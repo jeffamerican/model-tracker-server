@@ -153,7 +153,8 @@ Each model in the pricing data follows this structure:
       "Output": "Output pricing",
       // ... other fields
     },
-    "source": "https://provider.com/pricing"
+    "source": "https://provider.com/pricing",
+    "api_identifier": "provider"
   }
 }
 ```
@@ -161,6 +162,7 @@ Each model in the pricing data follows this structure:
 ### Common Pricing Fields
 While the exact structure varies by provider, common fields include:
 
+- `api_identifier`: Provider's API identifier
 - `Model`: Model name/identifier
 - `Input`: Input token pricing
 - `Output`: Output token pricing

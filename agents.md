@@ -37,8 +37,9 @@ lando-pricemaster/
 
 **Scraper Modules**: Located in `src/pricing_service/scrapers/`
 - Each module must implement a `fetch_prices()` function
+- Each module defines an `API_IDENTIFIER` constant naming the provider
 - Returns a dictionary with model IDs as keys
-- Expected format: `{model_id: {"raw": data, "source": url}}`
+- Expected format: `{model_id: {"raw": data, "source": url, "api_identifier": API_IDENTIFIER}}`
 
 ### 2. FastAPI Server (`server.py`)
 

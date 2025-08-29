@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 ELEVENLABS_PRICING_URL = "https://elevenlabs.io/pricing"
+API_IDENTIFIER = "elevenlabs"
 
 PLAN_ORDER = ["Free", "Starter", "Creator", "Pro", "Scale", "Business"]
 
@@ -44,5 +45,6 @@ def fetch_prices() -> Dict[str, Dict]:
             "raw": info,
             "source": ELEVENLABS_PRICING_URL,
             "modalities": ["text-to-speech", "speech-to-speech"],
+            "api_identifier": API_IDENTIFIER,
         }
     return data

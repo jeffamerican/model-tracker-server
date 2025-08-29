@@ -1,6 +1,6 @@
 # Pricing Service
 
-This service scrapes model pricing information from various providers and serves it over a FastAPI server.
+This service scrapes model pricing information from various providers and serves it over a FastAPI server. Each pricing record includes an `api_identifier` field that names the provider's API so other applications can associate models with their source service.
 
 ## Running
 
