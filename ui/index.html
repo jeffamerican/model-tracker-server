@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pricing Service</title>
+    <title>AI Model Pricing Service</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f5f5f5;
@@ -16,16 +16,59 @@
             text-align: center;
             margin-bottom: 30px;
         }
-        .search-bar {
+        .controls {
+            display: flex;
+            gap: 15px;
             margin-bottom: 20px;
-            text-align: center;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .search-bar {
+            flex: 1;
+            min-width: 300px;
         }
         .search-bar input {
-            padding: 8px;
+            padding: 10px;
             width: 100%;
-            max-width: 400px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .modality-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .modality-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .modality-btn:hover {
+            background: #f0f0f0;
+        }
+        .modality-btn.active {
+            background: #1976d2;
+            color: white;
+            border-color: #1976d2;
+        }
+        .modality-btn.server {
+            background: #ff9800;
+            color: white;
+            border-color: #ff9800;
+        }
+        .modality-btn.server:hover {
+            background: #f57c00;
+        }
+        .modality-btn.server.active {
+            background: #e65100;
+            border-color: #e65100;
         }
         .table-container {
             overflow-x: auto;
@@ -42,19 +85,41 @@
             border-bottom: 1px solid #ddd;
             text-align: left;
             color: #333;
+            vertical-align: top;
         }
         th {
             background: #fafafa;
             cursor: pointer;
             user-select: none;
+            font-weight: 600;
         }
         tr:hover {
-            background-color: #f1f1f1;
+            background-color: #f8f9fa;
+        }
+        .modality-badges {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .modality-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .modality-badge.server {
+            background: #fff3e0;
+            color: #e65100;
         }
         .loading {
             text-align: center;
             color: #666;
             font-style: italic;
+            padding: 40px;
         }
         .error {
             color: #d32f2f;
@@ -66,22 +131,75 @@
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            margin-bottom: 20px;
+            font-weight: 500;
+            transition: background 0.2s;
         }
         .refresh-btn:hover {
             background: #1565c0;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .source-link {
+            color: #1976d2;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .source-link:hover {
+            text-decoration: underline;
+        }
+        .no-modalities {
+            color: #999;
+            font-style: italic;
+            font-size: 12px;
+        }
+        .service-type {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>AI Model Pricing Service</h1>
-        <p>Real-time pricing information for various AI model providers</p>
+        <p>Real-time pricing information for AI models, APIs, and server rentals</p>
         <button class="refresh-btn" onclick="loadPricing()">Refresh Data</button>
+    </div>
+
+    <div class="stats" id="stats">
+        <!-- Stats will be populated here -->
+    </div>
+
+    <div class="controls">
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search..." oninput="filterTable()">
+            <input type="text" id="searchInput" placeholder="Search models, pricing, or modalities..." oninput="filterTable()">
+        </div>
+        <div class="modality-filter" id="modalityFilter">
+            <!-- Modality buttons will be populated here -->
         </div>
     </div>
 
@@ -92,6 +210,32 @@
     <script>
         let tableData = [];
         let displayData = [];
+        let allModalities = new Set();
+        let selectedModalities = new Set();
+
+        // Function to determine if an entry is a server/GPU rental
+        function isServerRental(modelId, details) {
+            const serverKeywords = ['H100', 'H200', 'A100', 'B200', 'GPU', 'VRAM'];
+            const hasServerKeyword = serverKeywords.some(keyword => 
+                modelId.includes(keyword) || 
+                Object.keys(details).some(key => key.includes(keyword))
+            );
+            const hasPricingPerHour = Object.keys(details).some(key => 
+                key.toLowerCase().includes('hour') || key.toLowerCase().includes('second')
+            );
+            return hasServerKeyword || hasPricingPerHour;
+        }
+
+        // Function to get service type label
+        function getServiceType(modelId, details, modalities) {
+            if (isServerRental(modelId, details)) {
+                return 'Server/GPU Rental';
+            } else if (modalities && modalities.length > 0) {
+                return 'AI Model/API';
+            } else {
+                return 'Service';
+            }
+        }
 
         async function loadPricing() {
             const content = document.getElementById('content');
@@ -109,17 +253,107 @@
                     return;
                 }
 
-                tableData = Object.entries(data).map(([modelId, modelData]) => ({
-                    modelId,
-                    details: modelData.raw || {},
-                    source: modelData.source || ''
-                }));
+                // Process data and collect modalities
+                tableData = Object.entries(data).map(([modelId, modelData]) => {
+                    let modalities = modelData.modalities || [];
+                    
+                    // Add 'server' modality for server/GPU rentals
+                    if (isServerRental(modelId, modelData.raw || {})) {
+                        if (!modalities.includes('server')) {
+                            modalities = [...modalities, 'server'];
+                        }
+                    }
+                    
+                    modalities.forEach(modality => allModalities.add(modality));
+                    
+                    return {
+                        modelId,
+                        details: modelData.raw || {},
+                        source: modelData.source || '',
+                        modalities: modalities,
+                        serviceType: getServiceType(modelId, modelData.raw || {}, modalities)
+                    };
+                });
 
+                updateStats();
+                updateModalityFilter();
                 renderTable(tableData);
 
             } catch (error) {
                 content.innerHTML = `<div class="error">Error loading pricing data: ${error.message}</div>`;
             }
+        }
+
+        function updateStats() {
+            const statsDiv = document.getElementById('stats');
+            const totalModels = tableData.length;
+            const totalModalities = allModalities.size;
+            const modelsWithModalities = tableData.filter(item => item.modalities.length > 0).length;
+            const serverRentals = tableData.filter(item => item.modalities.includes('server')).length;
+            const aiModels = tableData.filter(item => !item.modalities.includes('server')).length;
+
+            statsDiv.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalModels}</div>
+                    <div class="stat-label">Total Services</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${aiModels}</div>
+                    <div class="stat-label">AI Models/APIs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${serverRentals}</div>
+                    <div class="stat-label">Server Rentals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalModalities}</div>
+                    <div class="stat-label">Modalities</div>
+                </div>
+            `;
+        }
+
+        function updateModalityFilter() {
+            const filterDiv = document.getElementById('modalityFilter');
+            filterDiv.innerHTML = '';
+
+            // Add "All" button
+            const allBtn = document.createElement('button');
+            allBtn.className = 'modality-btn active';
+            allBtn.textContent = 'All';
+            allBtn.onclick = () => {
+                selectedModalities.clear();
+                document.querySelectorAll('.modality-btn').forEach(btn => btn.classList.remove('active'));
+                allBtn.classList.add('active');
+                filterTable();
+            };
+            filterDiv.appendChild(allBtn);
+
+            // Add modality buttons
+            Array.from(allModalities).sort().forEach(modality => {
+                const btn = document.createElement('button');
+                btn.className = `modality-btn ${modality === 'server' ? 'server' : ''}`;
+                btn.textContent = modality;
+                btn.onclick = () => {
+                    if (selectedModalities.has(modality)) {
+                        selectedModalities.delete(modality);
+                        btn.classList.remove('active');
+                    } else {
+                        selectedModalities.add(modality);
+                        btn.classList.add('active');
+                    }
+                    
+                    // Update "All" button state
+                    const allBtn = filterDiv.querySelector('.modality-btn');
+                    if (selectedModalities.size === 0) {
+                        allBtn.classList.add('active');
+                    } else {
+                        allBtn.classList.remove('active');
+                    }
+                    
+                    filterTable();
+                };
+                filterDiv.appendChild(btn);
+            });
         }
 
         function renderTable(data) {
@@ -131,11 +365,19 @@
             const thead = document.createElement('thead');
             const headerRow = document.createElement('tr');
 
+            // Model column
             const modelHeader = document.createElement('th');
-            modelHeader.textContent = 'Model';
+            modelHeader.textContent = 'Model/Service';
             modelHeader.onclick = () => sortTable('modelId');
             headerRow.appendChild(modelHeader);
 
+            // Modalities column
+            const modalitiesHeader = document.createElement('th');
+            modalitiesHeader.textContent = 'Modalities';
+            modalitiesHeader.style.minWidth = '150px';
+            headerRow.appendChild(modalitiesHeader);
+
+            // Pricing columns
             allKeys.forEach(key => {
                 const th = document.createElement('th');
                 th.textContent = key;
@@ -143,6 +385,7 @@
                 headerRow.appendChild(th);
             });
 
+            // Source column
             const sourceHeader = document.createElement('th');
             sourceHeader.textContent = 'Source';
             headerRow.appendChild(sourceHeader);
@@ -153,21 +396,52 @@
             const tbody = document.createElement('tbody');
             data.forEach(item => {
                 const tr = document.createElement('tr');
+                
+                // Model cell
                 const modelCell = document.createElement('td');
-                modelCell.textContent = item.modelId;
+                modelCell.innerHTML = `
+                    <div>${item.modelId}</div>
+                    <div class="service-type">${item.serviceType}</div>
+                `;
                 tr.appendChild(modelCell);
 
+                // Modalities cell
+                const modalitiesCell = document.createElement('td');
+                if (item.modalities && item.modalities.length > 0) {
+                    const badgesDiv = document.createElement('div');
+                    badgesDiv.className = 'modality-badges';
+                    item.modalities.forEach(modality => {
+                        const badge = document.createElement('span');
+                        badge.className = `modality-badge ${modality === 'server' ? 'server' : ''}`;
+                        badge.textContent = modality;
+                        badgesDiv.appendChild(badge);
+                    });
+                    modalitiesCell.appendChild(badgesDiv);
+                } else {
+                    modalitiesCell.innerHTML = '<span class="no-modalities">No modalities specified</span>';
+                }
+                tr.appendChild(modalitiesCell);
+
+                // Pricing data cells
                 allKeys.forEach(key => {
                     const td = document.createElement('td');
-                    td.textContent = item.details[key] || '';
+                    const value = item.details[key];
+                    if (typeof value === 'object') {
+                        // Handle nested objects (like Google's pricing structure)
+                        td.innerHTML = formatNestedValue(value);
+                    } else {
+                        td.textContent = value || '';
+                    }
                     tr.appendChild(td);
                 });
 
+                // Source cell
                 const sourceCell = document.createElement('td');
                 if (item.source) {
-                    sourceCell.innerHTML = `<a href="${item.source}" target="_blank">Link</a>`;
+                    sourceCell.innerHTML = `<a href="${item.source}" target="_blank" class="source-link">View</a>`;
                 }
                 tr.appendChild(sourceCell);
+                
                 tbody.appendChild(tr);
             });
 
@@ -181,6 +455,18 @@
             content.appendChild(container);
         }
 
+        function formatNestedValue(obj) {
+            if (typeof obj !== 'object' || obj === null) {
+                return obj || '';
+            }
+            
+            const items = Object.entries(obj).map(([key, value]) => {
+                return `<strong>${key}:</strong> ${value}`;
+            });
+            
+            return items.join('<br>');
+        }
+
         let currentSort = { key: '', asc: true };
 
         function sortTable(key) {
@@ -191,8 +477,19 @@
             }
 
             const sorted = [...displayData].sort((a, b) => {
-                const va = key === 'modelId' ? a.modelId : a.details[key] || '';
-                const vb = key === 'modelId' ? b.modelId : b.details[key] || '';
+                let va, vb;
+                
+                if (key === 'modelId') {
+                    va = a.modelId;
+                    vb = b.modelId;
+                } else if (key === 'modalities') {
+                    va = a.modalities.join(', ');
+                    vb = b.modalities.join(', ');
+                } else {
+                    va = a.details[key] || '';
+                    vb = b.details[key] || '';
+                }
+                
                 return currentSort.asc
                     ? va.toString().localeCompare(vb.toString())
                     : vb.toString().localeCompare(va.toString());
@@ -203,12 +500,24 @@
 
         function filterTable() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = tableData.filter(item => {
+            
+            let filtered = tableData.filter(item => {
+                // Text search
                 const modelMatch = item.modelId.toLowerCase().includes(query);
                 const detailsMatch = Object.values(item.details)
                     .some(val => val.toString().toLowerCase().includes(query));
-                return modelMatch || detailsMatch;
+                const modalitiesMatch = item.modalities.some(modality => 
+                    modality.toLowerCase().includes(query));
+                
+                const textMatch = modelMatch || detailsMatch || modalitiesMatch;
+                
+                // Modality filter
+                const modalityMatch = selectedModalities.size === 0 || 
+                    item.modalities.some(modality => selectedModalities.has(modality));
+                
+                return textMatch && modalityMatch;
             });
+            
             renderTable(filtered);
         }
 
