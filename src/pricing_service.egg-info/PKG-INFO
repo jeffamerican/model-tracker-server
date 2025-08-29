@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: pricing-service
+Version: 0.1.0
+Summary: Service to scrape and serve model pricing information
+Author: Script2Screen Team
+Project-URL: Homepage, https://example.com/pricing-service
+Requires-Python: >=3.10
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: requests
+Requires-Dist: beautifulsoup4

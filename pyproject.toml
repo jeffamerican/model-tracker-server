@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pricing-service"
+version = "0.1.0"
+description = "Service to scrape and serve model pricing information"
+authors = [{name = "Script2Screen Team"}]
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "requests",
+    "beautifulsoup4"
+]
+
+[project.urls]
+"Homepage" = "https://example.com/pricing-service"
