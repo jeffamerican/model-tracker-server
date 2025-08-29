@@ -34,6 +34,7 @@ def fetch_prices() -> dict:
     if not tables:
         return data
 
+
     for table in tables:
         headers = [
             th.get_text(strip=True).replace("*", "")
@@ -49,6 +50,7 @@ def fetch_prices() -> dict:
             continue
         for record in records:
             model_id = record.get(key)
+     main
             if model_id:
                 data[model_id] = {"raw": record, "source": FAL_PRICING_URL}
 
