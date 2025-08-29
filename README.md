@@ -14,3 +14,10 @@ The server exposes:
 - `GET /api/pricing/{model_id}` – retrieve pricing for a single model
 
 The service periodically refreshes pricing data every 6 hours using the included scraper modules.
+
+## Web UI
+
+The service includes a web interface for exploring pricing data. Navigate to `/ui/` when the server is running to view a searchable and sortable table:
+
+- Use the search box to filter models by name or pricing details.
+- Click any column header to sort by that column.
