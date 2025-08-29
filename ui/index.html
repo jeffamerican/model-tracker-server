@@ -16,26 +16,40 @@
             text-align: center;
             margin-bottom: 30px;
         }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+        .search-bar {
+            margin-bottom: 20px;
+            text-align: center;
         }
-        .pricing-card {
+        .search-bar input {
+            padding: 8px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
             background: white;
             border-radius: 8px;
-            padding: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .model-name {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 10px;
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
             color: #333;
         }
-        .price-info {
-            color: #666;
-            line-height: 1.5;
+        th {
+            background: #fafafa;
+            cursor: pointer;
+            user-select: none;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
         }
         .loading {
             text-align: center;
@@ -66,74 +80,138 @@
         <h1>AI Model Pricing Service</h1>
         <p>Real-time pricing information for various AI model providers</p>
         <button class="refresh-btn" onclick="loadPricing()">Refresh Data</button>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search..." oninput="filterTable()">
+        </div>
     </div>
-    
+
     <div id="content">
         <div class="loading">Loading pricing data...</div>
     </div>
 
     <script>
+        let tableData = [];
+        let displayData = [];
+
         async function loadPricing() {
             const content = document.getElementById('content');
             content.innerHTML = '<div class="loading">Loading pricing data...</div>';
-            
+
             try {
                 const response = await fetch('/api/pricing');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                
+
                 if (Object.keys(data).length === 0) {
                     content.innerHTML = '<div class="error">No pricing data available</div>';
                     return;
                 }
-                
-                const grid = document.createElement('div');
-                grid.className = 'pricing-grid';
-                
-                for (const [modelId, modelData] of Object.entries(data)) {
-                    const card = document.createElement('div');
-                    card.className = 'pricing-card';
-                    
-                    const modelName = document.createElement('div');
-                    modelName.className = 'model-name';
-                    modelName.textContent = modelId;
-                    
-                    const priceInfo = document.createElement('div');
-                    priceInfo.className = 'price-info';
-                    
-                    if (modelData.raw) {
-                        const details = Object.entries(modelData.raw)
-                            .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
-                            .join('<br>');
-                        priceInfo.innerHTML = details;
-                    } else {
-                        priceInfo.textContent = 'Pricing information available';
-                    }
-                    
-                    if (modelData.source) {
-                        const source = document.createElement('div');
-                        source.style.marginTop = '10px';
-                        source.style.fontSize = '0.9em';
-                        source.style.color = '#999';
-                        source.innerHTML = `Source: <a href="${modelData.source}" target="_blank">${modelData.source}</a>`;
-                        card.appendChild(source);
-                    }
-                    
-                    card.appendChild(modelName);
-                    card.appendChild(priceInfo);
-                    grid.appendChild(card);
-                }
-                
-                content.innerHTML = '';
-                content.appendChild(grid);
-                
+
+                tableData = Object.entries(data).map(([modelId, modelData]) => ({
+                    modelId,
+                    details: modelData.raw || {},
+                    source: modelData.source || ''
+                }));
+
+                renderTable(tableData);
+
             } catch (error) {
                 content.innerHTML = `<div class="error">Error loading pricing data: ${error.message}</div>`;
             }
         }
-        
+
+        function renderTable(data) {
+            displayData = data;
+            const content = document.getElementById('content');
+            const allKeys = Array.from(new Set(data.flatMap(item => Object.keys(item.details))));
+
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+
+            const modelHeader = document.createElement('th');
+            modelHeader.textContent = 'Model';
+            modelHeader.onclick = () => sortTable('modelId');
+            headerRow.appendChild(modelHeader);
+
+            allKeys.forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                th.onclick = () => sortTable(key);
+                headerRow.appendChild(th);
+            });
+
+            const sourceHeader = document.createElement('th');
+            sourceHeader.textContent = 'Source';
+            headerRow.appendChild(sourceHeader);
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                const modelCell = document.createElement('td');
+                modelCell.textContent = item.modelId;
+                tr.appendChild(modelCell);
+
+                allKeys.forEach(key => {
+                    const td = document.createElement('td');
+                    td.textContent = item.details[key] || '';
+                    tr.appendChild(td);
+                });
+
+                const sourceCell = document.createElement('td');
+                if (item.source) {
+                    sourceCell.innerHTML = `<a href="${item.source}" target="_blank">Link</a>`;
+                }
+                tr.appendChild(sourceCell);
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(tbody);
+
+            const container = document.createElement('div');
+            container.className = 'table-container';
+            container.appendChild(table);
+
+            content.innerHTML = '';
+            content.appendChild(container);
+        }
+
+        let currentSort = { key: '', asc: true };
+
+        function sortTable(key) {
+            if (currentSort.key === key) {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort = { key, asc: true };
+            }
+
+            const sorted = [...displayData].sort((a, b) => {
+                const va = key === 'modelId' ? a.modelId : a.details[key] || '';
+                const vb = key === 'modelId' ? b.modelId : b.details[key] || '';
+                return currentSort.asc
+                    ? va.toString().localeCompare(vb.toString())
+                    : vb.toString().localeCompare(va.toString());
+            });
+
+            renderTable(sorted);
+        }
+
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = tableData.filter(item => {
+                const modelMatch = item.modelId.toLowerCase().includes(query);
+                const detailsMatch = Object.values(item.details)
+                    .some(val => val.toString().toLowerCase().includes(query));
+                return modelMatch || detailsMatch;
+            });
+            renderTable(filtered);
+        }
+
         // Load pricing data on page load
         loadPricing();
     </script>

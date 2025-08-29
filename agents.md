@@ -60,7 +60,7 @@ lando-pricemaster/
 **Purpose**: User-friendly interface for viewing pricing data.
 
 **Features**:
-- Responsive grid layout
+- Searchable and sortable pricing table
 - Real-time data refresh
 - Error handling and loading states
 - Modern Material Design styling
