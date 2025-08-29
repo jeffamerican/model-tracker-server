@@ -35,40 +35,72 @@
             border-radius: 6px;
             font-size: 14px;
         }
-        .modality-filter {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
         }
-        .modality-btn {
-            padding: 6px 12px;
-            border: 1px solid #ddd;
+        .dropdown-btn {
             background: white;
-            border-radius: 20px;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
-            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 120px;
         }
-        .modality-btn:hover {
+        .dropdown-btn:hover {
             background: #f0f0f0;
         }
-        .modality-btn.active {
-            background: #1976d2;
-            color: white;
-            border-color: #1976d2;
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 6px;
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
         }
-        .modality-btn.server {
-            background: #ff9800;
-            color: white;
-            border-color: #ff9800;
+        .dropdown-content.show {
+            display: block;
         }
-        .modality-btn.server:hover {
-            background: #f57c00;
+        .dropdown-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .modality-btn.server.active {
-            background: #e65100;
-            border-color: #e65100;
+        .dropdown-item:hover {
+            background: #f5f5f5;
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .dropdown-item input[type="checkbox"] {
+            margin: 0;
+        }
+        .dropdown-header {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            font-weight: 600;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+        }
+        .service-count {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 500;
         }
         .table-container {
             overflow-x: auto;
@@ -79,6 +111,7 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            table-layout: fixed;
         }
         th, td {
             padding: 12px;
@@ -86,12 +119,63 @@
             text-align: left;
             color: #333;
             vertical-align: top;
+            position: relative;
         }
         th {
             background: #fafafa;
             cursor: pointer;
             user-select: none;
             font-weight: 600;
+            position: relative;
+        }
+        th:hover {
+            background: #f0f0f0;
+        }
+        .column-resize-handle {
+            position: absolute;
+            right: -3px;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            cursor: col-resize;
+            background: transparent;
+            z-index: 10;
+        }
+        .column-resize-handle:hover {
+            background: #1976d2;
+        }
+        .column-resize-handle.active {
+            background: #1976d2;
+        }
+        .column-resize-handle::after {
+            content: '';
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 20px;
+            background: #ccc;
+            border-radius: 1px;
+        }
+        .column-resize-handle:hover::after {
+            background: #1976d2;
+        }
+        .column-drag-handle {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            cursor: move;
+            background: transparent;
+            z-index: 10;
+        }
+        .column-drag-handle:hover {
+            background: #ff9800;
+        }
+        .column-drag-handle.active {
+            background: #ff9800;
         }
         tr:hover {
             background-color: #f8f9fa;
@@ -111,9 +195,15 @@
             font-weight: 500;
             white-space: nowrap;
         }
-        .modality-badge.server {
-            background: #fff3e0;
-            color: #e65100;
+        .api-identifier {
+            background: #f3e5f5;
+            color: #7b1fa2;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
         }
         .loading {
             text-align: center;
@@ -176,22 +266,10 @@
             font-style: italic;
             font-size: 12px;
         }
-          .service-type {
-              font-size: 11px;
-              color: #666;
-              margin-top: 2px;
-          }
-        .column-controls {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-            font-size: 12px;
-        }
-        .column-controls label {
-            display: flex;
-            align-items: center;
-            gap: 4px;
+        .service-type {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
         }
         .toggle-btn {
             background: white;
@@ -206,6 +284,34 @@
         .toggle-btn:hover {
             background: #e3f2fd;
         }
+        .column-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            flex-wrap: wrap;
+        }
+        .column-control-btn {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+        .column-control-btn:hover {
+            background: #f0f0f0;
+        }
+        .column-control-btn.active {
+            background: #1976d2;
+            color: white;
+            border-color: #1976d2;
+        }
         body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
@@ -217,6 +323,9 @@
         body.dark-mode th {
             background: #2c2c2c;
             color: #e0e0e0;
+        }
+        body.dark-mode th:hover {
+            background: #333;
         }
         body.dark-mode tr:hover {
             background-color: #333;
@@ -231,9 +340,9 @@
             background: #263238;
             color: #90caf9;
         }
-        body.dark-mode .modality-badge.server {
-            background: #e65100;
-            color: #fff;
+        body.dark-mode .api-identifier {
+            background: #4a148c;
+            color: #e1bee7;
         }
         body.dark-mode .toggle-btn {
             background: #333;
@@ -243,7 +352,39 @@
         body.dark-mode .toggle-btn:hover {
             background: #444;
         }
-      </style>
+        body.dark-mode .dropdown-btn {
+            background: #333;
+            color: #fff;
+            border-color: #555;
+        }
+        body.dark-mode .dropdown-content {
+            background: #333;
+            border-color: #555;
+        }
+        body.dark-mode .dropdown-item {
+            color: #fff;
+            border-bottom-color: #555;
+        }
+        body.dark-mode .dropdown-item:hover {
+            background: #444;
+        }
+        body.dark-mode .dropdown-header {
+            background: #2c2c2c;
+            color: #fff;
+            border-bottom-color: #555;
+        }
+        body.dark-mode .column-controls {
+            background: #2c2c2c;
+        }
+        body.dark-mode .column-control-btn {
+            background: #333;
+            color: #fff;
+            border-color: #555;
+        }
+        body.dark-mode .column-control-btn:hover {
+            background: #444;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -256,30 +397,65 @@
         <!-- Stats will be populated here -->
     </div>
 
-      <div class="controls">
-          <div class="search-bar">
-              <input type="text" id="searchInput" placeholder="Search models, pricing, or modalities..." oninput="filterTable()">
-          </div>
-          <div class="modality-filter" id="modalityFilter">
-              <!-- Modality buttons will be populated here -->
-          </div>
-          <div class="column-controls" id="columnControls">
-              <!-- Column toggles will be populated here -->
-          </div>
-          <button id="themeToggle" class="toggle-btn">Toggle Dark Mode</button>
-      </div>
+    <div class="controls">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search models, pricing, or modalities..." oninput="filterTable()">
+        </div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn" onclick="toggleDropdown('modalities')">
+                Modalities <span class="service-count" id="modalityCount">0</span> ▼
+            </button>
+            <div class="dropdown-content" id="modalitiesDropdown">
+                <!-- Modality toggles will be populated here -->
+            </div>
+        </div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn" onclick="toggleDropdown('columns')">
+                Columns <span class="service-count" id="columnCount">0</span> ▼
+            </button>
+            <div class="dropdown-content" id="columnsDropdown">
+                <!-- Column toggles will be populated here -->
+            </div>
+        </div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn" onclick="toggleDropdown('providers')">
+                Providers <span class="service-count" id="providerCount">0</span> ▼
+            </button>
+            <div class="dropdown-content" id="providersDropdown">
+                <!-- Provider list will be populated here -->
+            </div>
+        </div>
+        <button id="themeToggle" class="toggle-btn">Toggle Dark Mode</button>
+    </div>
 
-      <div id="content">
-          <div class="loading">Loading pricing data...</div>
-      </div>
+    <div class="column-controls" id="columnControls">
+        <span style="font-weight: 600; font-size: 12px;">Column Controls:</span>
+        <button class="column-control-btn" onclick="resetColumnWidths()">Reset Widths</button>
+        <button class="column-control-btn" onclick="resetColumnOrder()">Reset Order</button>
+        <button class="column-control-btn" onclick="toggleColumnResize()" id="resizeToggle">Enable Resize</button>
+        <button class="column-control-btn" onclick="toggleColumnDrag()" id="dragToggle">Enable Drag</button>
+    </div>
 
-      <script>
+    <div id="content">
+        <div class="loading">Loading pricing data...</div>
+    </div>
+
+    <script>
         let tableData = [];
         let displayData = [];
         let allModalities = new Set();
         let selectedModalities = new Set();
         let allColumns = [];
         let visibleColumns = new Set();
+        let allProviders = new Set();
+        let columnWidths = {};
+        let columnOrder = [];
+        let resizeMode = false;
+        let dragMode = false;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let draggedColumn = null;
 
         // Theme initialization
         if (localStorage.getItem('darkMode') === 'true') {
@@ -330,9 +506,9 @@
                     return;
                 }
 
-                  // Process data and collect modalities
-                  tableData = Object.entries(data).map(([modelId, modelData]) => {
-                      let modalities = modelData.modalities || [];
+                // Process data and collect modalities
+                tableData = Object.entries(data).map(([modelId, modelData]) => {
+                    let modalities = modelData.modalities || [];
                     
                     // Add 'server' modality for server/GPU rentals
                     if (isServerRental(modelId, modelData.raw || {})) {
@@ -343,27 +519,43 @@
                     
                     modalities.forEach(modality => allModalities.add(modality));
                     
+                    // Collect API identifiers
+                    if (modelData.api_identifier) {
+                        allProviders.add(modelData.api_identifier);
+                    }
+                    
                     return {
                         modelId,
                         details: modelData.raw || {},
                         source: modelData.source || '',
                         modalities: modalities,
-                        serviceType: getServiceType(modelId, modelData.raw || {}, modalities)
+                        serviceType: getServiceType(modelId, modelData.raw || {}, modalities),
+                        apiIdentifier: modelData.api_identifier || 'unknown'
                     };
                 });
 
-                  allColumns = Array.from(new Set(tableData.flatMap(item => Object.keys(item.details))));
-                  const savedCols = JSON.parse(localStorage.getItem('visibleColumns') || 'null');
-                  if (savedCols && savedCols.length > 0) {
-                      visibleColumns = new Set(savedCols.filter(col => allColumns.includes(col)));
-                  } else {
-                      visibleColumns = new Set(allColumns);
-                  }
+                allColumns = Array.from(new Set(tableData.flatMap(item => Object.keys(item.details))));
+                const savedCols = JSON.parse(localStorage.getItem('visibleColumns') || 'null');
+                if (savedCols && savedCols.length > 0) {
+                    visibleColumns = new Set(savedCols.filter(col => allColumns.includes(col)));
+                } else {
+                    visibleColumns = new Set(allColumns);
+                }
 
-                  renderColumnControls(allColumns);
-                  updateStats();
-                  updateModalityFilter();
-                  renderTable(tableData);
+                // Load saved column settings
+                columnWidths = JSON.parse(localStorage.getItem('columnWidths') || '{}');
+                columnOrder = JSON.parse(localStorage.getItem('columnOrder') || '[]');
+                
+                // Initialize column order if not set
+                if (columnOrder.length === 0) {
+                    columnOrder = [...allColumns];
+                }
+
+                renderModalityControls();
+                renderColumnControls(allColumns);
+                renderProviderList();
+                updateStats();
+                renderTable(tableData);
 
             } catch (error) {
                 content.innerHTML = `<div class="error">Error loading pricing data: ${error.message}</div>`;
@@ -374,9 +566,9 @@
             const statsDiv = document.getElementById('stats');
             const totalModels = tableData.length;
             const totalModalities = allModalities.size;
-            const modelsWithModalities = tableData.filter(item => item.modalities.length > 0).length;
             const serverRentals = tableData.filter(item => item.modalities.includes('server')).length;
             const aiModels = tableData.filter(item => !item.modalities.includes('server')).length;
+            const totalProviders = allProviders.size;
 
             statsDiv.innerHTML = `
                 <div class="stat-card">
@@ -392,61 +584,76 @@
                     <div class="stat-label">Server Rentals</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-number">${totalProviders}</div>
+                    <div class="stat-label">Providers</div>
+                </div>
+                <div class="stat-card">
                     <div class="stat-number">${totalModalities}</div>
                     <div class="stat-label">Modalities</div>
                 </div>
             `;
         }
 
-          function updateModalityFilter() {
-              const filterDiv = document.getElementById('modalityFilter');
-              filterDiv.innerHTML = '';
-
-            // Add "All" button
-            const allBtn = document.createElement('button');
-            allBtn.className = 'modality-btn active';
-            allBtn.textContent = 'All';
-            allBtn.onclick = () => {
+        function renderModalityControls() {
+            const container = document.getElementById('modalitiesDropdown');
+            container.innerHTML = '<div class="dropdown-header">Filter by Modalities</div>';
+            
+            // Add "All" option
+            const allItem = document.createElement('div');
+            allItem.className = 'dropdown-item';
+            const allCheckbox = document.createElement('input');
+            allCheckbox.type = 'checkbox';
+            allCheckbox.checked = selectedModalities.size === 0;
+            allCheckbox.onchange = () => {
                 selectedModalities.clear();
-                document.querySelectorAll('.modality-btn').forEach(btn => btn.classList.remove('active'));
-                allBtn.classList.add('active');
+                document.querySelectorAll('#modalitiesDropdown input[type="checkbox"]').forEach(cb => {
+                    if (cb !== allCheckbox) cb.checked = false;
+                });
+                updateModalityCount();
                 filterTable();
             };
-            filterDiv.appendChild(allBtn);
-
-            // Add modality buttons
+            allItem.appendChild(allCheckbox);
+            allItem.appendChild(document.createTextNode('All Modalities'));
+            container.appendChild(allItem);
+            
+            // Add modality options
             Array.from(allModalities).sort().forEach(modality => {
-                const btn = document.createElement('button');
-                btn.className = `modality-btn ${modality === 'server' ? 'server' : ''}`;
-                btn.textContent = modality;
-                btn.onclick = () => {
-                    if (selectedModalities.has(modality)) {
-                        selectedModalities.delete(modality);
-                        btn.classList.remove('active');
-                    } else {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = selectedModalities.has(modality);
+                checkbox.onchange = () => {
+                    if (checkbox.checked) {
                         selectedModalities.add(modality);
-                        btn.classList.add('active');
-                    }
-                    
-                    // Update "All" button state
-                    const allBtn = filterDiv.querySelector('.modality-btn');
-                    if (selectedModalities.size === 0) {
-                        allBtn.classList.add('active');
+                        allCheckbox.checked = false;
                     } else {
-                        allBtn.classList.remove('active');
+                        selectedModalities.delete(modality);
+                        if (selectedModalities.size === 0) {
+                            allCheckbox.checked = true;
+                        }
                     }
-                    
+                    updateModalityCount();
                     filterTable();
                 };
-              filterDiv.appendChild(btn);
-          });
+                
+                item.appendChild(checkbox);
+                item.appendChild(document.createTextNode(modality));
+                container.appendChild(item);
+            });
+            
+            updateModalityCount();
         }
 
         function renderColumnControls(keys) {
-            const container = document.getElementById('columnControls');
-            container.innerHTML = '';
+            const container = document.getElementById('columnsDropdown');
+            container.innerHTML = '<div class="dropdown-header">Toggle Columns</div>';
+            
             keys.forEach(key => {
-                const label = document.createElement('label');
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.checked = visibleColumns.has(key);
@@ -457,18 +664,90 @@
                         visibleColumns.delete(key);
                     }
                     localStorage.setItem('visibleColumns', JSON.stringify(Array.from(visibleColumns)));
+                    updateColumnCount();
                     renderTable(displayData);
                 };
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(key));
-                container.appendChild(label);
+                
+                item.appendChild(checkbox);
+                item.appendChild(document.createTextNode(key));
+                container.appendChild(item);
             });
+            
+            updateColumnCount();
+        }
+
+        function renderProviderList() {
+            const container = document.getElementById('providersDropdown');
+            container.innerHTML = '<div class="dropdown-header">Data Providers</div>';
+            
+            const providerStats = {};
+            tableData.forEach(item => {
+                const provider = item.apiIdentifier;
+                if (!providerStats[provider]) {
+                    providerStats[provider] = 0;
+                }
+                providerStats[provider]++;
+            });
+            
+            Object.entries(providerStats).sort((a, b) => b[1] - a[1]).forEach(([provider, count]) => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.innerHTML = `
+                    <span>${provider}</span>
+                    <span class="service-count">${count}</span>
+                `;
+                container.appendChild(item);
+            });
+            
+            document.getElementById('providerCount').textContent = allProviders.size;
+        }
+
+        function updateModalityCount() {
+            const count = selectedModalities.size === 0 ? allModalities.size : selectedModalities.size;
+            document.getElementById('modalityCount').textContent = count;
+        }
+
+        function updateColumnCount() {
+            document.getElementById('columnCount').textContent = visibleColumns.size;
+        }
+
+        function toggleDropdown(type) {
+            const dropdown = document.getElementById(type + 'Dropdown');
+            const allDropdowns = document.querySelectorAll('.dropdown-content');
+            
+            // Close other dropdowns
+            allDropdowns.forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                }
+            });
+            
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdowns when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-btn')) {
+                const dropdowns = document.querySelectorAll('.dropdown-content');
+                dropdowns.forEach(dropdown => {
+                    if (dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            }
         }
 
         function renderTable(data) {
             displayData = data;
             const content = document.getElementById('content');
-            const columns = Array.from(visibleColumns);
+            const columns = Array.from(visibleColumns).sort((a, b) => {
+                const aIndex = columnOrder.indexOf(a);
+                const bIndex = columnOrder.indexOf(b);
+                if (aIndex === -1 && bIndex === -1) return 0;
+                if (aIndex === -1) return 1;
+                if (bIndex === -1) return 0;
+                return aIndex - bIndex;
+            });
 
             const table = document.createElement('table');
             const thead = document.createElement('thead');
@@ -478,12 +757,42 @@
             const modelHeader = document.createElement('th');
             modelHeader.textContent = 'Model/Service';
             modelHeader.onclick = () => sortTable('modelId');
+            const modelWidth = columnWidths['modelId'] || 'auto';
+            modelHeader.style.width = modelWidth;
+            if (resizeMode) {
+                const resizeHandle = document.createElement('div');
+                resizeHandle.className = 'column-resize-handle';
+                resizeHandle.title = 'Drag to resize column';
+                resizeHandle.onmousedown = (e) => startResize(e, 'modelId');
+                modelHeader.appendChild(resizeHandle);
+            }
+            if (dragMode) {
+                const dragHandle = document.createElement('div');
+                dragHandle.className = 'column-drag-handle';
+                dragHandle.onmousedown = (e) => startDrag(e, 'modelId');
+                modelHeader.appendChild(dragHandle);
+            }
             headerRow.appendChild(modelHeader);
 
             // Modalities column
             const modalitiesHeader = document.createElement('th');
             modalitiesHeader.textContent = 'Modalities';
             modalitiesHeader.style.minWidth = '150px';
+            const modalitiesWidth = columnWidths['modalities'] || 'auto';
+            modalitiesHeader.style.width = modalitiesWidth;
+            if (resizeMode) {
+                const resizeHandle = document.createElement('div');
+                resizeHandle.className = 'column-resize-handle';
+                resizeHandle.title = 'Drag to resize column';
+                resizeHandle.onmousedown = (e) => startResize(e, 'modalities');
+                modalitiesHeader.appendChild(resizeHandle);
+            }
+            if (dragMode) {
+                const dragHandle = document.createElement('div');
+                dragHandle.className = 'column-drag-handle';
+                dragHandle.onmousedown = (e) => startDrag(e, 'modalities');
+                modalitiesHeader.appendChild(dragHandle);
+            }
             headerRow.appendChild(modalitiesHeader);
 
             // Pricing columns
@@ -491,12 +800,42 @@
                 const th = document.createElement('th');
                 th.textContent = key;
                 th.onclick = () => sortTable(key);
+                const colWidth = columnWidths[key] || 'auto';
+                th.style.width = colWidth;
+                if (resizeMode) {
+                    const resizeHandle = document.createElement('div');
+                    resizeHandle.className = 'column-resize-handle';
+                    resizeHandle.title = 'Drag to resize column';
+                    resizeHandle.onmousedown = (e) => startResize(e, key);
+                    th.appendChild(resizeHandle);
+                }
+                if (dragMode) {
+                    const dragHandle = document.createElement('div');
+                    dragHandle.className = 'column-drag-handle';
+                    dragHandle.onmousedown = (e) => startDrag(e, key);
+                    th.appendChild(dragHandle);
+                }
                 headerRow.appendChild(th);
             });
 
             // Source column
             const sourceHeader = document.createElement('th');
             sourceHeader.textContent = 'Source';
+            const sourceWidth = columnWidths['source'] || 'auto';
+            sourceHeader.style.width = sourceWidth;
+            if (resizeMode) {
+                const resizeHandle = document.createElement('div');
+                resizeHandle.className = 'column-resize-handle';
+                resizeHandle.title = 'Drag to resize column';
+                resizeHandle.onmousedown = (e) => startResize(e, 'source');
+                sourceHeader.appendChild(resizeHandle);
+            }
+            if (dragMode) {
+                const dragHandle = document.createElement('div');
+                dragHandle.className = 'column-drag-handle';
+                dragHandle.onmousedown = (e) => startDrag(e, 'source');
+                sourceHeader.appendChild(dragHandle);
+            }
             headerRow.appendChild(sourceHeader);
 
             thead.appendChild(headerRow);
@@ -508,20 +847,23 @@
                 
                 // Model cell
                 const modelCell = document.createElement('td');
+                modelCell.style.width = modelWidth;
                 modelCell.innerHTML = `
                     <div>${item.modelId}</div>
                     <div class="service-type">${item.serviceType}</div>
+                    <div class="api-identifier">${item.apiIdentifier}</div>
                 `;
                 tr.appendChild(modelCell);
 
                 // Modalities cell
                 const modalitiesCell = document.createElement('td');
+                modalitiesCell.style.width = modalitiesWidth;
                 if (item.modalities && item.modalities.length > 0) {
                     const badgesDiv = document.createElement('div');
                     badgesDiv.className = 'modality-badges';
                     item.modalities.forEach(modality => {
                         const badge = document.createElement('span');
-                        badge.className = `modality-badge ${modality === 'server' ? 'server' : ''}`;
+                        badge.className = 'modality-badge';
                         badge.textContent = modality;
                         badgesDiv.appendChild(badge);
                     });
@@ -531,13 +873,15 @@
                 }
                 tr.appendChild(modalitiesCell);
 
-            // Pricing data cells
-            columns.forEach(key => {
-                const td = document.createElement('td');
-                const value = item.details[key];
-                if (typeof value === 'object') {
-                    // Handle nested objects (like Google's pricing structure)
-                    td.innerHTML = formatNestedValue(value);
+                // Pricing data cells
+                columns.forEach(key => {
+                    const td = document.createElement('td');
+                    const colWidth = columnWidths[key] || 'auto';
+                    td.style.width = colWidth;
+                    const value = item.details[key];
+                    if (typeof value === 'object') {
+                        // Handle nested objects (like Google's pricing structure)
+                        td.innerHTML = formatNestedValue(value);
                     } else {
                         td.textContent = value || '';
                     }
@@ -546,6 +890,7 @@
 
                 // Source cell
                 const sourceCell = document.createElement('td');
+                sourceCell.style.width = sourceWidth;
                 if (item.source) {
                     sourceCell.innerHTML = `<a href="${item.source}" target="_blank" class="source-link">View</a>`;
                 }
@@ -617,8 +962,9 @@
                     .some(val => val.toString().toLowerCase().includes(query));
                 const modalitiesMatch = item.modalities.some(modality => 
                     modality.toLowerCase().includes(query));
+                const providerMatch = item.apiIdentifier.toLowerCase().includes(query);
                 
-                const textMatch = modelMatch || detailsMatch || modalitiesMatch;
+                const textMatch = modelMatch || detailsMatch || modalitiesMatch || providerMatch;
                 
                 // Modality filter
                 const modalityMatch = selectedModalities.size === 0 || 
@@ -628,6 +974,169 @@
             });
             
             renderTable(filtered);
+        }
+
+        // Column resize functionality
+        function startResize(e, columnKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const handle = e.target;
+            const header = handle.parentElement;
+            const startX = e.clientX;
+            const startWidth = header.offsetWidth;
+            
+            // Add active class for visual feedback
+            handle.classList.add('active');
+            document.body.style.cursor = 'col-resize';
+            
+            function onMouseMove(e) {
+                const deltaX = e.clientX - startX;
+                const newWidth = Math.max(100, startWidth + deltaX); // Minimum 100px
+                
+                columnWidths[columnKey] = newWidth + 'px';
+                header.style.width = newWidth + 'px';
+                
+                // Update all cells in this column
+                const columnIndex = Array.from(header.parentElement.children).indexOf(header);
+                const rows = document.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const cell = row.children[columnIndex];
+                    if (cell) {
+                        cell.style.width = newWidth + 'px';
+                    }
+                });
+                
+                // Force table to recalculate layout
+                const table = header.closest('table');
+                if (table) {
+                    table.style.width = table.offsetWidth + 'px';
+                }
+            }
+            
+            function onMouseUp() {
+                handle.classList.remove('active');
+                document.body.style.cursor = '';
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                localStorage.setItem('columnWidths', JSON.stringify(columnWidths));
+            }
+            
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        // Column drag functionality
+        function startDrag(e, columnKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const handle = e.target;
+            isDragging = true;
+            draggedColumn = columnKey;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            
+            // Add active class for visual feedback
+            handle.classList.add('active');
+            document.body.style.cursor = 'grabbing';
+            
+            function onMouseMove(e) {
+                if (!isDragging) return;
+                
+                const deltaX = Math.abs(e.clientX - dragStartX);
+                const deltaY = Math.abs(e.clientY - dragStartY);
+                
+                // Only start drag if moved horizontally more than vertically
+                if (deltaX > deltaY && deltaX > 10) {
+                    // Find the target column based on mouse position
+                    const headers = document.querySelectorAll('th');
+                    let targetColumn = null;
+                    
+                    headers.forEach((header) => {
+                        const rect = header.getBoundingClientRect();
+                        if (e.clientX > rect.left && e.clientX < rect.right) {
+                            targetColumn = header.textContent.trim();
+                        }
+                    });
+                    
+                    if (targetColumn && targetColumn !== draggedColumn) {
+                        // Reorder columns
+                        const oldIndex = columnOrder.indexOf(draggedColumn);
+                        const newIndex = columnOrder.indexOf(targetColumn);
+                        
+                        if (oldIndex !== -1 && newIndex !== -1) {
+                            columnOrder.splice(oldIndex, 1);
+                            columnOrder.splice(newIndex, 0, draggedColumn);
+                            localStorage.setItem('columnOrder', JSON.stringify(columnOrder));
+                            renderTable(displayData);
+                        }
+                    }
+                }
+            }
+            
+            function onMouseUp() {
+                isDragging = false;
+                draggedColumn = null;
+                handle.classList.remove('active');
+                document.body.style.cursor = '';
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+            
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        // Column control functions
+        function resetColumnWidths() {
+            columnWidths = {};
+            localStorage.removeItem('columnWidths');
+            renderTable(displayData);
+        }
+
+        function resetColumnOrder() {
+            columnOrder = [...allColumns];
+            localStorage.removeItem('columnOrder');
+            renderTable(displayData);
+        }
+
+        function toggleColumnResize() {
+            resizeMode = !resizeMode;
+            const btn = document.getElementById('resizeToggle');
+            btn.classList.toggle('active', resizeMode);
+            btn.textContent = resizeMode ? 'Disable Resize' : 'Enable Resize';
+            
+            // Add visual indicator to table
+            const table = document.querySelector('table');
+            if (table) {
+                if (resizeMode) {
+                    table.style.border = '2px solid #1976d2';
+                } else {
+                    table.style.border = '';
+                }
+            }
+            
+            renderTable(displayData);
+        }
+
+        function toggleColumnDrag() {
+            dragMode = !dragMode;
+            const btn = document.getElementById('dragToggle');
+            btn.classList.toggle('active', dragMode);
+            btn.textContent = dragMode ? 'Disable Drag' : 'Enable Drag';
+            
+            // Add visual indicator to table
+            const table = document.querySelector('table');
+            if (table) {
+                if (dragMode) {
+                    table.style.border = '2px solid #ff9800';
+                } else if (!resizeMode) {
+                    table.style.border = '';
+                }
+            }
+            
+            renderTable(displayData);
         }
 
         // Load pricing data on page load
