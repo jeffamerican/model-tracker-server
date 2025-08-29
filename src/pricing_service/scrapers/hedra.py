@@ -11,6 +11,7 @@ from typing import Dict
 import requests
 
 HEDRA_PRICING_URL = "https://hedra.com/pricing"
+API_IDENTIFIER = "hedra"
 
 
 def fetch_prices() -> Dict[str, Dict]:
@@ -25,6 +26,7 @@ def fetch_prices() -> Dict[str, Dict]:
                 "raw": {"error": str(exc)},
                 "source": HEDRA_PRICING_URL,
                 "modalities": ["speech-to-video", "text-to-video"],
+                "api_identifier": API_IDENTIFIER,
             }
         }
 
@@ -34,5 +36,6 @@ def fetch_prices() -> Dict[str, Dict]:
             "raw": {"message": "Pricing page accessible but data not parsed"},
             "source": HEDRA_PRICING_URL,
             "modalities": ["speech-to-video", "text-to-video"],
+            "api_identifier": API_IDENTIFIER,
         }
     }

@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 GEMINI_PRICING_URL = "https://ai.google.dev/pricing"
+API_IDENTIFIER = "gemini"
 
 # Gemini models accept multimodal inputs (text, images, audio, video) and
 # produce text outputs.
@@ -43,5 +44,6 @@ def fetch_prices() -> Dict[str, Dict]:
                 "raw": rows,
                 "source": GEMINI_PRICING_URL,
                 "modalities": GEMINI_MODALITIES,
+                "api_identifier": API_IDENTIFIER,
             }
     return data

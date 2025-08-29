@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import requests
 
 OPENAI_PRICING_URL = "https://openai.com/pricing"
+API_IDENTIFIER = "openai"
 
 # The OpenAI pricing page is served through a CDN that may reject
 # requests without typical browser headers.  Supplying a minimal
@@ -39,5 +40,6 @@ def fetch_prices() -> dict:
                 data[model_id] = {
                     "raw": record,
                     "source": OPENAI_PRICING_URL,
+                    "api_identifier": API_IDENTIFIER,
                 }
     return data

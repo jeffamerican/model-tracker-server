@@ -6,7 +6,8 @@
       "Price per hour": "$1.89/h",
       "Price per second": "$0.0005/s"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "api_identifier": "fal"
   },
   "H200": {
     "raw": {
@@ -15,7 +16,8 @@
       "Price per hour": "$2.10/h",
       "Price per second": "$0.0006/s"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "api_identifier": "fal"
   },
   "A100": {
     "raw": {
@@ -24,7 +26,8 @@
       "Price per hour": "$0.99/h",
       "Price per second": "$0.0003/s"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "api_identifier": "fal"
   },
   "B200": {
     "raw": {
@@ -33,7 +36,8 @@
       "Price per hour": "contact us",
       "Price per second": "contact us"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "api_identifier": "fal"
   },
   "Hunyuan Video": {
     "raw": {
@@ -43,6 +47,7 @@
       "Output per $1": "3videos"
     },
     "source": "https://fal.ai/pricing",
+    "api_identifier": "fal",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -56,6 +61,7 @@
       "Output per $1": "11video seconds"
     },
     "source": "https://fal.ai/pricing",
+    "api_identifier": "fal",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -69,6 +75,7 @@
       "Output per $1": "4video seconds"
     },
     "source": "https://fal.ai/pricing",
+    "api_identifier": "fal",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -82,6 +89,7 @@
       "Output per $1": "3videos"
     },
     "source": "https://fal.ai/pricing",
+    "api_identifier": "fal",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -95,6 +103,7 @@
       "Output per $1": "2videos"
     },
     "source": "https://fal.ai/pricing",
+    "api_identifier": "fal",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -108,6 +117,7 @@
       "Output per $1": "50video seconds"
     },
     "source": "https://fal.ai/pricing",
+    "api_identifier": "fal",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -122,7 +132,8 @@
     "modalities": [
       "text-to-video",
       "image-to-video"
-    ]
+    ],
+    "api_identifier": "runway"
   },
   "runway-standard": {
     "raw": {
@@ -135,7 +146,8 @@
     "modalities": [
       "text-to-video",
       "image-to-video"
-    ]
+    ],
+    "api_identifier": "runway"
   },
   "runway-pro": {
     "raw": {
@@ -148,7 +160,8 @@
     "modalities": [
       "text-to-video",
       "image-to-video"
-    ]
+    ],
+    "api_identifier": "runway"
   },
   "runway-team": {
     "raw": {
@@ -159,7 +172,8 @@
     "modalities": [
       "text-to-video",
       "image-to-video"
-    ]
+    ],
+    "api_identifier": "runway"
   },
   "hedra": {
     "raw": {
@@ -169,7 +183,8 @@
     "modalities": [
       "speech-to-video",
       "text-to-video"
-    ]
+    ],
+    "api_identifier": "hedra"
   },
   "elevenlabs-free": {
     "raw": {
@@ -181,7 +196,8 @@
     "modalities": [
       "text-to-speech",
       "speech-to-speech"
-    ]
+    ],
+    "api_identifier": "elevenlabs"
   },
   "elevenlabs-starter": {
     "raw": {
@@ -193,7 +209,8 @@
     "modalities": [
       "text-to-speech",
       "speech-to-speech"
-    ]
+    ],
+    "api_identifier": "elevenlabs"
   },
   "elevenlabs-creator": {
     "raw": {
@@ -205,7 +222,8 @@
     "modalities": [
       "text-to-speech",
       "speech-to-speech"
-    ]
+    ],
+    "api_identifier": "elevenlabs"
   },
   "elevenlabs-pro": {
     "raw": {
@@ -217,7 +235,8 @@
     "modalities": [
       "text-to-speech",
       "speech-to-speech"
-    ]
+    ],
+    "api_identifier": "elevenlabs"
   },
   "elevenlabs-scale": {
     "raw": {
@@ -228,7 +247,8 @@
     "modalities": [
       "text-to-speech",
       "speech-to-speech"
-    ]
+    ],
+    "api_identifier": "elevenlabs"
   },
   "elevenlabs-business": {
     "raw": {
@@ -239,7 +259,8 @@
     "modalities": [
       "text-to-speech",
       "speech-to-speech"
-    ]
+    ],
+    "api_identifier": "elevenlabs"
   },
   "Gemini 2.5 Pro": {
     "raw": {
@@ -270,7 +291,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.5 Flash": {
     "raw": {
@@ -305,7 +327,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.5 Flash-Lite": {
     "raw": {
@@ -336,7 +359,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.5 Flash Native Audio": {
     "raw": {
@@ -359,7 +383,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.5 Flash Image Preview": {
     "raw": {
@@ -382,7 +407,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.5 Flash Preview TTS": {
     "raw": {
@@ -405,7 +431,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.5 Pro Preview TTS": {
     "raw": {
@@ -428,7 +455,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.0 Flash": {
     "raw": {
@@ -475,7 +503,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 2.0 Flash-Lite": {
     "raw": {
@@ -514,7 +543,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Imagen 4": {
     "raw": {
@@ -541,7 +571,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Imagen 3": {
     "raw": {
@@ -560,7 +591,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Veo 3 Preview": {
     "raw": {
@@ -579,7 +611,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Veo 3 Fast Preview": {
     "raw": {
@@ -598,7 +631,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Veo 2": {
     "raw": {
@@ -617,7 +651,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini Embedding": {
     "raw": {
@@ -636,7 +671,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemma 3": {
     "raw": {
@@ -675,7 +711,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemma 3n": {
     "raw": {
@@ -714,7 +751,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 1.5 Flash": {
     "raw": {
@@ -753,7 +791,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 1.5 Flash-8B": {
     "raw": {
@@ -792,7 +831,8 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   },
   "Gemini 1.5 Pro": {
     "raw": {
@@ -831,6 +871,7 @@
       "image-to-text",
       "audio-to-text",
       "video-to-text"
-    ]
+    ],
+    "api_identifier": "gemini"
   }
 }

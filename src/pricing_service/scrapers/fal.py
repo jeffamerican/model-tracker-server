@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import requests
 
 FAL_PRICING_URL = "https://fal.ai/pricing"
+API_IDENTIFIER = "fal"
 
 # Known model modalities for fal.ai hosted models. These models primarily
 # generate video and generally support both text and image prompting.
@@ -49,14 +50,22 @@ def fetch_prices() -> dict:
     for record in _parse_table(tables[0]):
         model_id = record.get("GPU")
         if model_id:
-            data[model_id] = {"raw": record, "source": FAL_PRICING_URL}
+            data[model_id] = {
+                "raw": record,
+                "source": FAL_PRICING_URL,
+                "api_identifier": API_IDENTIFIER,
+            }
 
     # Model pricing (second table)
     if len(tables) > 1:
         for record in _parse_table(tables[1]):
             model_id = record.get("Model")
             if model_id:
-                data[model_id] = {"raw": record, "source": FAL_PRICING_URL}
+                data[model_id] = {
+                    "raw": record,
+                    "source": FAL_PRICING_URL,
+                    "api_identifier": API_IDENTIFIER,
+                }
 
     # Attach known modality information
     for model, modalities in MODEL_MODALITIES.items():

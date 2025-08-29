@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 RUNWAY_PRICING_URL = "https://runwayml.com/pricing"
+API_IDENTIFIER = "runway"
 
 
 def fetch_prices() -> Dict[str, Dict]:
@@ -25,6 +26,7 @@ def fetch_prices() -> Dict[str, Dict]:
             "raw": {"Plan": "Free", "Price": free_price.strip()},
             "source": RUNWAY_PRICING_URL,
             "modalities": ["text-to-video", "image-to-video"],
+            "api_identifier": API_IDENTIFIER,
         }
 
     # Remaining plan prices are comment wrapped like "$<!-- -->12"
@@ -62,6 +64,7 @@ def fetch_prices() -> Dict[str, Dict]:
             },
             "source": RUNWAY_PRICING_URL,
             "modalities": ["text-to-video", "image-to-video"],
+            "api_identifier": API_IDENTIFIER,
         }
 
     # Team plan price only (usage cost not derivable without credits)
@@ -70,6 +73,7 @@ def fetch_prices() -> Dict[str, Dict]:
             "raw": {"Plan": "Team", "Price": f"${prices[2]}"},
             "source": RUNWAY_PRICING_URL,
             "modalities": ["text-to-video", "image-to-video"],
+            "api_identifier": API_IDENTIFIER,
         }
 
     return data
