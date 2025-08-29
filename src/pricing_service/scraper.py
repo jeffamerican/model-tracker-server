@@ -9,6 +9,10 @@ from typing import Iterable
 SCRAPER_MODULES: Iterable[str] = [
     "pricing_service.scrapers.openai",
     "pricing_service.scrapers.fal",
+    "pricing_service.scrapers.runway",
+    "pricing_service.scrapers.hedra",
+    "pricing_service.scrapers.elevenlabs",
+    "pricing_service.scrapers.gemini",
 ]
 
 

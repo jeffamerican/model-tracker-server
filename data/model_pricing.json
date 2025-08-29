@@ -42,7 +42,11 @@
       "Price": "$0.4",
       "Output per $1": "3videos"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
   },
   "Kling 1.6 Pro Video": {
     "raw": {
@@ -51,7 +55,11 @@
       "Price": "$0.095",
       "Output per $1": "11video seconds"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
   },
   "Kling 2 Master Video": {
     "raw": {
@@ -60,7 +68,11 @@
       "Price": "$0.28",
       "Output per $1": "4video seconds"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
   },
   "Alibaba Wan Video": {
     "raw": {
@@ -69,7 +81,11 @@
       "Price": "$0.4",
       "Output per $1": "3videos"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
   },
   "MiniMax Video Live": {
     "raw": {
@@ -78,7 +94,11 @@
       "Price": "$0.5",
       "Output per $1": "2videos"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
   },
   "LTX-Video 13B 0.9.8 Distilled": {
     "raw": {
@@ -87,6 +107,730 @@
       "Price": "$0.02",
       "Output per $1": "50video seconds"
     },
-    "source": "https://fal.ai/pricing"
+    "source": "https://fal.ai/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
+  },
+  "runway-free": {
+    "raw": {
+      "Plan": "Free",
+      "Price": "$0"
+    },
+    "source": "https://runwayml.com/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
+  },
+  "runway-standard": {
+    "raw": {
+      "Plan": "Standard",
+      "Price": "$12",
+      "Gen-4": "$0.23/s",
+      "Gen-4 Turbo": "$0.10/s"
+    },
+    "source": "https://runwayml.com/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
+  },
+  "runway-pro": {
+    "raw": {
+      "Plan": "Pro",
+      "Price": "$28",
+      "Gen-4": "$0.15/s",
+      "Gen-4 Turbo": "$0.06/s"
+    },
+    "source": "https://runwayml.com/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
+  },
+  "runway-team": {
+    "raw": {
+      "Plan": "Team",
+      "Price": "$76"
+    },
+    "source": "https://runwayml.com/pricing",
+    "modalities": [
+      "text-to-video",
+      "image-to-video"
+    ]
+  },
+  "hedra": {
+    "raw": {
+      "error": "status 404"
+    },
+    "source": "https://hedra.com/pricing",
+    "modalities": [
+      "speech-to-video",
+      "text-to-video"
+    ]
+  },
+  "elevenlabs-free": {
+    "raw": {
+      "Plan": "Free",
+      "Price": "$0",
+      "Usage": "$0.15/minute"
+    },
+    "source": "https://elevenlabs.io/pricing",
+    "modalities": [
+      "text-to-speech",
+      "speech-to-speech"
+    ]
+  },
+  "elevenlabs-starter": {
+    "raw": {
+      "Plan": "Starter",
+      "Price": "$5",
+      "Usage": "$0.12/minute"
+    },
+    "source": "https://elevenlabs.io/pricing",
+    "modalities": [
+      "text-to-speech",
+      "speech-to-speech"
+    ]
+  },
+  "elevenlabs-creator": {
+    "raw": {
+      "Plan": "Creator",
+      "Price": "$11",
+      "Usage": "$0.09/minute"
+    },
+    "source": "https://elevenlabs.io/pricing",
+    "modalities": [
+      "text-to-speech",
+      "speech-to-speech"
+    ]
+  },
+  "elevenlabs-pro": {
+    "raw": {
+      "Plan": "Pro",
+      "Price": "$99",
+      "Usage": "$0.06/minute"
+    },
+    "source": "https://elevenlabs.io/pricing",
+    "modalities": [
+      "text-to-speech",
+      "speech-to-speech"
+    ]
+  },
+  "elevenlabs-scale": {
+    "raw": {
+      "Plan": "Scale",
+      "Price": "$330"
+    },
+    "source": "https://elevenlabs.io/pricing",
+    "modalities": [
+      "text-to-speech",
+      "speech-to-speech"
+    ]
+  },
+  "elevenlabs-business": {
+    "raw": {
+      "Plan": "Business",
+      "Price": "$1,320"
+    },
+    "source": "https://elevenlabs.io/pricing",
+    "modalities": [
+      "text-to-speech",
+      "speech-to-speech"
+    ]
+  },
+  "Gemini 2.5 Pro": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$1.25, prompts <= 200k tokens$2.50, prompts > 200k tokens"
+      },
+      "Output price (including thinking tokens)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$10.00, prompts <= 200k tokens$15.00, prompts > 200k"
+      },
+      "Context caching price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.31, prompts <= 200k tokens$0.625, prompts > 200k$4.50 / 1,000,000 tokens per hour (storage price)"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "1,500 RPD (free), then $35 / 1,000 requests"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.5 Flash": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.30 (text / image / video)$1.00 (audio)"
+      },
+      "Output price (including thinking tokens)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$2.50"
+      },
+      "Context caching price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.075 (text / image / video)$0.25 (audio)$1.00 / 1,000,000 tokens per hour (storage price)"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Free of charge, up to 500 RPD (limit shared with Flash-Lite RPD)",
+        "Paid Tier, per 1M tokens in USD": "1,500 RPD (free, limit shared with Flash-Lite RPD), then $35 / 1,000 requests"
+      },
+      "Live API": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Input: $0.50 (text), $3.00 (audio / image [video])Output: $2.00 (text), $12.00 (audio)"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.5 Flash-Lite": {
+    "raw": {
+      "Input price (text, image, video)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.10 (text / image / video)$0.30 (audio)"
+      },
+      "Output price (including thinking tokens)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.40"
+      },
+      "Context caching price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.025 (text / image / video)$0.125 (audio)$1.00 / 1,000,000 tokens per hour (storage price)"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Free of charge, up to 500 RPD (limit shared with Flash RPD)",
+        "Paid Tier, per 1M tokens in USD": "1,500 RPD (free, limit shared with Flash RPD), then $35 / 1,000 requests"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.5 Flash Native Audio": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.50 (text)$3.00 (audio / video)"
+      },
+      "Output price (including thinking tokens)": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$2.00 (text)$12.00 (audio)"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.5 Flash Image Preview": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.30 (text / image)"
+      },
+      "Output price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.039 per image*"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.5 Flash Preview TTS": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.50 (text)"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$10.00 (audio)"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.5 Pro Preview TTS": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$1.00 (text)"
+      },
+      "Output price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$20.00 (audio)"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.0 Flash": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.10 (text / image / video)$0.70 (audio)"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.40"
+      },
+      "Context caching price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.025 / 1,000,000 tokens (text/image/video)$0.175 / 1,000,000 tokens (audio)"
+      },
+      "Context caching (storage)": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$1.00 / 1,000,000 tokens per hour"
+      },
+      "Image generation pricing": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.039 per image*"
+      },
+      "Tuning price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Free of charge, up to 500 RPD",
+        "Paid Tier, per 1M tokens in USD": "1,500 RPD (free), then $35 / 1,000 requests"
+      },
+      "Live API": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Input: $0.35 (text), $2.10 (audio / image [video])Output: $1.50 (text), $8.50 (audio)"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 2.0 Flash-Lite": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.075"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.30"
+      },
+      "Context caching price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Context caching (storage)": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Tuning price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Imagen 4": {
+    "raw": {
+      "Imagen 4 Fast image price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per Image in USD": "$0.02"
+      },
+      "Imagen 4 Standard image price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per Image in USD": "$0.04"
+      },
+      "Imagen 4 Ultra image price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per Image in USD": "$0.06"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per Image in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Imagen 3": {
+    "raw": {
+      "Image price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per Image in USD": "$0.03"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per Image in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Veo 3 Preview": {
+    "raw": {
+      "Video with audio price (default)": {
+        "Free Tier": "Not available",
+        "Paid Tier, per second in USD": "$0.75"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per second in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Veo 3 Fast Preview": {
+    "raw": {
+      "Video with audio price (default)": {
+        "Free Tier": "Not available",
+        "Paid Tier, per second in USD": "$0.40"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per second in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Veo 2": {
+    "raw": {
+      "Video price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per second in USD": "$0.35"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per second in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini Embedding": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.15"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemma 3": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Context caching price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Context caching (storage)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Tuning price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemma 3n": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Context caching price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Context caching (storage)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Tuning price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 1.5 Flash": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.075, prompts <= 128k tokens$0.15, prompts > 128k tokens"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.30, prompts <= 128k tokens$0.60, prompts > 128k tokens"
+      },
+      "Context caching price": {
+        "Free Tier": "Free of charge, up to 1 million tokens of storage per hour",
+        "Paid Tier, per 1M tokens in USD": "$0.01875, prompts <= 128k tokens$0.0375, prompts > 128k tokens"
+      },
+      "Context caching (storage)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$1.00 per hour"
+      },
+      "Tuning price": {
+        "Free Tier": "Token prices are the same for tuned modelsTuning service is free of charge.",
+        "Paid Tier, per 1M tokens in USD": "Token prices are the same for tuned modelsTuning service is free of charge."
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$35 / 1K grounding requests"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 1.5 Flash-8B": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.0375, prompts <= 128k tokens$0.075, prompts > 128k tokens"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.15, prompts <= 128k tokens$0.30, prompts > 128k tokens"
+      },
+      "Context caching price": {
+        "Free Tier": "Free of charge, up to 1 million tokens of storage per hour",
+        "Paid Tier, per 1M tokens in USD": "$0.01, prompts <= 128k tokens$0.02, prompts > 128k tokens"
+      },
+      "Context caching (storage)": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.25 per hour"
+      },
+      "Tuning price": {
+        "Free Tier": "Token prices are the same for tuned modelsTuning service is free of charge.",
+        "Paid Tier, per 1M tokens in USD": "Token prices are the same for tuned modelsTuning service is free of charge."
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$35 / 1K grounding requests"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
+  },
+  "Gemini 1.5 Pro": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$1.25, prompts <= 128k tokens$2.50, prompts > 128k tokens"
+      },
+      "Output price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$5.00, prompts <= 128k tokens$10.00, prompts > 128k tokens"
+      },
+      "Context caching price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.3125, prompts <= 128k tokens$0.625, prompts > 128k tokens"
+      },
+      "Context caching (storage)": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$4.50 per hour"
+      },
+      "Tuning price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "Not available"
+      },
+      "Grounding with Google Search": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$35 / 1K grounding requests"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ]
   }
 }

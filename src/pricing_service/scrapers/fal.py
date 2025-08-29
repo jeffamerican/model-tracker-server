@@ -6,6 +6,17 @@ import requests
 
 FAL_PRICING_URL = "https://fal.ai/pricing"
 
+# Known model modalities for fal.ai hosted models. These models primarily
+# generate video and generally support both text and image prompting.
+MODEL_MODALITIES = {
+    "Hunyuan Video": ["text-to-video", "image-to-video"],
+    "Kling 1.6 Pro Video": ["text-to-video", "image-to-video"],
+    "Kling 2 Master Video": ["text-to-video", "image-to-video"],
+    "Alibaba Wan Video": ["text-to-video", "image-to-video"],
+    "MiniMax Video Live": ["text-to-video", "image-to-video"],
+    "LTX-Video 13B 0.9.8 Distilled": ["text-to-video", "image-to-video"],
+}
+
 
 def _parse_table(table: BeautifulSoup) -> list[dict[str, str]]:
     """Convert an HTML table to a list of dictionaries."""
@@ -46,5 +57,10 @@ def fetch_prices() -> dict:
             model_id = record.get("Model")
             if model_id:
                 data[model_id] = {"raw": record, "source": FAL_PRICING_URL}
+
+    # Attach known modality information
+    for model, modalities in MODEL_MODALITIES.items():
+        if model in data:
+            data[model]["modalities"] = modalities
 
     return data
