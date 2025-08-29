@@ -176,12 +176,74 @@
             font-style: italic;
             font-size: 12px;
         }
-        .service-type {
-            font-size: 11px;
-            color: #666;
-            margin-top: 2px;
+          .service-type {
+              font-size: 11px;
+              color: #666;
+              margin-top: 2px;
+          }
+        .column-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 12px;
         }
-    </style>
+        .column-controls label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .toggle-btn {
+            background: white;
+            color: #1976d2;
+            border: 1px solid #1976d2;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .toggle-btn:hover {
+            background: #e3f2fd;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode table {
+            background: #1e1e1e;
+            color: #e0e0e0;
+        }
+        body.dark-mode th {
+            background: #2c2c2c;
+            color: #e0e0e0;
+        }
+        body.dark-mode tr:hover {
+            background-color: #333;
+        }
+        body.dark-mode .stat-card {
+            background: #1e1e1e;
+        }
+        body.dark-mode .source-link {
+            color: #90caf9;
+        }
+        body.dark-mode .modality-badge {
+            background: #263238;
+            color: #90caf9;
+        }
+        body.dark-mode .modality-badge.server {
+            background: #e65100;
+            color: #fff;
+        }
+        body.dark-mode .toggle-btn {
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }
+        body.dark-mode .toggle-btn:hover {
+            background: #444;
+        }
+      </style>
 </head>
 <body>
     <div class="header">
@@ -194,24 +256,39 @@
         <!-- Stats will be populated here -->
     </div>
 
-    <div class="controls">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search models, pricing, or modalities..." oninput="filterTable()">
-        </div>
-        <div class="modality-filter" id="modalityFilter">
-            <!-- Modality buttons will be populated here -->
-        </div>
-    </div>
+      <div class="controls">
+          <div class="search-bar">
+              <input type="text" id="searchInput" placeholder="Search models, pricing, or modalities..." oninput="filterTable()">
+          </div>
+          <div class="modality-filter" id="modalityFilter">
+              <!-- Modality buttons will be populated here -->
+          </div>
+          <div class="column-controls" id="columnControls">
+              <!-- Column toggles will be populated here -->
+          </div>
+          <button id="themeToggle" class="toggle-btn">Toggle Dark Mode</button>
+      </div>
 
-    <div id="content">
-        <div class="loading">Loading pricing data...</div>
-    </div>
+      <div id="content">
+          <div class="loading">Loading pricing data...</div>
+      </div>
 
-    <script>
+      <script>
         let tableData = [];
         let displayData = [];
         let allModalities = new Set();
         let selectedModalities = new Set();
+        let allColumns = [];
+        let visibleColumns = new Set();
+
+        // Theme initialization
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+        });
 
         // Function to determine if an entry is a server/GPU rental
         function isServerRental(modelId, details) {
@@ -253,9 +330,9 @@
                     return;
                 }
 
-                // Process data and collect modalities
-                tableData = Object.entries(data).map(([modelId, modelData]) => {
-                    let modalities = modelData.modalities || [];
+                  // Process data and collect modalities
+                  tableData = Object.entries(data).map(([modelId, modelData]) => {
+                      let modalities = modelData.modalities || [];
                     
                     // Add 'server' modality for server/GPU rentals
                     if (isServerRental(modelId, modelData.raw || {})) {
@@ -275,9 +352,18 @@
                     };
                 });
 
-                updateStats();
-                updateModalityFilter();
-                renderTable(tableData);
+                  allColumns = Array.from(new Set(tableData.flatMap(item => Object.keys(item.details))));
+                  const savedCols = JSON.parse(localStorage.getItem('visibleColumns') || 'null');
+                  if (savedCols && savedCols.length > 0) {
+                      visibleColumns = new Set(savedCols.filter(col => allColumns.includes(col)));
+                  } else {
+                      visibleColumns = new Set(allColumns);
+                  }
+
+                  renderColumnControls(allColumns);
+                  updateStats();
+                  updateModalityFilter();
+                  renderTable(tableData);
 
             } catch (error) {
                 content.innerHTML = `<div class="error">Error loading pricing data: ${error.message}</div>`;
@@ -312,9 +398,9 @@
             `;
         }
 
-        function updateModalityFilter() {
-            const filterDiv = document.getElementById('modalityFilter');
-            filterDiv.innerHTML = '';
+          function updateModalityFilter() {
+              const filterDiv = document.getElementById('modalityFilter');
+              filterDiv.innerHTML = '';
 
             // Add "All" button
             const allBtn = document.createElement('button');
@@ -352,14 +438,37 @@
                     
                     filterTable();
                 };
-                filterDiv.appendChild(btn);
+              filterDiv.appendChild(btn);
+          });
+        }
+
+        function renderColumnControls(keys) {
+            const container = document.getElementById('columnControls');
+            container.innerHTML = '';
+            keys.forEach(key => {
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = visibleColumns.has(key);
+                checkbox.onchange = () => {
+                    if (checkbox.checked) {
+                        visibleColumns.add(key);
+                    } else {
+                        visibleColumns.delete(key);
+                    }
+                    localStorage.setItem('visibleColumns', JSON.stringify(Array.from(visibleColumns)));
+                    renderTable(displayData);
+                };
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(key));
+                container.appendChild(label);
             });
         }
 
         function renderTable(data) {
             displayData = data;
             const content = document.getElementById('content');
-            const allKeys = Array.from(new Set(data.flatMap(item => Object.keys(item.details))));
+            const columns = Array.from(visibleColumns);
 
             const table = document.createElement('table');
             const thead = document.createElement('thead');
@@ -378,7 +487,7 @@
             headerRow.appendChild(modalitiesHeader);
 
             // Pricing columns
-            allKeys.forEach(key => {
+            columns.forEach(key => {
                 const th = document.createElement('th');
                 th.textContent = key;
                 th.onclick = () => sortTable(key);
@@ -422,13 +531,13 @@
                 }
                 tr.appendChild(modalitiesCell);
 
-                // Pricing data cells
-                allKeys.forEach(key => {
-                    const td = document.createElement('td');
-                    const value = item.details[key];
-                    if (typeof value === 'object') {
-                        // Handle nested objects (like Google's pricing structure)
-                        td.innerHTML = formatNestedValue(value);
+            // Pricing data cells
+            columns.forEach(key => {
+                const td = document.createElement('td');
+                const value = item.details[key];
+                if (typeof value === 'object') {
+                    // Handle nested objects (like Google's pricing structure)
+                    td.innerHTML = formatNestedValue(value);
                     } else {
                         td.textContent = value || '';
                     }
