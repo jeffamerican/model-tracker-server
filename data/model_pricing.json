@@ -1,1 +1,128 @@
-{}
+{
+  "H100": {
+    "raw": {
+      "GPU": "H100",
+      "VRAM": "80GB",
+      "Price per hour": "$1.89/h",
+      "Price per second": "$0.0005/s"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "H200": {
+    "raw": {
+      "GPU": "H200",
+      "VRAM": "141GB",
+      "Price per hour": "$2.10/h",
+      "Price per second": "$0.0006/s"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "A100": {
+    "raw": {
+      "GPU": "A100",
+      "VRAM": "40GB",
+      "Price per hour": "$0.99/h",
+      "Price per second": "$0.0003/s"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "B200": {
+    "raw": {
+      "GPU": "B200",
+      "VRAM": "184GB",
+      "Price per hour": "contact us",
+      "Price per second": "contact us"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "Hunyuan Video": {
+    "raw": {
+      "Model": "Hunyuan Video",
+      "Unit": "video",
+      "Price": "$0.4",
+      "Output per $1": "3videos"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "Kling 1.6 Pro Video": {
+    "raw": {
+      "Model": "Kling 1.6 Pro Video",
+      "Unit": "video second",
+      "Price": "$0.095",
+      "Output per $1": "11video seconds"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "Kling 2 Master Video": {
+    "raw": {
+      "Model": "Kling 2 Master Video",
+      "Unit": "video second",
+      "Price": "$0.28",
+      "Output per $1": "4video seconds"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "Alibaba Wan Video": {
+    "raw": {
+      "Model": "Alibaba Wan Video",
+      "Unit": "video",
+      "Price": "$0.4",
+      "Output per $1": "3videos"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "MiniMax Video Live": {
+    "raw": {
+      "Model": "MiniMax Video Live",
+      "Unit": "video",
+      "Price": "$0.5",
+      "Output per $1": "2videos"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "LTX-Video 13B 0.9.8 Distilled": {
+    "raw": {
+      "Model": "LTX-Video 13B 0.9.8 Distilled",
+      "Unit": "video second",
+      "Price": "$0.02",
+      "Output per $1": "50video seconds"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "FLUX.1 [dev]": {
+    "raw": {
+      "Model": "FLUX.1 [dev]",
+      "Unit": "megapixel",
+      "Price": "$0.025",
+      "Output per $1": "40megapixels"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "FLUX.1 [schnell]": {
+    "raw": {
+      "Model": "FLUX.1 [schnell]",
+      "Unit": "megapixel",
+      "Price": "$0.003",
+      "Output per $1": "333megapixels"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "FLUX.1 [pro]": {
+    "raw": {
+      "Model": "FLUX.1 [pro]",
+      "Unit": "megapixel",
+      "Price": "$0.05",
+      "Output per $1": "20megapixels"
+    },
+    "source": "https://fal.ai/pricing"
+  },
+  "Stable Diffusion 3 - Medium": {
+    "raw": {
+      "Model": "Stable Diffusion 3 - Medium",
+      "Unit": "image",
+      "Price": "$0.035",
+      "Output per $1": "29images"
+    },
+    "source": "https://fal.ai/pricing"
+  }
+}

@@ -34,16 +34,23 @@ def fetch_prices() -> dict:
     if not tables:
         return data
 
-    # GPU pricing (first table)
-    for record in _parse_table(tables[0]):
-        model_id = record.get("GPU")
-        if model_id:
-            data[model_id] = {"raw": record, "source": FAL_PRICING_URL}
 
-    # Model pricing (second table)
-    if len(tables) > 1:
-        for record in _parse_table(tables[1]):
-            model_id = record.get("Model")
+    for table in tables:
+        headers = [
+            th.get_text(strip=True).replace("*", "")
+            for th in table.select("thead th")
+            if th.get_text(strip=True)
+        ]
+        records = _parse_table(table)
+        if "GPU" in headers:
+            key = "GPU"
+        elif "Model" in headers:
+            key = "Model"
+        else:
+            continue
+        for record in records:
+            model_id = record.get(key)
+     main
             if model_id:
                 data[model_id] = {"raw": record, "source": FAL_PRICING_URL}
 
