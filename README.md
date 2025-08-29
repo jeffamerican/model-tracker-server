@@ -21,3 +21,5 @@ The service includes a web interface for exploring pricing data. Navigate to `/u
 
 - Use the search box to filter models by name or pricing details.
 - Click any column header to sort by that column.
+- Toggle dark mode using the button in the controls.
+- Show or hide pricing columns with the column checkboxes.

@@ -64,6 +64,8 @@ lando-pricemaster/
 - Real-time data refresh
 - Error handling and loading states
 - Modern Material Design styling
+- Dark mode toggle with preference persistence
+- Customizable pricing column visibility
 
 ## Development Workflow
 
