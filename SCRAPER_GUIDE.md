@@ -8,7 +8,7 @@ This guide explains how to create, maintain, and troubleshoot scrapers for the p
 
 ### Current Scrapers
 - `openai.py` - Scrapes OpenAI pricing (currently blocked by 403)
-- `fal.py` - Placeholder scraper for fal.ai
+- `fal.py` - Scrapes fal.ai pricing and progressively discovers additional endpoints
 
 ### Scraper Interface
 All scrapers must implement the following interface and classify each entry with a `service_type` value (for example `api_endpoint`, `server_rental`, or `subscription`):
