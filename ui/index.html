@@ -11,18 +11,22 @@
             margin: 0 auto;
             padding: 20px;
             background-color: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
         }
         .controls {
             display: flex;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
         .search-bar {
             flex: 1;
@@ -62,7 +66,7 @@
             min-width: 200px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
             border-radius: 6px;
-            z-index: 1000;
+            z-index: 1001;
             max-height: 300px;
             overflow-y: auto;
             border: 1px solid #ddd;
@@ -108,16 +112,88 @@
             font-size: 10px;
             font-weight: 500;
         }
-        .table-container {
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .fixed-header {
+            flex-shrink: 0;
+            background: #f5f5f5;
+            padding: 20px 20px 0 20px;
+            z-index: 100;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .scrollable-content {
+            flex: 1;
+            overflow: auto;
+            padding: 0 20px 20px 20px;
+        }
+        
+        .table-wrapper {
+            position: relative;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .table-scrollbar-top {
             overflow-x: auto;
+            overflow-y: hidden;
+            height: 8px;
+            margin-bottom: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc transparent;
+        }
+        
+        .table-scrollbar-top::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .table-scrollbar-top::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .table-scrollbar-top::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        
+        .table-scrollbar-top::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+        
+        .table-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #fafafa;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .table-body-container {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: calc(100vh - 400px);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .table-body-container::-webkit-scrollbar {
+            display: none;
         }
         table {
-            width: 100%;
+            min-width: 100%;
             border-collapse: collapse;
             background: white;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            table-layout: fixed;
+            white-space: nowrap;
         }
         th, td {
             padding: 12px;
@@ -126,6 +202,9 @@
             color: #333;
             vertical-align: top;
             position: relative;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         th {
             background: #fafafa;
@@ -239,8 +318,9 @@
             display: flex;
             gap: 20px;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
+            flex-shrink: 0;
         }
         .stat-card {
             background: white;
@@ -294,11 +374,12 @@
             display: flex;
             gap: 10px;
             align-items: center;
-            margin-top: 10px;
+            margin-bottom: 15px;
             padding: 10px;
             background: #f8f9fa;
             border-radius: 6px;
             flex-wrap: wrap;
+            flex-shrink: 0;
         }
         .column-control-btn {
             background: white;
@@ -321,6 +402,29 @@
         body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
+        }
+        body.dark-mode .fixed-header {
+            background: #121212;
+            border-bottom-color: #333;
+        }
+        body.dark-mode .table-wrapper {
+            background: #1e1e1e;
+        }
+        body.dark-mode .table-scrollbar-top {
+            scrollbar-color: #555 transparent;
+        }
+        body.dark-mode .table-scrollbar-top::-webkit-scrollbar-thumb {
+            background: #555;
+        }
+        body.dark-mode .table-scrollbar-top::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+        body.dark-mode .table-container {
+            background: #1e1e1e;
+        }
+        body.dark-mode .table-header {
+            background: #2c2c2c;
+            border-bottom-color: #555;
         }
         body.dark-mode table {
             background: #1e1e1e;
@@ -393,58 +497,64 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>AI Model Pricing Service</h1>
-        <p>Real-time pricing information for AI models, APIs, and server rentals</p>
-        <button class="refresh-btn" onclick="loadPricing()">Refresh Data</button>
-    </div>
+    <div class="main-container">
+        <div class="fixed-header">
+            <div class="header">
+                <h1>AI Model Pricing Service</h1>
+                <p>Real-time pricing information for AI models, APIs, and server rentals</p>
+                <button class="refresh-btn" onclick="loadPricing()">Refresh Data</button>
+            </div>
 
-    <div class="stats" id="stats">
-        <!-- Stats will be populated here -->
-    </div>
+            <div class="stats" id="stats">
+                <!-- Stats will be populated here -->
+            </div>
 
-    <div class="controls">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search models, pricing, or modalities..." oninput="filterTable()">
-        </div>
-        <div class="dropdown-container">
-            <button class="dropdown-btn" onclick="toggleDropdown('modalities')">
-                Modalities <span class="service-count" id="modalityCount">0</span> ▼
-            </button>
-            <div class="dropdown-content" id="modalitiesDropdown">
-                <!-- Modality toggles will be populated here -->
+            <div class="controls">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search models, pricing, or modalities..." oninput="filterTable()">
+                </div>
+                <div class="dropdown-container">
+                    <button class="dropdown-btn" onclick="toggleDropdown('modalities')">
+                        Modalities <span class="service-count" id="modalityCount">0</span> ▼
+                    </button>
+                    <div class="dropdown-content" id="modalitiesDropdown">
+                        <!-- Modality toggles will be populated here -->
+                    </div>
+                </div>
+                <div class="dropdown-container">
+                    <button class="dropdown-btn" onclick="toggleDropdown('columns')">
+                        Columns <span class="service-count" id="columnCount">0</span> ▼
+                    </button>
+                    <div class="dropdown-content" id="columnsDropdown">
+                        <!-- Column toggles will be populated here -->
+                    </div>
+                </div>
+                <div class="dropdown-container">
+                    <button class="dropdown-btn" onclick="toggleDropdown('providers')">
+                        Providers <span class="service-count" id="providerCount">0</span> ▼
+                    </button>
+                    <div class="dropdown-content" id="providersDropdown">
+                        <!-- Provider list will be populated here -->
+                    </div>
+                </div>
+                <label class="api-toggle"><input type="checkbox" id="apiFilter" onchange="filterTable()"> API endpoints only</label>
+                <button id="themeToggle" class="toggle-btn">Toggle Dark Mode</button>
+            </div>
+
+            <div class="column-controls" id="columnControls">
+                <span style="font-weight: 600; font-size: 12px;">Column Controls:</span>
+                <button class="column-control-btn" onclick="resetColumnWidths()">Reset Widths</button>
+                <button class="column-control-btn" onclick="resetColumnOrder()">Reset Order</button>
+                <button class="column-control-btn" onclick="toggleColumnResize()" id="resizeToggle">Enable Resize</button>
+                <button class="column-control-btn" onclick="toggleColumnDrag()" id="dragToggle">Enable Drag</button>
             </div>
         </div>
-        <div class="dropdown-container">
-            <button class="dropdown-btn" onclick="toggleDropdown('columns')">
-                Columns <span class="service-count" id="columnCount">0</span> ▼
-            </button>
-            <div class="dropdown-content" id="columnsDropdown">
-                <!-- Column toggles will be populated here -->
+
+        <div class="scrollable-content">
+            <div id="content">
+                <div class="loading">Loading pricing data...</div>
             </div>
         </div>
-        <div class="dropdown-container">
-            <button class="dropdown-btn" onclick="toggleDropdown('providers')">
-                Providers <span class="service-count" id="providerCount">0</span> ▼
-            </button>
-            <div class="dropdown-content" id="providersDropdown">
-                <!-- Provider list will be populated here -->
-            </div>
-        </div>
-        <label class="api-toggle"><input type="checkbox" id="apiFilter" onchange="filterTable()"> API endpoints only</label>
-        <button id="themeToggle" class="toggle-btn">Toggle Dark Mode</button>
-    </div>
-
-    <div class="column-controls" id="columnControls">
-        <span style="font-weight: 600; font-size: 12px;">Column Controls:</span>
-        <button class="column-control-btn" onclick="resetColumnWidths()">Reset Widths</button>
-        <button class="column-control-btn" onclick="resetColumnOrder()">Reset Order</button>
-        <button class="column-control-btn" onclick="toggleColumnResize()" id="resizeToggle">Enable Resize</button>
-        <button class="column-control-btn" onclick="toggleColumnDrag()" id="dragToggle">Enable Drag</button>
-    </div>
-
-    <div id="content">
-        <div class="loading">Loading pricing data...</div>
     </div>
 
     <script>
@@ -845,9 +955,37 @@
             }
             headerRow.appendChild(sourceHeader);
 
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
-
+            // Create the table wrapper structure
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-wrapper';
+            
+            // Create top scrollbar with spacer
+            const topScrollbar = document.createElement('div');
+            topScrollbar.className = 'table-scrollbar-top';
+            
+            // Create a spacer div that matches the table width
+            const spacer = document.createElement('div');
+            spacer.style.width = '1px';
+            spacer.style.height = '1px';
+            spacer.style.visibility = 'hidden';
+            topScrollbar.appendChild(spacer);
+            
+            // Create table container
+            const container = document.createElement('div');
+            container.className = 'table-container';
+            
+            // Create body container with scrollable content
+            const bodyContainer = document.createElement('div');
+            bodyContainer.className = 'table-body-container';
+            
+            // Create the main table with header and body
+            const mainTable = document.createElement('table');
+            
+            // Add header to main table
+            const mainThead = document.createElement('thead');
+            mainThead.appendChild(headerRow);
+            mainTable.appendChild(mainThead);
+            
             const tbody = document.createElement('tbody');
             data.forEach(item => {
                 const tr = document.createElement('tr');
@@ -906,14 +1044,33 @@
                 tbody.appendChild(tr);
             });
 
-            table.appendChild(tbody);
-
-            const container = document.createElement('div');
-            container.className = 'table-container';
-            container.appendChild(table);
+            mainTable.appendChild(tbody);
+            bodyContainer.appendChild(mainTable);
+            
+            // Synchronize scrolling between top scrollbar and body container
+            topScrollbar.addEventListener('scroll', () => {
+                bodyContainer.scrollLeft = topScrollbar.scrollLeft;
+            });
+            
+            bodyContainer.addEventListener('scroll', () => {
+                topScrollbar.scrollLeft = bodyContainer.scrollLeft;
+            });
+            
+            // Update spacer width to match table width after rendering
+            setTimeout(() => {
+                const tableWidth = mainTable.scrollWidth;
+                spacer.style.width = tableWidth + 'px';
+            }, 0);
+            
+            // Add elements to container
+            container.appendChild(bodyContainer);
+            
+            // Add elements to wrapper
+            wrapper.appendChild(topScrollbar);
+            wrapper.appendChild(container);
 
             content.innerHTML = '';
-            content.appendChild(container);
+            content.appendChild(wrapper);
         }
 
         function formatNestedValue(obj) {
