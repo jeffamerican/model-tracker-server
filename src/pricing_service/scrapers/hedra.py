@@ -27,6 +27,7 @@ def fetch_prices() -> Dict[str, Dict]:
                 "source": HEDRA_PRICING_URL,
                 "modalities": ["speech-to-video", "text-to-video"],
                 "api_identifier": API_IDENTIFIER,
+                "service_type": "api_endpoint",
             }
         }
 
@@ -37,5 +38,6 @@ def fetch_prices() -> Dict[str, Dict]:
             "source": HEDRA_PRICING_URL,
             "modalities": ["speech-to-video", "text-to-video"],
             "api_identifier": API_IDENTIFIER,
+            "service_type": "api_endpoint",
         }
     }

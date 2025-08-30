@@ -60,8 +60,11 @@ async def startup_event() -> None:
 
 
 @app.get("/api/pricing")
-async def get_pricing() -> Dict[str, dict]:
-    return _cache or {}
+async def get_pricing(service_type: str | None = None) -> Dict[str, dict]:
+    data = _cache or {}
+    if service_type:
+        return {k: v for k, v in data.items() if v.get("service_type") == service_type}
+    return data
 
 
 @app.get("/api/pricing/{model_id}")

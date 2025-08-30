@@ -45,5 +45,6 @@ def fetch_prices() -> Dict[str, Dict]:
                 "source": GEMINI_PRICING_URL,
                 "modalities": GEMINI_MODALITIES,
                 "api_identifier": API_IDENTIFIER,
+                "service_type": "api_endpoint",
             }
     return data

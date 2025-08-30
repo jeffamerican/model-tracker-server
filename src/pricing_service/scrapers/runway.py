@@ -27,6 +27,7 @@ def fetch_prices() -> Dict[str, Dict]:
             "source": RUNWAY_PRICING_URL,
             "modalities": ["text-to-video", "image-to-video"],
             "api_identifier": API_IDENTIFIER,
+            "service_type": "subscription",
         }
 
     # Remaining plan prices are comment wrapped like "$<!-- -->12"
@@ -65,6 +66,7 @@ def fetch_prices() -> Dict[str, Dict]:
             "source": RUNWAY_PRICING_URL,
             "modalities": ["text-to-video", "image-to-video"],
             "api_identifier": API_IDENTIFIER,
+            "service_type": "subscription",
         }
 
     # Team plan price only (usage cost not derivable without credits)
@@ -74,6 +76,7 @@ def fetch_prices() -> Dict[str, Dict]:
             "source": RUNWAY_PRICING_URL,
             "modalities": ["text-to-video", "image-to-video"],
             "api_identifier": API_IDENTIFIER,
+            "service_type": "subscription",
         }
 
     return data

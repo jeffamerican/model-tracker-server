@@ -67,6 +67,12 @@
             overflow-y: auto;
             border: 1px solid #ddd;
         }
+        .api-toggle {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
         .dropdown-content.show {
             display: block;
         }
@@ -425,6 +431,7 @@
                 <!-- Provider list will be populated here -->
             </div>
         </div>
+        <label class="api-toggle"><input type="checkbox" id="apiFilter" onchange="filterTable()"> API endpoints only</label>
         <button id="themeToggle" class="toggle-btn">Toggle Dark Mode</button>
     </div>
 
@@ -482,11 +489,11 @@
         // Function to get service type label
         function getServiceType(modelId, details, modalities) {
             if (isServerRental(modelId, details)) {
-                return 'Server/GPU Rental';
+                return 'server_rental';
             } else if (modalities && modalities.length > 0) {
-                return 'AI Model/API';
+                return 'api_endpoint';
             } else {
-                return 'Service';
+                return 'other_service';
             }
         }
 
@@ -529,7 +536,7 @@
                         details: modelData.raw || {},
                         source: modelData.source || '',
                         modalities: modalities,
-                        serviceType: getServiceType(modelId, modelData.raw || {}, modalities),
+                        serviceType: modelData.service_type || getServiceType(modelId, modelData.raw || {}, modalities),
                         apiIdentifier: modelData.api_identifier || 'unknown'
                     };
                 });
@@ -566,8 +573,8 @@
             const statsDiv = document.getElementById('stats');
             const totalModels = tableData.length;
             const totalModalities = allModalities.size;
-            const serverRentals = tableData.filter(item => item.modalities.includes('server')).length;
-            const aiModels = tableData.filter(item => !item.modalities.includes('server')).length;
+            const apiEndpoints = tableData.filter(item => item.serviceType === 'api_endpoint').length;
+            const serverRentals = tableData.filter(item => item.serviceType === 'server_rental').length;
             const totalProviders = allProviders.size;
 
             statsDiv.innerHTML = `
@@ -576,8 +583,8 @@
                     <div class="stat-label">Total Services</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">${aiModels}</div>
-                    <div class="stat-label">AI Models/APIs</div>
+                    <div class="stat-number">${apiEndpoints}</div>
+                    <div class="stat-label">API Endpoints</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${serverRentals}</div>
@@ -955,6 +962,7 @@
         function filterTable() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             
+            const apiOnly = document.getElementById('apiFilter').checked;
             let filtered = tableData.filter(item => {
                 // Text search
                 const modelMatch = item.modelId.toLowerCase().includes(query);
@@ -970,7 +978,9 @@
                 const modalityMatch = selectedModalities.size === 0 || 
                     item.modalities.some(modality => selectedModalities.has(modality));
                 
-                return textMatch && modalityMatch;
+                const serviceMatch = !apiOnly || item.serviceType === 'api_endpoint';
+
+                return textMatch && modalityMatch && serviceMatch;
             });
             
             renderTable(filtered);

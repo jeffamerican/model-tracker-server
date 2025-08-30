@@ -7,7 +7,8 @@
       "Price per second": "$0.0005/s"
     },
     "source": "https://fal.ai/pricing",
-    "api_identifier": "fal"
+    "api_identifier": "fal",
+    "service_type": "server_rental"
   },
   "H200": {
     "raw": {
@@ -17,7 +18,8 @@
       "Price per second": "$0.0006/s"
     },
     "source": "https://fal.ai/pricing",
-    "api_identifier": "fal"
+    "api_identifier": "fal",
+    "service_type": "server_rental"
   },
   "A100": {
     "raw": {
@@ -27,7 +29,8 @@
       "Price per second": "$0.0003/s"
     },
     "source": "https://fal.ai/pricing",
-    "api_identifier": "fal"
+    "api_identifier": "fal",
+    "service_type": "server_rental"
   },
   "B200": {
     "raw": {
@@ -37,7 +40,8 @@
       "Price per second": "contact us"
     },
     "source": "https://fal.ai/pricing",
-    "api_identifier": "fal"
+    "api_identifier": "fal",
+    "service_type": "server_rental"
   },
   "Hunyuan Video": {
     "raw": {
@@ -48,6 +52,7 @@
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
+    "service_type": "api_endpoint",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -62,6 +67,7 @@
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
+    "service_type": "api_endpoint",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -76,6 +82,7 @@
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
+    "service_type": "api_endpoint",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -90,6 +97,7 @@
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
+    "service_type": "api_endpoint",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -104,6 +112,7 @@
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
+    "service_type": "api_endpoint",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -118,6 +127,7 @@
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
+    "service_type": "api_endpoint",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -133,7 +143,8 @@
       "text-to-video",
       "image-to-video"
     ],
-    "api_identifier": "runway"
+    "api_identifier": "runway",
+    "service_type": "subscription"
   },
   "runway-standard": {
     "raw": {
@@ -147,7 +158,8 @@
       "text-to-video",
       "image-to-video"
     ],
-    "api_identifier": "runway"
+    "api_identifier": "runway",
+    "service_type": "subscription"
   },
   "runway-pro": {
     "raw": {
@@ -161,7 +173,8 @@
       "text-to-video",
       "image-to-video"
     ],
-    "api_identifier": "runway"
+    "api_identifier": "runway",
+    "service_type": "subscription"
   },
   "runway-team": {
     "raw": {
@@ -173,7 +186,8 @@
       "text-to-video",
       "image-to-video"
     ],
-    "api_identifier": "runway"
+    "api_identifier": "runway",
+    "service_type": "subscription"
   },
   "hedra": {
     "raw": {
@@ -184,7 +198,8 @@
       "speech-to-video",
       "text-to-video"
     ],
-    "api_identifier": "hedra"
+    "api_identifier": "hedra",
+    "service_type": "api_endpoint"
   },
   "elevenlabs-free": {
     "raw": {
@@ -197,7 +212,8 @@
       "text-to-speech",
       "speech-to-speech"
     ],
-    "api_identifier": "elevenlabs"
+    "api_identifier": "elevenlabs",
+    "service_type": "subscription"
   },
   "elevenlabs-starter": {
     "raw": {
@@ -210,7 +226,8 @@
       "text-to-speech",
       "speech-to-speech"
     ],
-    "api_identifier": "elevenlabs"
+    "api_identifier": "elevenlabs",
+    "service_type": "subscription"
   },
   "elevenlabs-creator": {
     "raw": {
@@ -223,7 +240,8 @@
       "text-to-speech",
       "speech-to-speech"
     ],
-    "api_identifier": "elevenlabs"
+    "api_identifier": "elevenlabs",
+    "service_type": "subscription"
   },
   "elevenlabs-pro": {
     "raw": {
@@ -236,7 +254,8 @@
       "text-to-speech",
       "speech-to-speech"
     ],
-    "api_identifier": "elevenlabs"
+    "api_identifier": "elevenlabs",
+    "service_type": "subscription"
   },
   "elevenlabs-scale": {
     "raw": {
@@ -248,7 +267,8 @@
       "text-to-speech",
       "speech-to-speech"
     ],
-    "api_identifier": "elevenlabs"
+    "api_identifier": "elevenlabs",
+    "service_type": "subscription"
   },
   "elevenlabs-business": {
     "raw": {
@@ -260,7 +280,8 @@
       "text-to-speech",
       "speech-to-speech"
     ],
-    "api_identifier": "elevenlabs"
+    "api_identifier": "elevenlabs",
+    "service_type": "subscription"
   },
   "Gemini 2.5 Pro": {
     "raw": {
@@ -292,7 +313,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.5 Flash": {
     "raw": {
@@ -328,7 +350,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.5 Flash-Lite": {
     "raw": {
@@ -360,7 +383,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.5 Flash Native Audio": {
     "raw": {
@@ -384,7 +408,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.5 Flash Image Preview": {
     "raw": {
@@ -408,7 +433,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.5 Flash Preview TTS": {
     "raw": {
@@ -432,7 +458,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.5 Pro Preview TTS": {
     "raw": {
@@ -456,7 +483,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.0 Flash": {
     "raw": {
@@ -504,7 +532,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 2.0 Flash-Lite": {
     "raw": {
@@ -544,7 +573,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Imagen 4": {
     "raw": {
@@ -572,7 +602,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Imagen 3": {
     "raw": {
@@ -592,7 +623,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Veo 3 Preview": {
     "raw": {
@@ -612,7 +644,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Veo 3 Fast Preview": {
     "raw": {
@@ -632,7 +665,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Veo 2": {
     "raw": {
@@ -652,7 +686,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini Embedding": {
     "raw": {
@@ -672,7 +707,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemma 3": {
     "raw": {
@@ -712,7 +748,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemma 3n": {
     "raw": {
@@ -752,7 +789,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 1.5 Flash": {
     "raw": {
@@ -792,7 +830,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 1.5 Flash-8B": {
     "raw": {
@@ -832,7 +871,8 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   },
   "Gemini 1.5 Pro": {
     "raw": {
@@ -872,6 +912,7 @@
       "audio-to-text",
       "video-to-text"
     ],
-    "api_identifier": "gemini"
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint"
   }
 }

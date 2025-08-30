@@ -46,5 +46,6 @@ def fetch_prices() -> Dict[str, Dict]:
             "source": ELEVENLABS_PRICING_URL,
             "modalities": ["text-to-speech", "speech-to-speech"],
             "api_identifier": API_IDENTIFIER,
+            "service_type": "subscription",
         }
     return data
