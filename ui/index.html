@@ -596,11 +596,37 @@
             return hasServerKeyword || hasPricingPerHour;
         }
 
+        // Function to determine if an entry is an API endpoint
+        function isApiEndpoint(modelId, details, modalities) {
+            // Check if it has modalities (text, image, etc.)
+            if (modalities && modalities.length > 0) {
+                return true;
+            }
+            
+            // Check for API-specific keywords in model ID
+            const apiKeywords = ['gpt', 'claude', 'gemini', 'llama', 'mistral', 'cohere', 'anthropic', 'openai', 'text', 'image', 'vision', 'audio', 'speech'];
+            const hasApiKeyword = apiKeywords.some(keyword => 
+                modelId.toLowerCase().includes(keyword)
+            );
+            
+            // Check for token-based pricing (typical for APIs)
+            const hasTokenPricing = Object.keys(details).some(key => 
+                key.toLowerCase().includes('token') || key.toLowerCase().includes('input') || key.toLowerCase().includes('output')
+            );
+            
+            // Check for per-request pricing (typical for APIs)
+            const hasPerRequestPricing = Object.keys(details).some(key => 
+                key.toLowerCase().includes('request') || key.toLowerCase().includes('call') || key.toLowerCase().includes('query')
+            );
+            
+            return hasApiKeyword || hasTokenPricing || hasPerRequestPricing;
+        }
+
         // Function to get service type label
         function getServiceType(modelId, details, modalities) {
             if (isServerRental(modelId, details)) {
                 return 'server_rental';
-            } else if (modalities && modalities.length > 0) {
+            } else if (isApiEndpoint(modelId, details, modalities)) {
                 return 'api_endpoint';
             } else {
                 return 'other_service';
@@ -839,19 +865,34 @@
                 }
             });
             
-            dropdown.classList.toggle('show');
+            // For modalities dropdown, only toggle if it's not already open
+            if (type === 'modalities') {
+                if (!dropdown.classList.contains('show')) {
+                    dropdown.classList.add('show');
+                }
+            } else {
+                dropdown.classList.toggle('show');
+            }
         }
 
         // Close dropdowns when clicking outside
         window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-btn')) {
-                const dropdowns = document.querySelectorAll('.dropdown-content');
-                dropdowns.forEach(dropdown => {
-                    if (dropdown.classList.contains('show')) {
-                        dropdown.classList.remove('show');
-                    }
-                });
+            // Don't close if clicking on dropdown content or checkboxes
+            if (event.target.closest('.dropdown-content') || event.target.type === 'checkbox') {
+                return;
             }
+            
+            // Don't close if clicking on dropdown button
+            if (event.target.matches('.dropdown-btn')) {
+                return;
+            }
+            
+            const dropdowns = document.querySelectorAll('.dropdown-content');
+            dropdowns.forEach(dropdown => {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            });
         }
 
         function renderTable(data) {
@@ -1135,7 +1176,8 @@
                 const modalityMatch = selectedModalities.size === 0 || 
                     item.modalities.some(modality => selectedModalities.has(modality));
                 
-                const serviceMatch = !apiOnly || item.serviceType === 'api_endpoint';
+                // API endpoints only filter - use the improved detection
+                const serviceMatch = !apiOnly || isApiEndpoint(item.modelId, item.details, item.modalities);
 
                 return textMatch && modalityMatch && serviceMatch;
             });
