@@ -30,6 +30,7 @@ def fetch_prices() -> dict:
     # contain pricing information.
     for card in soup.select("table"):
         headers = [th.get_text(strip=True) for th in card.select("thead th")]
+        service_type = "api_endpoint" if "Model" in headers else "other_service"
         for row in card.select("tbody tr"):
             cols = [td.get_text(strip=True) for td in row.select("td")]
             if len(cols) != len(headers):
@@ -41,5 +42,6 @@ def fetch_prices() -> dict:
                     "raw": record,
                     "source": OPENAI_PRICING_URL,
                     "api_identifier": API_IDENTIFIER,
+                    "service_type": service_type,
                 }
     return data

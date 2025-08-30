@@ -11,7 +11,7 @@ This guide explains how to create, maintain, and troubleshoot scrapers for the p
 - `fal.py` - Placeholder scraper for fal.ai
 
 ### Scraper Interface
-All scrapers must implement the following interface:
+All scrapers must implement the following interface and classify each entry with a `service_type` value (for example `api_endpoint`, `server_rental`, or `subscription`):
 
 ```python
 def fetch_prices() -> dict:
@@ -20,7 +20,7 @@ def fetch_prices() -> dict:
     
     Returns:
         dict: Dictionary with model IDs as keys and pricing data as values.
-              Format: {model_id: {"raw": data, "source": url}}
+              Format: {model_id: {"raw": data, "source": url, "service_type": str}}
     """
 ```
 

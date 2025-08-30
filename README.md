@@ -2,6 +2,8 @@
 
 This service scrapes model pricing information from various providers and serves it over a FastAPI server. Each pricing record includes an `api_identifier` field that names the provider's API so other applications can associate models with their source service.
 
+Entries are now classified by `service_type` to distinguish API endpoints from other offerings such as subscriptions or server rentals. The API and web UI can filter to show only API endpoints.
+
 ## Running
 
 ```bash
@@ -10,7 +12,7 @@ python -m pricing_service.server
 ```
 
 The server exposes:
-- `GET /api/pricing` – list all pricing records
+- `GET /api/pricing` – list all pricing records (use `?service_type=api_endpoint` to filter APIs)
 - `GET /api/pricing/{model_id}` – retrieve pricing for a single model
 
 The service periodically refreshes pricing data every 6 hours using the included scraper modules.
@@ -23,3 +25,4 @@ The service includes a web interface for exploring pricing data. Navigate to `/u
 - Click any column header to sort by that column.
 - Toggle dark mode using the button in the controls.
 - Show or hide pricing columns with the column checkboxes.
+- Limit results to API endpoints using the "API endpoints only" toggle.

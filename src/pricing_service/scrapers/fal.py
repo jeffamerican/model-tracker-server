@@ -54,6 +54,7 @@ def fetch_prices() -> dict:
                 "raw": record,
                 "source": FAL_PRICING_URL,
                 "api_identifier": API_IDENTIFIER,
+                "service_type": "server_rental",
             }
 
     # Model pricing (second table)
@@ -65,6 +66,7 @@ def fetch_prices() -> dict:
                     "raw": record,
                     "source": FAL_PRICING_URL,
                     "api_identifier": API_IDENTIFIER,
+                    "service_type": "api_endpoint",
                 }
 
     # Attach known modality information

@@ -27,7 +27,13 @@ curl -I http://localhost:8001/
 ### 2. Get All Pricing Data
 **GET** `/api/pricing`
 
-Returns all available pricing data from all scrapers.
+Returns all available pricing data from all scrapers. Supports optional filtering by service type.
+
+**Query Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `service_type` | string | Filter results by service type (e.g. `api_endpoint`, `server_rental`, `subscription`) |
 
 **Response:**
 - **Status:** 200 OK
@@ -59,7 +65,11 @@ Returns all available pricing data from all scrapers.
 
 **Example:**
 ```bash
+# All services
 curl http://localhost:8001/api/pricing
+
+# Only API endpoints
+curl http://localhost:8001/api/pricing?service_type=api_endpoint
 ```
 
 **Empty Response (when no data available):**
@@ -154,7 +164,8 @@ Each model in the pricing data follows this structure:
       // ... other fields
     },
     "source": "https://provider.com/pricing",
-    "api_identifier": "provider"
+    "api_identifier": "provider",
+    "service_type": "api_endpoint"
   }
 }
 ```
@@ -163,6 +174,7 @@ Each model in the pricing data follows this structure:
 While the exact structure varies by provider, common fields include:
 
 - `api_identifier`: Provider's API identifier
+- `service_type`: Classification of the entry (`api_endpoint`, `server_rental`, `subscription`, etc.)
 - `Model`: Model name/identifier
 - `Input`: Input token pricing
 - `Output`: Output token pricing
