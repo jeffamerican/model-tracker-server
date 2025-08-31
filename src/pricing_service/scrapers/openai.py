@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from bs4 import BeautifulSoup
+from datetime import datetime
 import requests
 
 OPENAI_PRICING_URL = "https://openai.com/pricing"
@@ -43,5 +44,9 @@ def fetch_prices() -> dict:
                     "source": OPENAI_PRICING_URL,
                     "api_identifier": API_IDENTIFIER,
                     "service_type": service_type,
+                    "api_schema": None,
+                    "generation_latency": None,
+                    "description": None,
+                    "last_updated": datetime.utcnow().isoformat(),
                 }
     return data

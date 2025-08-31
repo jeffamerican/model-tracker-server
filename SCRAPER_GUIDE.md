@@ -8,7 +8,8 @@ This guide explains how to create, maintain, and troubleshoot scrapers for the p
 
 ### Current Scrapers
 - `openai.py` - Scrapes OpenAI pricing (currently blocked by 403)
-- `fal.py` - Scrapes fal.ai pricing and progressively discovers additional endpoints
+- `fal.py` - Scrapes fal.ai pricing via the official `fal-client` SDK
+- `runway.py` - Uses the `runwayml` SDK to fetch organization data
 
 ### Scraper Interface
 All scrapers must implement the following interface and classify each entry with a `service_type` value (for example `api_endpoint`, `server_rental`, or `subscription`):
@@ -20,7 +21,18 @@ def fetch_prices() -> dict:
     
     Returns:
         dict: Dictionary with model IDs as keys and pricing data as values.
-              Format: {model_id: {"raw": data, "source": url, "service_type": str}}
+              Format: {
+                  model_id: {
+                      "raw": data,
+                      "source": url,
+                      "api_identifier": str,
+                      "service_type": str,
+                      "api_schema": str | None,
+                      "generation_latency": str | None,
+                      "description": str | None,
+                      "last_updated": str,
+                  }
+              }
     """
 ```
 
@@ -38,6 +50,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from typing import Dict, Any
+from datetime import datetime
 
 PROVIDER_URL = "https://provider.com/pricing"
 PROVIDER_NAME = "Provider Name"
@@ -95,7 +108,13 @@ def parse_html_pricing(soup: BeautifulSoup) -> Dict[str, Dict[str, Any]]:
                         "Input": input_price,
                         "Output": output_price,
                     },
-                    "source": PROVIDER_URL
+                    "source": PROVIDER_URL,
+                    "api_identifier": PROVIDER_NAME,
+                    "service_type": "api_endpoint",
+                    "api_schema": None,
+                    "generation_latency": None,
+                    "description": None,
+                    "last_updated": datetime.utcnow().isoformat(),
                 }
     
     return data
@@ -111,7 +130,13 @@ def parse_json_pricing(json_data: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
         if model_id:
             data[model_id] = {
                 "raw": model,
-                "source": PROVIDER_URL
+                "source": PROVIDER_URL,
+                "api_identifier": PROVIDER_NAME,
+                "service_type": "api_endpoint",
+                "api_schema": None,
+                "generation_latency": None,
+                "description": None,
+                "last_updated": datetime.utcnow().isoformat(),
             }
     
     return data
@@ -167,7 +192,13 @@ def scrape_table_pricing(soup: BeautifulSoup) -> Dict[str, Dict[str, Any]]:
                 if model_id:
                     data[model_id] = {
                         "raw": row_data,
-                        "source": PROVIDER_URL
+                        "source": PROVIDER_URL,
+                        "api_identifier": PROVIDER_NAME,
+                        "service_type": "api_endpoint",
+                        "api_schema": None,
+                        "generation_latency": None,
+                        "description": None,
+                        "last_updated": datetime.utcnow().isoformat(),
                     }
     
     return data

@@ -49,7 +49,13 @@ Returns all available pricing data from all scrapers. Supports optional filterin
       "Output": "$0.06/1K tokens",
       "Context": "8K tokens"
     },
-    "source": "https://openai.com/pricing"
+    "source": "https://openai.com/pricing",
+    "api_identifier": "openai",
+    "service_type": "api_endpoint",
+    "api_schema": null,
+    "generation_latency": null,
+    "description": null,
+    "last_updated": "2024-01-01T00:00:00"
   },
   "gpt-3.5-turbo": {
     "raw": {
@@ -58,7 +64,13 @@ Returns all available pricing data from all scrapers. Supports optional filterin
       "Output": "$0.002/1K tokens",
       "Context": "4K tokens"
     },
-    "source": "https://openai.com/pricing"
+    "source": "https://openai.com/pricing",
+    "api_identifier": "openai",
+    "service_type": "api_endpoint",
+    "api_schema": null,
+    "generation_latency": null,
+    "description": null,
+    "last_updated": "2024-01-01T00:00:00"
   }
 }
 ```
@@ -100,7 +112,13 @@ Returns pricing information for a specific model.
     "Output": "$0.06/1K tokens",
     "Context": "8K tokens"
   },
-  "source": "https://openai.com/pricing"
+  "source": "https://openai.com/pricing",
+  "api_identifier": "openai",
+  "service_type": "api_endpoint",
+  "api_schema": null,
+  "generation_latency": null,
+  "description": null,
+  "last_updated": "2024-01-01T00:00:00"
 }
 ```
 
@@ -165,7 +183,11 @@ Each model in the pricing data follows this structure:
     },
     "source": "https://provider.com/pricing",
     "api_identifier": "provider",
-    "service_type": "api_endpoint"
+    "service_type": "api_endpoint",
+    "api_schema": null,
+    "generation_latency": null,
+    "description": null,
+    "last_updated": "2024-01-01T00:00:00"
   }
 }
 ```
@@ -175,6 +197,10 @@ While the exact structure varies by provider, common fields include:
 
 - `api_identifier`: Provider's API identifier
 - `service_type`: Classification of the entry (`api_endpoint`, `server_rental`, `subscription`, etc.)
+- `api_schema`: JSON schema or usage snippet for the model's API (if available)
+- `generation_latency`: Typical time to generate a result (if available)
+- `description`: Human-readable model description when provided
+- `last_updated`: ISO timestamp for when the record was scraped
 - `Model`: Model name/identifier
 - `Input`: Input token pricing
 - `Output`: Output token pricing

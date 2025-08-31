@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from typing import Dict
 
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
@@ -46,5 +47,9 @@ def fetch_prices() -> Dict[str, Dict]:
                 "modalities": GEMINI_MODALITIES,
                 "api_identifier": API_IDENTIFIER,
                 "service_type": "api_endpoint",
+                "api_schema": None,
+                "generation_latency": None,
+                "description": None,
+                "last_updated": datetime.utcnow().isoformat(),
             }
     return data
