@@ -4,6 +4,10 @@ This service scrapes model pricing information from various providers and serves
 
 Entries are now classified by `service_type` to distinguish API endpoints from other offerings such as subscriptions or server rentals. The API and web UI can filter to show only API endpoints.
 
+Records also attempt to capture the API usage schema and typical generation latency for each model. Each entry tracks a free-form description when one is published and a `last_updated` timestamp showing when the record was scraped. Fields are included only when providers expose the information.
+
+The scrapers rely on official provider SDKs when available, such as `fal-client` for Fal.ai and `runwayml` for Runway data, to capture as much model metadata as possible.
+
 ## Running
 
 ```bash
@@ -26,3 +30,5 @@ The service includes a web interface for exploring pricing data. Navigate to `/u
 - Toggle dark mode using the button in the controls.
 - Show or hide pricing columns with the column checkboxes.
 - Limit results to API endpoints using the "API endpoints only" toggle.
+- Click a row to view all scraped details for a model, including API schema and timing information.
+- Models updated within the past week display a "NEW" badge for easy discovery.

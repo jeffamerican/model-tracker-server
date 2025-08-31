@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 from bs4 import BeautifulSoup
-import requests
+from fal_client import SyncClient
+from datetime import datetime
 import string
+import re
 
 FAL_PRICING_URL = "https://fal.ai/pricing"
 EXPLORER_SEARCH_URL = "https://fal.ai/explore/search"
@@ -31,7 +33,15 @@ MODEL_MODALITIES = {
 }
 
 
-def _discover_model_slugs(limit: int = 80) -> list[str]:
+CLIENT = SyncClient(key="0")
+
+
+def _get(url: str, **kwargs):
+    """Wrapper around the fal client to issue HTTP GET requests."""
+    return CLIENT._client.get(url, **kwargs)
+
+
+def _discover_model_slugs(limit: int = 10) -> list[str]:
     """Return a list of model slugs discovered via the explore search page."""
     slugs: list[str] = []
     seen: set[str] = set()
@@ -39,7 +49,7 @@ def _discover_model_slugs(limit: int = 80) -> list[str]:
         if len(slugs) >= limit:
             break
         try:
-            resp = requests.get(EXPLORER_SEARCH_URL, params={"q": query}, timeout=10)
+            resp = _get(EXPLORER_SEARCH_URL, params={"q": query}, timeout=10)
             resp.raise_for_status()
         except Exception:
             continue
@@ -61,7 +71,7 @@ def _extract_price(slug: str) -> str | None:
     """Extract a price snippet from a model page if available."""
     url = f"{MODEL_BASE_URL}/{slug}"
     try:
-        resp = requests.get(url, timeout=10)
+        resp = _get(url, timeout=10)
         resp.raise_for_status()
     except Exception:
         return None
@@ -81,6 +91,34 @@ def _extract_price(slug: str) -> str | None:
     return None
 
 
+def _extract_api_details(slug: str) -> tuple[str | None, str | None, str | None]:
+    """Return usage schema, generation latency, and description from a model page if present."""
+    url = f"{MODEL_BASE_URL}/{slug}"
+    try:
+        resp = _get(url, timeout=10)
+        resp.raise_for_status()
+    except Exception:
+        return None, None, None
+    html = resp.text.replace("<!--$-->", "").replace("<!--/$-->", "")
+    soup = BeautifulSoup(html, "html.parser")
+    schema = None
+    code = soup.select_one("pre code")
+    if code:
+        text = code.get_text(strip=True)
+        if text:
+            schema = text
+    latency = None
+    text_blob = soup.get_text(" ", strip=True).lower()
+    match = re.search(r"(\d+(?:\.\d+)?)\s*(?:s|sec|seconds)", text_blob)
+    if match:
+        latency = f"{match.group(1)}s"
+    description = None
+    meta = soup.find("meta", attrs={"name": "description"})
+    if meta:
+        description = meta.get("content")
+    return schema, latency, description
+
+
 def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
     """Fetch model data from the explore search endpoints."""
     results: dict[str, dict] = {}
@@ -93,12 +131,23 @@ def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
             "source": f"{MODEL_BASE_URL}/{slug}",
             "api_identifier": API_IDENTIFIER,
             "service_type": "api_endpoint",
+            "api_schema": None,
+            "generation_latency": None,
+            "description": None,
+            "last_updated": datetime.utcnow().isoformat(),
         }
         if price:
             record["raw"]["price"] = price
         modality = slug.split("/")[-1]
         if "-" in modality:
             record["modalities"] = [modality]
+        schema, latency, description = _extract_api_details(slug)
+        if schema:
+            record["api_schema"] = schema
+        if latency:
+            record["generation_latency"] = latency
+        if description:
+            record["description"] = description
         results[slug] = record
     return results
 
@@ -121,7 +170,7 @@ def _parse_table(table: BeautifulSoup) -> list[dict[str, str]]:
 
 def fetch_prices() -> dict:
     """Fetch pricing data from fal.ai."""
-    response = requests.get(FAL_PRICING_URL, timeout=10)
+    response = _get(FAL_PRICING_URL, timeout=10)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
 
@@ -139,6 +188,10 @@ def fetch_prices() -> dict:
                 "source": FAL_PRICING_URL,
                 "api_identifier": API_IDENTIFIER,
                 "service_type": "server_rental",
+                "api_schema": None,
+                "generation_latency": None,
+                "description": None,
+                "last_updated": datetime.utcnow().isoformat(),
             }
 
     # Model pricing (second table)
@@ -151,6 +204,10 @@ def fetch_prices() -> dict:
                     "source": FAL_PRICING_URL,
                     "api_identifier": API_IDENTIFIER,
                     "service_type": "api_endpoint",
+                    "api_schema": None,
+                    "generation_latency": None,
+                    "description": None,
+                    "last_updated": datetime.utcnow().isoformat(),
                 }
 
     # Attach known modality information

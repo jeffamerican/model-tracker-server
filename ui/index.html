@@ -357,6 +357,21 @@
             color: #666;
             margin-top: 2px;
         }
+        .new-badge {
+            background: #ff9800;
+            color: white;
+            padding: 2px 4px;
+            margin-left: 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .new-model {
+            background: #fff8e1;
+        }
+        body.dark-mode .new-model {
+            background: rgba(255, 152, 0, 0.2);
+        }
         .toggle-btn {
             background: white;
             color: #1976d2;
@@ -494,9 +509,45 @@
         body.dark-mode .column-control-btn:hover {
             background: #444;
         }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+        }
+        .modal-close {
+            float: right;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        body.dark-mode .modal-content {
+            background: #1e1e1e;
+            color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span id="modalClose" class="modal-close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
     <div class="main-container">
         <div class="fixed-header">
             <div class="header">
@@ -652,28 +703,40 @@
                 // Process data and collect modalities
                 tableData = Object.entries(data).map(([modelId, modelData]) => {
                     let modalities = modelData.modalities || [];
-                    
+
                     // Add 'server' modality for server/GPU rentals
                     if (isServerRental(modelId, modelData.raw || {})) {
                         if (!modalities.includes('server')) {
                             modalities = [...modalities, 'server'];
                         }
                     }
-                    
+
                     modalities.forEach(modality => allModalities.add(modality));
-                    
+
                     // Collect API identifiers
                     if (modelData.api_identifier) {
                         allProviders.add(modelData.api_identifier);
                     }
-                    
+
+                    const details = {
+                        ...(modelData.raw || {}),
+                    };
+                    if (modelData.generation_latency) {
+                        details.generation_latency = modelData.generation_latency;
+                    }
+                    if (modelData.description) {
+                        details.description = modelData.description;
+                    }
+
                     return {
                         modelId,
-                        details: modelData.raw || {},
+                        details,
                         source: modelData.source || '',
                         modalities: modalities,
                         serviceType: modelData.service_type || getServiceType(modelId, modelData.raw || {}, modalities),
-                        apiIdentifier: modelData.api_identifier || 'unknown'
+                        apiIdentifier: modelData.api_identifier || 'unknown',
+                        apiSchema: modelData.api_schema || null,
+                        lastUpdated: modelData.last_updated || null,
                     };
                 });
 
@@ -1030,12 +1093,17 @@
             const tbody = document.createElement('tbody');
             data.forEach(item => {
                 const tr = document.createElement('tr');
-                
+
+                const isNew = item.lastUpdated && (Date.now() - new Date(item.lastUpdated).getTime() < 7 * 24 * 60 * 60 * 1000);
+                if (isNew) {
+                    tr.classList.add('new-model');
+                }
+
                 // Model cell
                 const modelCell = document.createElement('td');
                 modelCell.style.width = modelWidth;
                 modelCell.innerHTML = `
-                    <div>${item.modelId}</div>
+                    <div>${item.modelId}${isNew ? '<span class="new-badge">NEW</span>' : ''}</div>
                     <div class="service-type">${item.serviceType}</div>
                     <div class="api-identifier">${item.apiIdentifier}</div>
                 `;
@@ -1081,7 +1149,13 @@
                     sourceCell.innerHTML = `<a href="${item.source}" target="_blank" class="source-link">View</a>`;
                 }
                 tr.appendChild(sourceCell);
-                
+
+                tr.addEventListener('click', (e) => {
+                    if (e.target.tagName.toLowerCase() !== 'a') {
+                        showDetails(item);
+                    }
+                });
+
                 tbody.appendChild(tr);
             });
 
@@ -1347,6 +1421,36 @@
             
             renderTable(displayData);
         }
+
+        function showDetails(item) {
+            const modal = document.getElementById('detailsModal');
+            const body = document.getElementById('modalBody');
+            const info = {
+                model: item.modelId,
+                api_identifier: item.apiIdentifier,
+                service_type: item.serviceType,
+                modalities: item.modalities,
+                source: item.source,
+                last_updated: item.lastUpdated,
+                api_schema: item.apiSchema,
+                raw: item.details,
+            };
+            body.innerHTML = '';
+            const pre = document.createElement('pre');
+            pre.textContent = JSON.stringify(info, null, 2);
+            body.appendChild(pre);
+            modal.style.display = 'flex';
+        }
+
+        document.getElementById('modalClose').onclick = () => {
+            document.getElementById('detailsModal').style.display = 'none';
+        };
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('detailsModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
 
         // Load pricing data on page load
         loadPricing();

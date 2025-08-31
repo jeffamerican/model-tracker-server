@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from typing import Dict
 
+from datetime import datetime
 import requests
 
 HEDRA_PRICING_URL = "https://hedra.com/pricing"
@@ -28,6 +29,10 @@ def fetch_prices() -> Dict[str, Dict]:
                 "modalities": ["speech-to-video", "text-to-video"],
                 "api_identifier": API_IDENTIFIER,
                 "service_type": "api_endpoint",
+                "api_schema": None,
+                "generation_latency": None,
+                "description": None,
+                "last_updated": datetime.utcnow().isoformat(),
             }
         }
 
@@ -39,5 +44,9 @@ def fetch_prices() -> Dict[str, Dict]:
             "modalities": ["speech-to-video", "text-to-video"],
             "api_identifier": API_IDENTIFIER,
             "service_type": "api_endpoint",
+            "api_schema": None,
+            "generation_latency": None,
+            "description": None,
+            "last_updated": datetime.utcnow().isoformat(),
         }
     }

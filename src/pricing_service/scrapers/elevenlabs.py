@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Dict
 
 import re
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
@@ -47,5 +48,9 @@ def fetch_prices() -> Dict[str, Dict]:
             "modalities": ["text-to-speech", "speech-to-speech"],
             "api_identifier": API_IDENTIFIER,
             "service_type": "subscription",
+            "api_schema": None,
+            "generation_latency": None,
+            "description": None,
+            "last_updated": datetime.utcnow().isoformat(),
         }
     return data

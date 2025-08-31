@@ -12,7 +12,9 @@ dependencies = [
     "fastapi",
     "uvicorn",
     "requests",
-    "beautifulsoup4"
+    "beautifulsoup4",
+    "fal-client",
+    "runwayml"
 ]
 
 [project.urls]
