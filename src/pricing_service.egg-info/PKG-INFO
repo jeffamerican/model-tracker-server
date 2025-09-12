@@ -9,3 +9,5 @@ Requires-Dist: fastapi
 Requires-Dist: uvicorn
 Requires-Dist: requests
 Requires-Dist: beautifulsoup4
+Requires-Dist: fal-client
+Requires-Dist: runwayml

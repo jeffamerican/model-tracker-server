@@ -9,5 +9,9 @@ src/pricing_service.egg-info/dependency_links.txt
 src/pricing_service.egg-info/requires.txt
 src/pricing_service.egg-info/top_level.txt
 src/pricing_service/scrapers/__init__.py
+src/pricing_service/scrapers/elevenlabs.py
 src/pricing_service/scrapers/fal.py
+src/pricing_service/scrapers/gemini.py
+src/pricing_service/scrapers/hedra.py
 src/pricing_service/scrapers/openai.py
+src/pricing_service/scrapers/runway.py

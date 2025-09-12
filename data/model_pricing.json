@@ -12,7 +12,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013649"
+    "last_updated": "2025-09-12T19:21:11.606344"
   },
   "H200": {
     "raw": {
@@ -27,7 +27,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013673"
+    "last_updated": "2025-09-12T19:21:11.606358"
   },
   "A100": {
     "raw": {
@@ -42,7 +42,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013698"
+    "last_updated": "2025-09-12T19:21:11.606363"
   },
   "B200": {
     "raw": {
@@ -57,7 +57,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013702"
+    "last_updated": "2025-09-12T19:21:11.606365"
   },
   "Hunyuan Video": {
     "raw": {
@@ -72,7 +72,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014710",
+    "last_updated": "2025-09-12T19:21:11.607039",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -81,9 +81,9 @@
   "Kling 1.6 Pro Video": {
     "raw": {
       "Model": "Kling 1.6 Pro Video",
-      "Unit": "video second",
+      "Unit": "second",
       "Price": "$0.095",
-      "Output per $1": "11video seconds"
+      "Output per $1": "11seconds"
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
@@ -91,7 +91,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014719",
+    "last_updated": "2025-09-12T19:21:11.607043",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -100,9 +100,9 @@
   "Kling 2 Master Video": {
     "raw": {
       "Model": "Kling 2 Master Video",
-      "Unit": "video second",
+      "Unit": "second",
       "Price": "$0.28",
-      "Output per $1": "4video seconds"
+      "Output per $1": "4seconds"
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
@@ -110,7 +110,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014723",
+    "last_updated": "2025-09-12T19:21:11.607046",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -129,7 +129,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014727",
+    "last_updated": "2025-09-12T19:21:11.607049",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -148,7 +148,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014731",
+    "last_updated": "2025-09-12T19:21:11.607052",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -157,9 +157,9 @@
   "LTX-Video 13B 0.9.8 Distilled": {
     "raw": {
       "Model": "LTX-Video 13B 0.9.8 Distilled",
-      "Unit": "video second",
+      "Unit": "second",
       "Price": "$0.02",
-      "Output per $1": "50video seconds"
+      "Output per $1": "50seconds"
     },
     "source": "https://fal.ai/pricing",
     "api_identifier": "fal",
@@ -167,7 +167,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014734",
+    "last_updated": "2025-09-12T19:21:11.607055",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -184,20 +184,7 @@
     "api_schema": "{\"images\":[{\"height\":1024,\"url\":\"https://fal.media/files/tiger/7dSJbIU_Ni-0Zp9eaLsvR_fe56916811d84ac69c6ffc0d32dca151.jpg\",\"width\":1024}],\"prompt\":\"\"}",
     "generation_latency": null,
     "description": "FLUX.1 Kontext [pro] handles both text and reference images as inputs, seamlessly enabling targeted, local edits and complex transformations of entire scenes.",
-    "last_updated": "2025-08-31T19:46:50.094860"
-  },
-  "fal-ai/imagen4/preview": {
-    "raw": {
-      "endpoint": "fal-ai/imagen4/preview",
-      "price": "): $0.05 per image - Balanced quality and performance ): $0.04 per image - Cost-effective option with best quality per dollar"
-    },
-    "source": "https://fal.ai/models/fal-ai/imagen4/preview",
-    "api_identifier": "fal",
-    "service_type": "api_endpoint",
-    "api_schema": "{\"images\":[{\"url\":\"https://v3.fal.media/files/rabbit/rmgBxhwGYb2d3pl3x9sKf_output.png\"}],\"seed\":42}",
-    "generation_latency": "1960s",
-    "description": "Google\u2019s highest quality image generation model",
-    "last_updated": "2025-08-31T19:46:52.248034"
+    "last_updated": "2025-09-12T19:21:12.642413"
   },
   "fal-ai/kling-video/v2/master/image-to-video": {
     "raw": {
@@ -210,7 +197,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://v3.fal.media/files/koala/VvGXP5xEhTR9ovGjpulJ7_output.mp4\"}}",
     "generation_latency": "5s",
     "description": "Create premium videos with Kling AI 2.0 Master. Highest quality image-to-video generation, enhanced motion, cinematic results. $1.00/video.",
-    "last_updated": "2025-08-31T19:46:53.244345",
+    "last_updated": "2025-09-12T19:21:13.522047",
     "modalities": [
       "image-to-video"
     ]
@@ -218,7 +205,7 @@
   "fal-ai/wan-effects": {
     "raw": {
       "endpoint": "fal-ai/wan-effects",
-      "price": "self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$La\\\",null,{\\\"buildId\\\":\\\"wP_HRgUAR58HThH7m5tHZ\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"models\\\",\\\"fal-ai\\\",\\\"wan-effects\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-effects\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-effects\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$Lb\\\",\\\"$Lc\\\",null],null],null]},[[null,\\\"$Ld\\\"],null],null]},[null,[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"models\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/00b00e41a5072d35.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/5aad38425d209400.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"className\\\":\\\"__variable_5e98b6 __variable_31ce7f __variable_2ad14d __variable_054e7a\\\",\\\"suppressHydrationWarning\\\":true,\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"href\\\":\\\"/favicon.png\\\",\\\"rel\\\":\\\"shortcut icon\\\",\\\"type\\\":\\\"image/x-icon\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"href\\\":\\\"/apple-touch-icon.png\\\",\\\"rel\\\":\\\"apple-touch-icon\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"sitemap\\\",\\\"type\\\":\\\"application/xml\\\",\\\"title\\\":\\\"fal.ai sitemap\\\",\\\"href\\\":\\\"/sitemap.xml\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[[\\\"$\\\",\\\"script\\\",null,{\\\"defer\\\":true,\\\"data-domain\\\":\\\"fal.ai\\\",\\\"src\\\":\\\"https://plausible.io/js/script.tagged-events.js\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }\\\"}}]],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"msvalidate.01\\\",\\\"content\\\":\\\"987496805F82711F23F544ACCFA42B9D\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"suppressHydrationWarning\\\":true,\\\"className\\\":\\\"bg-surface-300\\\",\\\"children\\\":[[[\\\"$\\\",\\\"script\\\",null,{\\\"async\\\":true,\\\"src\\\":\\\"https://www.googletagmanager.com/gtag/js?id=G-HRNLRXZ833\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.dataLayer = window.dataLayer || [];\\\\nfunction gtag(){dataLayer.push(arguments);}\\\\ngtag('js', new Date());\\\\n\\\\ngtag('config', 'G-HRNLRXZ833');\\\"}}]],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(t){var k=\\\\\\\"ko\\\\\\\",i=(window.globalKoalaKey=window.globalKoalaKey||k);if(window[i])return;var ko=(window[i]=[]);[\\\\\\\"identify\\\\\\\",\\\\\\\"track\\\\\\\",\\\\\\\"removeListeners\\\\\\\",\\\\\\\"on\\\\\\\",\\\\\\\"off\\\\\\\",\\\\\\\"qualify\\\\\\\",\\\\\\\"ready\\\\\\\"].forEach(function(t){ko[t]=function(){var n=[].slice.call(arguments);return n.unshift(t),ko.push(n),ko}});var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://cdn.getkoala.com/v1/pk_f63728be455c83e0e4bf62a608599ea7eb65/sdk.js\\\\\\\"),(document.body || document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(){var e=[\\\\\\\"identify\\\\\\\",\\\\\\\"page\\\\\\\",\\\\\\\"startAutoPage\\\\\\\",\\\\\\\"stopAutoPage\\\\\\\",\\\\\\\"startAutoIdentify\\\\\\\",\\\\\\\"stopAutoIdentify\\\\\\\"];function t(o){return Object.assign([],e.reduce(function(r,n){return r[n]=function(){return o.push([n,[].slice.call(arguments)]),o},r},{}))}window.unify||(window.unify=t(window.unify)),window.unifyBrowser||(window.unifyBrowser=t(window.unifyBrowser));var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://tag.unifyintent.com/v1/StYP4Vo8FEq9BUGubFFci3/script.js\\\\\\\"),n.setAttribute(\\\\\\\"data-api-key\\\\\\\",\\\\\\\"wk_WBAvxinW_7ggin1XjVGpqtQCYUPas3E18tLs3CbNd\\\\\\\"),n.setAttribute(\\\\\\\"id\\\\\\\",\\\\\\\"unifytag\\\\\\\"),(document.body||document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"$L10\\\",null,{\\\"children\\\":\\\"$L11\\\"}],[\\\"$\\\",\\\"$L12\\\",null,{}]]}]]}]],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$L13\\\"],\\\"globalErrorComponent\\\":\\\"$14\\\",\\\"missingSlots\\\":\\\"$W15\\\"}]\\n\"]) self.__next_f.push([1,\"atic/chunks/29763-485d276d6b46af69.js\\\",\\\"82957\\\",\\\"static/chunks/82957-aef5ae7f4ee19098.js\\\",\\\"975\\\",\\\"static/chunks/975-a927bcf9a181e846.js\\\",\\\"97276\\\",\\\"static/chunks/97276-e9279d074eb7a01a.js\\\",\\\"99395\\\",\\\"static/chunks/99395-5ec95ac3e3d22803.js\\\",\\\"95243\\\",\\\"static/chunks/95243-429bd7cd04b4412f.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-588dd06516a4f43d.js\\\"],\\\"PlausibleSignupTracker\\\"]\\n11:[\\\"$\\\",\\\"$L16\\\",null,{\\\"user\\\":null,\\\"children\\\":[[\\\"$\\\",\\\"$L17\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$18\\\",\\\"errorStyles\\\":[],\\\"errorScripts\\\":[],\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[\\\"$\\\",\\\"$L19\\\",null,{}],\\\"notFoundStyles\\\":[]}]}],[\\\"$\\\",\\\"$L1a\\\",null,{}]]}]\\n\"])"
+      "price": "self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$La\\\",null,{\\\"buildId\\\":\\\"bEFZ-6zB0N3kuYE1PF4h0\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"models\\\",\\\"fal-ai\\\",\\\"wan-effects\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-effects\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-effects\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$Lb\\\",\\\"$Lc\\\",null],null],null]},[[null,\\\"$Ld\\\"],null],null]},[null,[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"models\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f6c90280273a8732.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f20ee124b4f16e82.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"className\\\":\\\"__variable_5e98b6 __variable_31ce7f __variable_2ad14d __variable_054e7a\\\",\\\"suppressHydrationWarning\\\":true,\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"sitemap\\\",\\\"type\\\":\\\"application/xml\\\",\\\"title\\\":\\\"fal.ai sitemap\\\",\\\"href\\\":\\\"/sitemap.xml\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[[\\\"$\\\",\\\"script\\\",null,{\\\"defer\\\":true,\\\"data-domain\\\":\\\"fal.ai\\\",\\\"src\\\":\\\"https://plausible.io/js/script.tagged-events.js\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }\\\"}}]],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"msvalidate.01\\\",\\\"content\\\":\\\"987496805F82711F23F544ACCFA42B9D\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"suppressHydrationWarning\\\":true,\\\"className\\\":\\\"bg-surface-300\\\",\\\"children\\\":[[[\\\"$\\\",\\\"script\\\",null,{\\\"async\\\":true,\\\"src\\\":\\\"https://www.googletagmanager.com/gtag/js?id=G-HRNLRXZ833\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.dataLayer = window.dataLayer || [];\\\\nfunction gtag(){dataLayer.push(arguments);}\\\\ngtag('js', new Date());\\\\n\\\\ngtag('config', 'G-HRNLRXZ833');\\\"}}]],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(t){var k=\\\\\\\"ko\\\\\\\",i=(window.globalKoalaKey=window.globalKoalaKey||k);if(window[i])return;var ko=(window[i]=[]);[\\\\\\\"identify\\\\\\\",\\\\\\\"track\\\\\\\",\\\\\\\"removeListeners\\\\\\\",\\\\\\\"on\\\\\\\",\\\\\\\"off\\\\\\\",\\\\\\\"qualify\\\\\\\",\\\\\\\"ready\\\\\\\"].forEach(function(t){ko[t]=function(){var n=[].slice.call(arguments);return n.unshift(t),ko.push(n),ko}});var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://cdn.getkoala.com/v1/pk_f63728be455c83e0e4bf62a608599ea7eb65/sdk.js\\\\\\\"),(document.body || document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(){var e=[\\\\\\\"identify\\\\\\\",\\\\\\\"page\\\\\\\",\\\\\\\"startAutoPage\\\\\\\",\\\\\\\"stopAutoPage\\\\\\\",\\\\\\\"startAutoIdentify\\\\\\\",\\\\\\\"stopAutoIdentify\\\\\\\"];function t(o){return Object.assign([],e.reduce(function(r,n){return r[n]=function(){return o.push([n,[].slice.call(arguments)]),o},r},{}))}window.unify||(window.unify=t(window.unify)),window.unifyBrowser||(window.unifyBrowser=t(window.unifyBrowser));var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://tag.unifyintent.com/v1/StYP4Vo8FEq9BUGubFFci3/script.js\\\\\\\"),n.setAttribute(\\\\\\\"data-api-key\\\\\\\",\\\\\\\"wk_WBAvxinW_7ggin1XjVGpqtQCYUPas3E18tLs3CbNd\\\\\\\"),n.setAttribute(\\\\\\\"id\\\\\\\",\\\\\\\"unifytag\\\\\\\"),(document.body||document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"$L10\\\",null,{\\\"children\\\":\\\"$L11\\\"}],[\\\"$\\\",\\\"$L12\\\",null,{}]]}]]}]],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$L13\\\"],\\\"globalErrorComponent\\\":\\\"$14\\\",\\\"missingSlots\\\":\\\"$W15\\\"}]\\n\"]) self.__next_f.push([1,\"/chunks/34319-e3225e32392b9831.js\\\",\\\"27353\\\",\\\"static/chunks/27353-b635e10b689032a0.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-92a1553fe539907e.js\\\"],\\\"default\\\"]\\n19:I[10376,[\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"27648\\\",\\\"static/chunks/27648-4f4c86cb7287bcb9.js\\\",\\\"97601\\\",\\\"static/chunks/app/error-bf331a31d63973ed.js\\\"],\\\"default\\\"]\\n1a:I[75292,[\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"66022\\\",\\\"static/chunks/66022-cd33073a8222031c.js\\\",\\\"15679\\\",\\\"static/chunks/15679-01fae0230efd6e57.js\\\",\\\"27648\\\",\\\"static/chunks/27648-4f4c86cb7287bcb9.js\\\",\\\"37813\\\",\\\"static/chunks/37813-10db322c6c51f3a4.js\\\",\\\"80602\\\",\\\"static/chunks/80602-d1638fb628cbd5e5.js\\\",\\\"4859\\\",\\\"static/chunks/4859-05e2d7ce218b18fd.js\\\",\\\"44642\\\",\\\"static/chunks/44642-5b67c5957602ff66.js\\\",\\\"34319\\\",\\\"static/chunks/34319-e3225e32392b9831.js\\\",\\\"29160\\\",\\\"static/chunks/app/not-found-5732728dbd8d4b99.js\\\"],\\\"default\\\"]\\n1b:I[60141,[\\\"35878\\\",\\\"static/chunks/9da6db1e-c3308e728af630be.js\\\",\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"66022\\\",\\\"static/chunks/66022-cd33073a8222031c.js\\\",\\\"37813\\\",\\\"static/chunks/37813-10db322c6c51f3a4.js\\\",\\\"29763\\\",\\\"static/chunks/29763-3a3d232570f46279.js\\\",\\\"975\\\",\\\"static/chunks/975-b187f347639c8c6b.js\\\",\\\"82957\\\",\\\"static/chunks/82957-aef5ae7f4ee19098.js\\\",\\\"97276\\\",\\\"static/chunks/97276-d8c49311173a49ea.js\\\",\\\"67119\\\",\\\"static/chunks/67119-ddb68bb1a7aaaa65.js\\\",\\\"38119\\\",\\\"static/chunks/38119-e82ab60e94ec8fbd.js\\\",\\\"34319\\\",\\\"static/chunks/34319-e3225e32392b9831.js\\\",\\\"27353\\\",\\\"static/chunks/27353-b635e10b689032a0.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-92a1553fe539907e.js\\\"],\\\"PlausibleSignupTracker\\\"]\\n11:[\\\"$\\\",\\\"$L16\\\",null,{\\\"user\\\":null,\\\"children\\\":[[\\\"$\\\",\\\"$L17\\\",null,{}],[\\\"$\\\",\\\"$L18\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$19\\\",\\\"errorStyles\\\":[],\\\"errorScripts\\\":[],\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[\\\"$\\\",\\\"$L1a\\\",null,{}],\\\"n\"])"
     },
     "source": "https://fal.ai/models/fal-ai/wan-effects",
     "api_identifier": "fal",
@@ -226,7 +213,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://storage.googleapis.com/falserverless/web-examples/wan-effects/cat_video.mp4\"}}",
     "generation_latency": null,
     "description": "Wan Effects generates high-quality videos with popular effects from images",
-    "last_updated": "2025-08-31T19:46:54.104230",
+    "last_updated": "2025-09-12T19:21:14.269884",
     "modalities": [
       "wan-effects"
     ]
@@ -234,7 +221,7 @@
   "fal-ai/wan-pro/image-to-video": {
     "raw": {
       "endpoint": "fal-ai/wan-pro/image-to-video",
-      "price": "self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$La\\\",null,{\\\"buildId\\\":\\\"wP_HRgUAR58HThH7m5tHZ\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"models\\\",\\\"fal-ai\\\",\\\"wan-pro\\\",\\\"image-to-video\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-pro%2Fimage-to-video\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-pro%2Fimage-to-video\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$Lb\\\",\\\"$Lc\\\",null],null],null]},[[null,\\\"$Ld\\\"],null],null]},[null,[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"models\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/00b00e41a5072d35.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/5aad38425d209400.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"className\\\":\\\"__variable_5e98b6 __variable_31ce7f __variable_2ad14d __variable_054e7a\\\",\\\"suppressHydrationWarning\\\":true,\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"href\\\":\\\"/favicon.png\\\",\\\"rel\\\":\\\"shortcut icon\\\",\\\"type\\\":\\\"image/x-icon\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"href\\\":\\\"/apple-touch-icon.png\\\",\\\"rel\\\":\\\"apple-touch-icon\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"sitemap\\\",\\\"type\\\":\\\"application/xml\\\",\\\"title\\\":\\\"fal.ai sitemap\\\",\\\"href\\\":\\\"/sitemap.xml\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[[\\\"$\\\",\\\"script\\\",null,{\\\"defer\\\":true,\\\"data-domain\\\":\\\"fal.ai\\\",\\\"src\\\":\\\"https://plausible.io/js/script.tagged-events.js\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }\\\"}}]],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"msvalidate.01\\\",\\\"content\\\":\\\"987496805F82711F23F544ACCFA42B9D\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"suppressHydrationWarning\\\":true,\\\"className\\\":\\\"bg-surface-300\\\",\\\"children\\\":[[[\\\"$\\\",\\\"script\\\",null,{\\\"async\\\":true,\\\"src\\\":\\\"https://www.googletagmanager.com/gtag/js?id=G-HRNLRXZ833\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.dataLayer = window.dataLayer || [];\\\\nfunction gtag(){dataLayer.push(arguments);}\\\\ngtag('js', new Date());\\\\n\\\\ngtag('config', 'G-HRNLRXZ833');\\\"}}]],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(t){var k=\\\\\\\"ko\\\\\\\",i=(window.globalKoalaKey=window.globalKoalaKey||k);if(window[i])return;var ko=(window[i]=[]);[\\\\\\\"identify\\\\\\\",\\\\\\\"track\\\\\\\",\\\\\\\"removeListeners\\\\\\\",\\\\\\\"on\\\\\\\",\\\\\\\"off\\\\\\\",\\\\\\\"qualify\\\\\\\",\\\\\\\"ready\\\\\\\"].forEach(function(t){ko[t]=function(){var n=[].slice.call(arguments);return n.unshift(t),ko.push(n),ko}});var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://cdn.getkoala.com/v1/pk_f63728be455c83e0e4bf62a608599ea7eb65/sdk.js\\\\\\\"),(document.body || document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(){var e=[\\\\\\\"identify\\\\\\\",\\\\\\\"page\\\\\\\",\\\\\\\"startAutoPage\\\\\\\",\\\\\\\"stopAutoPage\\\\\\\",\\\\\\\"startAutoIdentify\\\\\\\",\\\\\\\"stopAutoIdentify\\\\\\\"];function t(o){return Object.assign([],e.reduce(function(r,n){return r[n]=function(){return o.push([n,[].slice.call(arguments)]),o},r},{}))}window.unify||(window.unify=t(window.unify)),window.unifyBrowser||(window.unifyBrowser=t(window.unifyBrowser));var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://tag.unifyintent.com/v1/StYP4Vo8FEq9BUGubFFci3/script.js\\\\\\\"),n.setAttribute(\\\\\\\"data-api-key\\\\\\\",\\\\\\\"wk_WBAvxinW_7ggin1XjVGpqtQCYUPas3E18tLs3CbNd\\\\\\\"),n.setAttribute(\\\\\\\"id\\\\\\\",\\\\\\\"unifytag\\\\\\\"),(document.body||document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"$L10\\\",null,{\\\"children\\\":\\\"$L11\\\"}],[\\\"$\\\",\\\"$L12\\\",null,{}]]}]]}]],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$L13\\\"],\\\"globalErrorComponent\\\":\\\"$14\\\",\\\"missingSlots\\\":\\\"$W15\\\"}]\\n\"]) self.__next_f.push([1,\"atic/chunks/29763-485d276d6b46af69.js\\\",\\\"82957\\\",\\\"static/chunks/82957-aef5ae7f4ee19098.js\\\",\\\"975\\\",\\\"static/chunks/975-a927bcf9a181e846.js\\\",\\\"97276\\\",\\\"static/chunks/97276-e9279d074eb7a01a.js\\\",\\\"99395\\\",\\\"static/chunks/99395-5ec95ac3e3d22803.js\\\",\\\"95243\\\",\\\"static/chunks/95243-429bd7cd04b4412f.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-588dd06516a4f43d.js\\\"],\\\"PlausibleSignupTracker\\\"]\\n11:[\\\"$\\\",\\\"$L16\\\",null,{\\\"user\\\":null,\\\"children\\\":[[\\\"$\\\",\\\"$L17\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$18\\\",\\\"errorStyles\\\":[],\\\"errorScripts\\\":[],\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[\\\"$\\\",\\\"$L19\\\",null,{}],\\\"notFoundStyles\\\":[]}]}],[\\\"$\\\",\\\"$L1a\\\",null,{}]]}]\\n\"])"
+      "price": "self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$La\\\",null,{\\\"buildId\\\":\\\"bEFZ-6zB0N3kuYE1PF4h0\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"models\\\",\\\"fal-ai\\\",\\\"wan-pro\\\",\\\"image-to-video\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-pro%2Fimage-to-video\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fwan-pro%2Fimage-to-video\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$Lb\\\",\\\"$Lc\\\",null],null],null]},[[null,\\\"$Ld\\\"],null],null]},[null,[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"models\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f6c90280273a8732.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f20ee124b4f16e82.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"className\\\":\\\"__variable_5e98b6 __variable_31ce7f __variable_2ad14d __variable_054e7a\\\",\\\"suppressHydrationWarning\\\":true,\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"sitemap\\\",\\\"type\\\":\\\"application/xml\\\",\\\"title\\\":\\\"fal.ai sitemap\\\",\\\"href\\\":\\\"/sitemap.xml\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[[\\\"$\\\",\\\"script\\\",null,{\\\"defer\\\":true,\\\"data-domain\\\":\\\"fal.ai\\\",\\\"src\\\":\\\"https://plausible.io/js/script.tagged-events.js\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }\\\"}}]],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"msvalidate.01\\\",\\\"content\\\":\\\"987496805F82711F23F544ACCFA42B9D\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"suppressHydrationWarning\\\":true,\\\"className\\\":\\\"bg-surface-300\\\",\\\"children\\\":[[[\\\"$\\\",\\\"script\\\",null,{\\\"async\\\":true,\\\"src\\\":\\\"https://www.googletagmanager.com/gtag/js?id=G-HRNLRXZ833\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.dataLayer = window.dataLayer || [];\\\\nfunction gtag(){dataLayer.push(arguments);}\\\\ngtag('js', new Date());\\\\n\\\\ngtag('config', 'G-HRNLRXZ833');\\\"}}]],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(t){var k=\\\\\\\"ko\\\\\\\",i=(window.globalKoalaKey=window.globalKoalaKey||k);if(window[i])return;var ko=(window[i]=[]);[\\\\\\\"identify\\\\\\\",\\\\\\\"track\\\\\\\",\\\\\\\"removeListeners\\\\\\\",\\\\\\\"on\\\\\\\",\\\\\\\"off\\\\\\\",\\\\\\\"qualify\\\\\\\",\\\\\\\"ready\\\\\\\"].forEach(function(t){ko[t]=function(){var n=[].slice.call(arguments);return n.unshift(t),ko.push(n),ko}});var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://cdn.getkoala.com/v1/pk_f63728be455c83e0e4bf62a608599ea7eb65/sdk.js\\\\\\\"),(document.body || document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(){var e=[\\\\\\\"identify\\\\\\\",\\\\\\\"page\\\\\\\",\\\\\\\"startAutoPage\\\\\\\",\\\\\\\"stopAutoPage\\\\\\\",\\\\\\\"startAutoIdentify\\\\\\\",\\\\\\\"stopAutoIdentify\\\\\\\"];function t(o){return Object.assign([],e.reduce(function(r,n){return r[n]=function(){return o.push([n,[].slice.call(arguments)]),o},r},{}))}window.unify||(window.unify=t(window.unify)),window.unifyBrowser||(window.unifyBrowser=t(window.unifyBrowser));var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://tag.unifyintent.com/v1/StYP4Vo8FEq9BUGubFFci3/script.js\\\\\\\"),n.setAttribute(\\\\\\\"data-api-key\\\\\\\",\\\\\\\"wk_WBAvxinW_7ggin1XjVGpqtQCYUPas3E18tLs3CbNd\\\\\\\"),n.setAttribute(\\\\\\\"id\\\\\\\",\\\\\\\"unifytag\\\\\\\"),(document.body||document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"$L10\\\",null,{\\\"children\\\":\\\"$L11\\\"}],[\\\"$\\\",\\\"$L12\\\",null,{}]]}]]}]],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$L13\\\"],\\\"globalErrorComponent\\\":\\\"$14\\\",\\\"missingSlots\\\":\\\"$W15\\\"}]\\n\"]) self.__next_f.push([1,\"/chunks/34319-e3225e32392b9831.js\\\",\\\"27353\\\",\\\"static/chunks/27353-b635e10b689032a0.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-92a1553fe539907e.js\\\"],\\\"default\\\"]\\n19:I[10376,[\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"27648\\\",\\\"static/chunks/27648-4f4c86cb7287bcb9.js\\\",\\\"97601\\\",\\\"static/chunks/app/error-bf331a31d63973ed.js\\\"],\\\"default\\\"]\\n1a:I[75292,[\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"66022\\\",\\\"static/chunks/66022-cd33073a8222031c.js\\\",\\\"15679\\\",\\\"static/chunks/15679-01fae0230efd6e57.js\\\",\\\"27648\\\",\\\"static/chunks/27648-4f4c86cb7287bcb9.js\\\",\\\"37813\\\",\\\"static/chunks/37813-10db322c6c51f3a4.js\\\",\\\"80602\\\",\\\"static/chunks/80602-d1638fb628cbd5e5.js\\\",\\\"4859\\\",\\\"static/chunks/4859-05e2d7ce218b18fd.js\\\",\\\"44642\\\",\\\"static/chunks/44642-5b67c5957602ff66.js\\\",\\\"34319\\\",\\\"static/chunks/34319-e3225e32392b9831.js\\\",\\\"29160\\\",\\\"static/chunks/app/not-found-5732728dbd8d4b99.js\\\"],\\\"default\\\"]\\n1b:I[60141,[\\\"35878\\\",\\\"static/chunks/9da6db1e-c3308e728af630be.js\\\",\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"66022\\\",\\\"static/chunks/66022-cd33073a8222031c.js\\\",\\\"37813\\\",\\\"static/chunks/37813-10db322c6c51f3a4.js\\\",\\\"29763\\\",\\\"static/chunks/29763-3a3d232570f46279.js\\\",\\\"975\\\",\\\"static/chunks/975-b187f347639c8c6b.js\\\",\\\"82957\\\",\\\"static/chunks/82957-aef5ae7f4ee19098.js\\\",\\\"97276\\\",\\\"static/chunks/97276-d8c49311173a49ea.js\\\",\\\"67119\\\",\\\"static/chunks/67119-ddb68bb1a7aaaa65.js\\\",\\\"38119\\\",\\\"static/chunks/38119-e82ab60e94ec8fbd.js\\\",\\\"34319\\\",\\\"static/chunks/34319-e3225e32392b9831.js\\\",\\\"27353\\\",\\\"static/chunks/27353-b635e10b689032a0.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-92a1553fe539907e.js\\\"],\\\"PlausibleSignupTracker\\\"]\\n11:[\\\"$\\\",\\\"$L16\\\",null,{\\\"user\\\":null,\\\"children\\\":[[\\\"$\\\",\\\"$L17\\\",null,{}],[\\\"$\\\",\\\"$L18\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$19\\\",\\\"errorStyles\\\":[],\\\"errorScripts\\\":[],\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[\\\"$\\\",\\\"$L1a\\\",null,{}],\\\"n\"])"
     },
     "source": "https://fal.ai/models/fal-ai/wan-pro/image-to-video",
     "api_identifier": "fal",
@@ -242,7 +229,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://fal.media/files/kangaroo/K1hB3k-IXBzq9rz1kNOxy.mp4\"}}",
     "generation_latency": "6s",
     "description": "Wan-2.1 Pro is a premium image-to-video model that generates high-quality 1080p videos at 30fps with up to 6 seconds duration, delivering exceptional visual quality and motion diversity from images",
-    "last_updated": "2025-08-31T19:46:54.738583",
+    "last_updated": "2025-09-12T19:21:14.863398",
     "modalities": [
       "image-to-video"
     ]
@@ -258,7 +245,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://v3.fal.media/files/monkey/jOYy3rvGB33vumzulpXd5_output.mp4\"}}",
     "generation_latency": "5s",
     "description": "Transform images into videos with Google Veo 2. Realistic motion, high-quality output, up to 8-second clips. Commercial use allowed. Try demo now.",
-    "last_updated": "2025-08-31T19:46:55.326528",
+    "last_updated": "2025-09-12T19:21:15.574697",
     "modalities": [
       "image-to-video"
     ]
@@ -274,7 +261,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://storage.googleapis.com/falserverless/kling/kling_i2v_output.mp4\"}}",
     "generation_latency": "10s",
     "description": "Generate video clips from your images using Kling 1.6 (pro)",
-    "last_updated": "2025-08-31T19:46:56.650758",
+    "last_updated": "2025-09-12T19:21:16.376375",
     "modalities": [
       "image-to-video"
     ]
@@ -290,12 +277,12 @@
     "api_schema": "{\"audio\":{\"file_size\":584109,\"duration\":24.3,\"file_name\":\"33dd5f07-f834-4080-aaac-4a253ce1660b.mp3\",\"content_type\":\"audio/mpeg\",\"url\":\"https://fal-api-audio-uploads.s3.amazonaws.com/33dd5f07-f834-4080-aaac-4a253ce1660b.mp3\"}}",
     "generation_latency": null,
     "description": "Generate natural-sounding multi-speaker dialogues, and audio. Perfect for expressive outputs, storytelling, games, animations, and interactive media.",
-    "last_updated": "2025-08-31T19:46:57.538086"
+    "last_updated": "2025-09-12T19:21:17.517193"
   },
   "fal-ai/flux-pro/v1.1-ultra": {
     "raw": {
       "endpoint": "fal-ai/flux-pro/v1.1-ultra",
-      "price": "self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$La\\\",null,{\\\"buildId\\\":\\\"wP_HRgUAR58HThH7m5tHZ\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"models\\\",\\\"fal-ai\\\",\\\"flux-pro\\\",\\\"v1.1-ultra\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fflux-pro%2Fv1.1-ultra\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fflux-pro%2Fv1.1-ultra\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$Lb\\\",\\\"$Lc\\\",null],null],null]},[[null,\\\"$Ld\\\"],null],null]},[null,[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"models\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/00b00e41a5072d35.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/5aad38425d209400.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"className\\\":\\\"__variable_5e98b6 __variable_31ce7f __variable_2ad14d __variable_054e7a\\\",\\\"suppressHydrationWarning\\\":true,\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"href\\\":\\\"/favicon.png\\\",\\\"rel\\\":\\\"shortcut icon\\\",\\\"type\\\":\\\"image/x-icon\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"href\\\":\\\"/apple-touch-icon.png\\\",\\\"rel\\\":\\\"apple-touch-icon\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"sitemap\\\",\\\"type\\\":\\\"application/xml\\\",\\\"title\\\":\\\"fal.ai sitemap\\\",\\\"href\\\":\\\"/sitemap.xml\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[[\\\"$\\\",\\\"script\\\",null,{\\\"defer\\\":true,\\\"data-domain\\\":\\\"fal.ai\\\",\\\"src\\\":\\\"https://plausible.io/js/script.tagged-events.js\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }\\\"}}]],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"msvalidate.01\\\",\\\"content\\\":\\\"987496805F82711F23F544ACCFA42B9D\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"suppressHydrationWarning\\\":true,\\\"className\\\":\\\"bg-surface-300\\\",\\\"children\\\":[[[\\\"$\\\",\\\"script\\\",null,{\\\"async\\\":true,\\\"src\\\":\\\"https://www.googletagmanager.com/gtag/js?id=G-HRNLRXZ833\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.dataLayer = window.dataLayer || [];\\\\nfunction gtag(){dataLayer.push(arguments);}\\\\ngtag('js', new Date());\\\\n\\\\ngtag('config', 'G-HRNLRXZ833');\\\"}}]],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(t){var k=\\\\\\\"ko\\\\\\\",i=(window.globalKoalaKey=window.globalKoalaKey||k);if(window[i])return;var ko=(window[i]=[]);[\\\\\\\"identify\\\\\\\",\\\\\\\"track\\\\\\\",\\\\\\\"removeListeners\\\\\\\",\\\\\\\"on\\\\\\\",\\\\\\\"off\\\\\\\",\\\\\\\"qualify\\\\\\\",\\\\\\\"ready\\\\\\\"].forEach(function(t){ko[t]=function(){var n=[].slice.call(arguments);return n.unshift(t),ko.push(n),ko}});var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://cdn.getkoala.com/v1/pk_f63728be455c83e0e4bf62a608599ea7eb65/sdk.js\\\\\\\"),(document.body || document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(){var e=[\\\\\\\"identify\\\\\\\",\\\\\\\"page\\\\\\\",\\\\\\\"startAutoPage\\\\\\\",\\\\\\\"stopAutoPage\\\\\\\",\\\\\\\"startAutoIdentify\\\\\\\",\\\\\\\"stopAutoIdentify\\\\\\\"];function t(o){return Object.assign([],e.reduce(function(r,n){return r[n]=function(){return o.push([n,[].slice.call(arguments)]),o},r},{}))}window.unify||(window.unify=t(window.unify)),window.unifyBrowser||(window.unifyBrowser=t(window.unifyBrowser));var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://tag.unifyintent.com/v1/StYP4Vo8FEq9BUGubFFci3/script.js\\\\\\\"),n.setAttribute(\\\\\\\"data-api-key\\\\\\\",\\\\\\\"wk_WBAvxinW_7ggin1XjVGpqtQCYUPas3E18tLs3CbNd\\\\\\\"),n.setAttribute(\\\\\\\"id\\\\\\\",\\\\\\\"unifytag\\\\\\\"),(document.body||document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"$L10\\\",null,{\\\"children\\\":\\\"$L11\\\"}],[\\\"$\\\",\\\"$L12\\\",null,{}]]}]]}]],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$L13\\\"],\\\"globalErrorComponent\\\":\\\"$14\\\",\\\"missingSlots\\\":\\\"$W15\\\"}]\\n\"]) self.__next_f.push([1,\"atic/chunks/29763-485d276d6b46af69.js\\\",\\\"82957\\\",\\\"static/chunks/82957-aef5ae7f4ee19098.js\\\",\\\"975\\\",\\\"static/chunks/975-a927bcf9a181e846.js\\\",\\\"97276\\\",\\\"static/chunks/97276-e9279d074eb7a01a.js\\\",\\\"99395\\\",\\\"static/chunks/99395-5ec95ac3e3d22803.js\\\",\\\"95243\\\",\\\"static/chunks/95243-429bd7cd04b4412f.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-588dd06516a4f43d.js\\\"],\\\"PlausibleSignupTracker\\\"]\\n11:[\\\"$\\\",\\\"$L16\\\",null,{\\\"user\\\":null,\\\"children\\\":[[\\\"$\\\",\\\"$L17\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$18\\\",\\\"errorStyles\\\":[],\\\"errorScripts\\\":[],\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[\\\"$\\\",\\\"$L19\\\",null,{}],\\\"notFoundStyles\\\":[]}]}],[\\\"$\\\",\\\"$L1a\\\",null,{}]]}]\\n\"])"
+      "price": "self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$La\\\",null,{\\\"buildId\\\":\\\"bEFZ-6zB0N3kuYE1PF4h0\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"models\\\",\\\"fal-ai\\\",\\\"flux-pro\\\",\\\"v1.1-ultra\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fflux-pro%2Fv1.1-ultra\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fflux-pro%2Fv1.1-ultra\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$Lb\\\",\\\"$Lc\\\",null],null],null]},[[null,\\\"$Ld\\\"],null],null]},[null,[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"models\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f6c90280273a8732.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f20ee124b4f16e82.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"className\\\":\\\"__variable_5e98b6 __variable_31ce7f __variable_2ad14d __variable_054e7a\\\",\\\"suppressHydrationWarning\\\":true,\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"sitemap\\\",\\\"type\\\":\\\"application/xml\\\",\\\"title\\\":\\\"fal.ai sitemap\\\",\\\"href\\\":\\\"/sitemap.xml\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[[\\\"$\\\",\\\"script\\\",null,{\\\"defer\\\":true,\\\"data-domain\\\":\\\"fal.ai\\\",\\\"src\\\":\\\"https://plausible.io/js/script.tagged-events.js\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }\\\"}}]],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"msvalidate.01\\\",\\\"content\\\":\\\"987496805F82711F23F544ACCFA42B9D\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"suppressHydrationWarning\\\":true,\\\"className\\\":\\\"bg-surface-300\\\",\\\"children\\\":[[[\\\"$\\\",\\\"script\\\",null,{\\\"async\\\":true,\\\"src\\\":\\\"https://www.googletagmanager.com/gtag/js?id=G-HRNLRXZ833\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.dataLayer = window.dataLayer || [];\\\\nfunction gtag(){dataLayer.push(arguments);}\\\\ngtag('js', new Date());\\\\n\\\\ngtag('config', 'G-HRNLRXZ833');\\\"}}]],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(t){var k=\\\\\\\"ko\\\\\\\",i=(window.globalKoalaKey=window.globalKoalaKey||k);if(window[i])return;var ko=(window[i]=[]);[\\\\\\\"identify\\\\\\\",\\\\\\\"track\\\\\\\",\\\\\\\"removeListeners\\\\\\\",\\\\\\\"on\\\\\\\",\\\\\\\"off\\\\\\\",\\\\\\\"qualify\\\\\\\",\\\\\\\"ready\\\\\\\"].forEach(function(t){ko[t]=function(){var n=[].slice.call(arguments);return n.unshift(t),ko.push(n),ko}});var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://cdn.getkoala.com/v1/pk_f63728be455c83e0e4bf62a608599ea7eb65/sdk.js\\\\\\\"),(document.body || document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(){var e=[\\\\\\\"identify\\\\\\\",\\\\\\\"page\\\\\\\",\\\\\\\"startAutoPage\\\\\\\",\\\\\\\"stopAutoPage\\\\\\\",\\\\\\\"startAutoIdentify\\\\\\\",\\\\\\\"stopAutoIdentify\\\\\\\"];function t(o){return Object.assign([],e.reduce(function(r,n){return r[n]=function(){return o.push([n,[].slice.call(arguments)]),o},r},{}))}window.unify||(window.unify=t(window.unify)),window.unifyBrowser||(window.unifyBrowser=t(window.unifyBrowser));var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://tag.unifyintent.com/v1/StYP4Vo8FEq9BUGubFFci3/script.js\\\\\\\"),n.setAttribute(\\\\\\\"data-api-key\\\\\\\",\\\\\\\"wk_WBAvxinW_7ggin1XjVGpqtQCYUPas3E18tLs3CbNd\\\\\\\"),n.setAttribute(\\\\\\\"id\\\\\\\",\\\\\\\"unifytag\\\\\\\"),(document.body||document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"$L10\\\",null,{\\\"children\\\":\\\"$L11\\\"}],[\\\"$\\\",\\\"$L12\\\",null,{}]]}]]}]],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$L13\\\"],\\\"globalErrorComponent\\\":\\\"$14\\\",\\\"missingSlots\\\":\\\"$W15\\\"}]\\n\"]) self.__next_f.push([1,\"/chunks/34319-e3225e32392b9831.js\\\",\\\"27353\\\",\\\"static/chunks/27353-b635e10b689032a0.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-92a1553fe539907e.js\\\"],\\\"default\\\"]\\n19:I[10376,[\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"27648\\\",\\\"static/chunks/27648-4f4c86cb7287bcb9.js\\\",\\\"97601\\\",\\\"static/chunks/app/error-bf331a31d63973ed.js\\\"],\\\"default\\\"]\\n1a:I[75292,[\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"66022\\\",\\\"static/chunks/66022-cd33073a8222031c.js\\\",\\\"15679\\\",\\\"static/chunks/15679-01fae0230efd6e57.js\\\",\\\"27648\\\",\\\"static/chunks/27648-4f4c86cb7287bcb9.js\\\",\\\"37813\\\",\\\"static/chunks/37813-10db322c6c51f3a4.js\\\",\\\"80602\\\",\\\"static/chunks/80602-d1638fb628cbd5e5.js\\\",\\\"4859\\\",\\\"static/chunks/4859-05e2d7ce218b18fd.js\\\",\\\"44642\\\",\\\"static/chunks/44642-5b67c5957602ff66.js\\\",\\\"34319\\\",\\\"static/chunks/34319-e3225e32392b9831.js\\\",\\\"29160\\\",\\\"static/chunks/app/not-found-5732728dbd8d4b99.js\\\"],\\\"default\\\"]\\n1b:I[60141,[\\\"35878\\\",\\\"static/chunks/9da6db1e-c3308e728af630be.js\\\",\\\"95840\\\",\\\"static/chunks/95840-20a772cd82367ed7.js\\\",\\\"39754\\\",\\\"static/chunks/39754-c01ee82abf152375.js\\\",\\\"66022\\\",\\\"static/chunks/66022-cd33073a8222031c.js\\\",\\\"37813\\\",\\\"static/chunks/37813-10db322c6c51f3a4.js\\\",\\\"29763\\\",\\\"static/chunks/29763-3a3d232570f46279.js\\\",\\\"975\\\",\\\"static/chunks/975-b187f347639c8c6b.js\\\",\\\"82957\\\",\\\"static/chunks/82957-aef5ae7f4ee19098.js\\\",\\\"97276\\\",\\\"static/chunks/97276-d8c49311173a49ea.js\\\",\\\"67119\\\",\\\"static/chunks/67119-ddb68bb1a7aaaa65.js\\\",\\\"38119\\\",\\\"static/chunks/38119-e82ab60e94ec8fbd.js\\\",\\\"34319\\\",\\\"static/chunks/34319-e3225e32392b9831.js\\\",\\\"27353\\\",\\\"static/chunks/27353-b635e10b689032a0.js\\\",\\\"63185\\\",\\\"static/chunks/app/layout-92a1553fe539907e.js\\\"],\\\"PlausibleSignupTracker\\\"]\\n11:[\\\"$\\\",\\\"$L16\\\",null,{\\\"user\\\":null,\\\"children\\\":[[\\\"$\\\",\\\"$L17\\\",null,{}],[\\\"$\\\",\\\"$L18\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$19\\\",\\\"errorStyles\\\":[],\\\"errorScripts\\\":[],\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[\\\"$\\\",\\\"$L1a\\\",null,{}],\\\"n\"])"
     },
     "source": "https://fal.ai/models/fal-ai/flux-pro/v1.1-ultra",
     "api_identifier": "fal",
@@ -303,7 +290,7 @@
     "api_schema": "{\"images\":[{\"url\":\"\",\"content_type\":\"image/jpeg\"}],\"prompt\":\"\"}",
     "generation_latency": null,
     "description": "FLUX1.1 [pro] ultra is the newest version of FLUX1.1 [pro], maintaining professional-grade image quality while delivering up to 2K resolution with improved photo realism.",
-    "last_updated": "2025-08-31T19:46:58.154708",
+    "last_updated": "2025-09-12T19:21:18.478974",
     "modalities": [
       "v1.1-ultra"
     ]
@@ -319,9 +306,25 @@
     "api_schema": "{\"images\":[{\"url\":\"https://fal.media/files/penguin/852yy3l5DGLmrwAK42RTB_image.webp\"}]}",
     "generation_latency": null,
     "description": "Recraft V3 is a text-to-image model with the ability to generate long texts, vector art, images in brand style, and much more. As of today, it is SOTA in image generation, proven by Hugging Face's industry-leading Text-to-Image Benchmark by Artificial Analysis.",
-    "last_updated": "2025-08-31T19:46:58.717397",
+    "last_updated": "2025-09-12T19:21:19.244244",
     "modalities": [
       "text-to-image"
+    ]
+  },
+  "fal-ai/minimax/video-01/image-to-video": {
+    "raw": {
+      "endpoint": "fal-ai/minimax/video-01/image-to-video",
+      "price": "$0.5 per video self.__next_f.push([1,\"0:[\\\"$\\\",\\\"$La\\\",null,{\\\"buildId\\\":\\\"bEFZ-6zB0N3kuYE1PF4h0\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"urlParts\\\":[\\\"\\\",\\\"models\\\",\\\"fal-ai\\\",\\\"minimax\\\",\\\"video-01\\\",\\\"image-to-video\\\"],\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fminimax%2Fvideo-01%2Fimage-to-video\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"models\\\",{\\\"children\\\":[[\\\"endpointId\\\",\\\"fal-ai%2Fminimax%2Fvideo-01%2Fimage-to-video\\\",\\\"d\\\"],{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$Lb\\\",\\\"$Lc\\\",null],null],null]},[[null,\\\"$Ld\\\"],null],null]},[null,[\\\"$\\\",\\\"$Le\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"models\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$Lf\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\"}]],null]},[[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f6c90280273a8732.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/f20ee124b4f16e82.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"className\\\":\\\"__variable_5e98b6 __variable_31ce7f __variable_2ad14d __variable_054e7a\\\",\\\"suppressHydrationWarning\\\":true,\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"sitemap\\\",\\\"type\\\":\\\"application/xml\\\",\\\"title\\\":\\\"fal.ai sitemap\\\",\\\"href\\\":\\\"/sitemap.xml\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[[\\\"$\\\",\\\"script\\\",null,{\\\"defer\\\":true,\\\"data-domain\\\":\\\"fal.ai\\\",\\\"src\\\":\\\"https://plausible.io/js/script.tagged-events.js\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }\\\"}}]],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"msvalidate.01\\\",\\\"content\\\":\\\"987496805F82711F23F544ACCFA42B9D\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"suppressHydrationWarning\\\":true,\\\"className\\\":\\\"bg-surface-300\\\",\\\"children\\\":[[[\\\"$\\\",\\\"script\\\",null,{\\\"async\\\":true,\\\"src\\\":\\\"https://www.googletagmanager.com/gtag/js?id=G-HRNLRXZ833\\\"}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"window.dataLayer = window.dataLayer || [];\\\\nfunction gtag(){dataLayer.push(arguments);}\\\\ngtag('js', new Date());\\\\n\\\\ngtag('config', 'G-HRNLRXZ833');\\\"}}]],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(t){var k=\\\\\\\"ko\\\\\\\",i=(window.globalKoalaKey=window.globalKoalaKey||k);if(window[i])return;var ko=(window[i]=[]);[\\\\\\\"identify\\\\\\\",\\\\\\\"track\\\\\\\",\\\\\\\"removeListeners\\\\\\\",\\\\\\\"on\\\\\\\",\\\\\\\"off\\\\\\\",\\\\\\\"qualify\\\\\\\",\\\\\\\"ready\\\\\\\"].forEach(function(t){ko[t]=function(){var n=[].slice.call(arguments);return n.unshift(t),ko.push(n),ko}});var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://cdn.getkoala.com/v1/pk_f63728be455c83e0e4bf62a608599ea7eb65/sdk.js\\\\\\\"),(document.body || document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"script\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"!function(){var e=[\\\\\\\"identify\\\\\\\",\\\\\\\"page\\\\\\\",\\\\\\\"startAutoPage\\\\\\\",\\\\\\\"stopAutoPage\\\\\\\",\\\\\\\"startAutoIdentify\\\\\\\",\\\\\\\"stopAutoIdentify\\\\\\\"];function t(o){return Object.assign([],e.reduce(function(r,n){return r[n]=function(){return o.push([n,[].slice.call(arguments)]),o},r},{}))}window.unify||(window.unify=t(window.unify)),window.unifyBrowser||(window.unifyBrowser=t(window.unifyBrowser));var n=document.createElement(\\\\\\\"script\\\\\\\");n.async=!0,n.setAttribute(\\\\\\\"src\\\\\\\",\\\\\\\"https://tag.unifyintent.com/v1/StYP4Vo8FEq9BUGubFFci3/script.js\\\\\\\"),n.setAttribute(\\\\\\\"data-api-key\\\\\\\",\\\\\\\"wk_WBAvxinW_7ggin1XjVGpqtQCYUPas3E18tLs3CbNd\\\\\\\"),n.setAttribute(\\\\\\\"id\\\\\\\",\\\\\\\"unifytag\\\\\\\"),(document.body||document.head).appendChild(n)}();\\\"}}],[\\\"$\\\",\\\"$L10\\\",null,{\\\"children\\\":\\\"$L11\\\"}],[\\\"$\\\",\\\"$L12\\\",null,{}]]}]]}]],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[null,\\\"$L13\\\"],\\\"globalErrorComponent\\\":\\\"$14\\\",\\\"missingSlots\\\":\\\"$W15\\\"}]\\n\"])"
+    },
+    "source": "https://fal.ai/models/fal-ai/minimax/video-01/image-to-video",
+    "api_identifier": "fal",
+    "service_type": "api_endpoint",
+    "api_schema": "{\"video\":{\"url\":\"https://fal.media/files/monkey/vNZqQV_WgC9MhoidClLyw_output.mp4\"}}",
+    "generation_latency": "6s",
+    "description": "Generate video clips from your images using MiniMax Video model",
+    "last_updated": "2025-09-12T19:21:20.551766",
+    "modalities": [
+      "image-to-video"
     ]
   },
   "hedra": {
@@ -338,7 +341,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:59.942819"
+    "last_updated": "2025-09-12T19:21:21.725895"
   },
   "elevenlabs-free": {
     "raw": {
@@ -356,7 +359,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139581"
+    "last_updated": "2025-09-12T19:21:21.980932"
   },
   "elevenlabs-starter": {
     "raw": {
@@ -374,7 +377,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139606"
+    "last_updated": "2025-09-12T19:21:21.980946"
   },
   "elevenlabs-creator": {
     "raw": {
@@ -392,7 +395,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139616"
+    "last_updated": "2025-09-12T19:21:21.980948"
   },
   "elevenlabs-pro": {
     "raw": {
@@ -410,7 +413,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139624"
+    "last_updated": "2025-09-12T19:21:21.980950"
   },
   "elevenlabs-scale": {
     "raw": {
@@ -427,7 +430,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139630"
+    "last_updated": "2025-09-12T19:21:21.980952"
   },
   "elevenlabs-business": {
     "raw": {
@@ -444,7 +447,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139638"
+    "last_updated": "2025-09-12T19:21:21.980954"
   },
   "Gemini 2.5 Pro": {
     "raw": {
@@ -481,7 +484,57 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.836195"
+    "last_updated": "2025-09-12T19:21:22.542289"
+  },
+  "Standard": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Free of charge",
+        "Paid Tier, per 1M tokens in USD": "$0.15"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ],
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint",
+    "api_schema": null,
+    "generation_latency": null,
+    "description": null,
+    "last_updated": "2025-09-12T19:21:22.549398"
+  },
+  "Batch": {
+    "raw": {
+      "Input price": {
+        "Free Tier": "Not available",
+        "Paid Tier, per 1M tokens in USD": "$0.075"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per 1M tokens in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ],
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint",
+    "api_schema": null,
+    "generation_latency": null,
+    "description": null,
+    "last_updated": "2025-09-12T19:21:22.549535"
   },
   "Gemini 2.5 Flash": {
     "raw": {
@@ -522,7 +575,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.837006"
+    "last_updated": "2025-09-12T19:21:22.543070"
   },
   "Gemini 2.5 Flash-Lite": {
     "raw": {
@@ -559,7 +612,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.837720"
+    "last_updated": "2025-09-12T19:21:22.543862"
   },
   "Gemini 2.5 Flash Native Audio": {
     "raw": {
@@ -588,7 +641,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.838283"
+    "last_updated": "2025-09-12T19:21:22.544520"
   },
   "Gemini 2.5 Flash Image Preview": {
     "raw": {
@@ -617,7 +670,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.838754"
+    "last_updated": "2025-09-12T19:21:22.544695"
   },
   "Gemini 2.5 Flash Preview TTS": {
     "raw": {
@@ -646,7 +699,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.839211"
+    "last_updated": "2025-09-12T19:21:22.545211"
   },
   "Gemini 2.5 Pro Preview TTS": {
     "raw": {
@@ -675,7 +728,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.839668"
+    "last_updated": "2025-09-12T19:21:22.545724"
   },
   "Gemini 2.0 Flash": {
     "raw": {
@@ -728,7 +781,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.840672"
+    "last_updated": "2025-09-12T19:21:22.546418"
   },
   "Gemini 2.0 Flash-Lite": {
     "raw": {
@@ -773,7 +826,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.841577"
+    "last_updated": "2025-09-12T19:21:22.547664"
   },
   "Imagen 4": {
     "raw": {
@@ -806,7 +859,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.842621"
+    "last_updated": "2025-09-12T19:21:22.548559"
   },
   "Imagen 3": {
     "raw": {
@@ -831,34 +884,9 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.843317"
+    "last_updated": "2025-09-12T19:21:22.548699"
   },
-  "Veo 3 Preview": {
-    "raw": {
-      "Video with audio price (default)": {
-        "Free Tier": "Not available",
-        "Paid Tier, per second in USD": "$0.75"
-      },
-      "Used to improve our products": {
-        "Free Tier": "Yes",
-        "Paid Tier, per second in USD": "No"
-      }
-    },
-    "source": "https://ai.google.dev/pricing",
-    "modalities": [
-      "text-to-text",
-      "image-to-text",
-      "audio-to-text",
-      "video-to-text"
-    ],
-    "api_identifier": "gemini",
-    "service_type": "api_endpoint",
-    "api_schema": null,
-    "generation_latency": null,
-    "description": null,
-    "last_updated": "2025-08-31T19:47:01.843799"
-  },
-  "Veo 3 Fast Preview": {
+  "Veo 3": {
     "raw": {
       "Video with audio price (default)": {
         "Free Tier": "Not available",
@@ -881,7 +909,32 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.844281"
+    "last_updated": "2025-09-12T19:21:22.548838"
+  },
+  "Veo 3 Fast": {
+    "raw": {
+      "Video with audio price (default)": {
+        "Free Tier": "Not available",
+        "Paid Tier, per second in USD": "$0.15"
+      },
+      "Used to improve our products": {
+        "Free Tier": "Yes",
+        "Paid Tier, per second in USD": "No"
+      }
+    },
+    "source": "https://ai.google.dev/pricing",
+    "modalities": [
+      "text-to-text",
+      "image-to-text",
+      "audio-to-text",
+      "video-to-text"
+    ],
+    "api_identifier": "gemini",
+    "service_type": "api_endpoint",
+    "api_schema": null,
+    "generation_latency": null,
+    "description": null,
+    "last_updated": "2025-09-12T19:21:22.548980"
   },
   "Veo 2": {
     "raw": {
@@ -906,7 +959,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.844755"
+    "last_updated": "2025-09-12T19:21:22.549120"
   },
   "Gemini Embedding": {
     "raw": {
@@ -931,7 +984,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.845149"
+    "last_updated": "2025-09-12T19:21:22.549264"
   },
   "Gemma 3": {
     "raw": {
@@ -976,7 +1029,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.845942"
+    "last_updated": "2025-09-12T19:21:22.549817"
   },
   "Gemma 3n": {
     "raw": {
@@ -1021,7 +1074,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.846797"
+    "last_updated": "2025-09-12T19:21:22.550094"
   },
   "Gemini 1.5 Flash": {
     "raw": {
@@ -1066,7 +1119,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.847658"
+    "last_updated": "2025-09-12T19:21:22.550443"
   },
   "Gemini 1.5 Flash-8B": {
     "raw": {
@@ -1111,7 +1164,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.848560"
+    "last_updated": "2025-09-12T19:21:22.550908"
   },
   "Gemini 1.5 Pro": {
     "raw": {
@@ -1156,6 +1209,6 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.849500"
+    "last_updated": "2025-09-12T19:21:22.551297"
   }
 }
