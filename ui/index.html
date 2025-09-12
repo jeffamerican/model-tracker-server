@@ -328,6 +328,17 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-color: #1976d2;
+        }
+        .stat-card:active {
+            transform: translateY(0);
         }
         .stat-number {
             font-size: 24px;
@@ -356,6 +367,38 @@
             font-size: 11px;
             color: #666;
             margin-top: 2px;
+        }
+        .service-list-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-list-item:last-child {
+            border-bottom: none;
+        }
+        .service-list-item:hover {
+            background-color: #f8f9fa;
+        }
+        .service-name {
+            font-weight: 600;
+            color: #1976d2;
+            font-size: 14px;
+        }
+        .service-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+        .service-provider, .service-modalities, .service-count, .service-types, .service-providers {
+            font-size: 12px;
+            color: #666;
+        }
+        .service-count {
+            font-weight: 600;
+            color: #1976d2;
         }
         .new-badge {
             background: #ff9800;
@@ -546,6 +589,13 @@
         <div class="modal-content">
             <span id="modalClose" class="modal-close">&times;</span>
             <div id="modalBody"></div>
+        </div>
+    </div>
+    <div id="serviceListModal" class="modal">
+        <div class="modal-content">
+            <span id="serviceListModalClose" class="modal-close">&times;</span>
+            <h2 id="serviceListTitle"></h2>
+            <div id="serviceListBody"></div>
         </div>
     </div>
     <div class="main-container">
@@ -777,23 +827,23 @@
             const totalProviders = allProviders.size;
 
             statsDiv.innerHTML = `
-                <div class="stat-card">
+                <div class="stat-card" onclick="showServiceList('all', 'All Services')">
                     <div class="stat-number">${totalModels}</div>
                     <div class="stat-label">Total Services</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" onclick="showServiceList('api_endpoint', 'API Endpoints')">
                     <div class="stat-number">${apiEndpoints}</div>
                     <div class="stat-label">API Endpoints</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" onclick="showServiceList('server_rental', 'Server Rentals')">
                     <div class="stat-number">${serverRentals}</div>
                     <div class="stat-label">Server Rentals</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" onclick="showProviderList()">
                     <div class="stat-number">${totalProviders}</div>
                     <div class="stat-label">Providers</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" onclick="showModalityList()">
                     <div class="stat-number">${totalModalities}</div>
                     <div class="stat-label">Modalities</div>
                 </div>
@@ -1445,12 +1495,108 @@
         document.getElementById('modalClose').onclick = () => {
             document.getElementById('detailsModal').style.display = 'none';
         };
+        document.getElementById('serviceListModalClose').onclick = () => {
+            document.getElementById('serviceListModal').style.display = 'none';
+        };
         window.addEventListener('click', (event) => {
             const modal = document.getElementById('detailsModal');
+            const serviceModal = document.getElementById('serviceListModal');
             if (event.target === modal) {
                 modal.style.display = 'none';
             }
+            if (event.target === serviceModal) {
+                serviceModal.style.display = 'none';
+            }
         });
+
+        function showServiceList(serviceType, title) {
+            const modal = document.getElementById('serviceListModal');
+            const modalTitle = document.getElementById('serviceListTitle');
+            const modalBody = document.getElementById('serviceListBody');
+            
+            modalTitle.textContent = title;
+            
+            let filteredData;
+            if (serviceType === 'all') {
+                filteredData = tableData;
+            } else {
+                filteredData = tableData.filter(item => item.serviceType === serviceType);
+            }
+            
+            const html = filteredData.map(item => `
+                <div class="service-list-item">
+                    <div class="service-name">${item.modelId}</div>
+                    <div class="service-details">
+                        <span class="service-provider">${item.apiIdentifier}</span>
+                        <span class="service-modalities">${item.modalities.join(', ')}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            modalBody.innerHTML = html || '<p>No services found.</p>';
+            modal.style.display = 'flex';
+        }
+
+        function showProviderList() {
+            const modal = document.getElementById('serviceListModal');
+            const modalTitle = document.getElementById('serviceListTitle');
+            const modalBody = document.getElementById('serviceListBody');
+            
+            modalTitle.textContent = 'Data Providers';
+            
+            const providerStats = {};
+            tableData.forEach(item => {
+                const provider = item.apiIdentifier;
+                if (!providerStats[provider]) {
+                    providerStats[provider] = [];
+                }
+                providerStats[provider].push(item);
+            });
+            
+            const html = Object.entries(providerStats).map(([provider, services]) => `
+                <div class="service-list-item">
+                    <div class="service-name">${provider}</div>
+                    <div class="service-details">
+                        <span class="service-count">${services.length} services</span>
+                        <span class="service-types">${[...new Set(services.map(s => s.serviceType))].join(', ')}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            modalBody.innerHTML = html || '<p>No providers found.</p>';
+            modal.style.display = 'flex';
+        }
+
+        function showModalityList() {
+            const modal = document.getElementById('serviceListModal');
+            const modalTitle = document.getElementById('serviceListTitle');
+            const modalBody = document.getElementById('serviceListBody');
+            
+            modalTitle.textContent = 'Available Modalities';
+            
+            const modalityStats = {};
+            tableData.forEach(item => {
+                item.modalities.forEach(modality => {
+                    if (!modalityStats[modality]) {
+                        modalityStats[modality] = [];
+                    }
+                    modalityStats[modality].push(item);
+                });
+            });
+            
+            const html = Object.entries(modalityStats).map(([modality, services]) => `
+                <div class="service-list-item">
+                    <div class="service-name">${modality}</div>
+                    <div class="service-details">
+                        <span class="service-count">${services.length} services</span>
+                        <span class="service-providers">${[...new Set(services.map(s => s.apiIdentifier))].join(', ')}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            modalBody.innerHTML = html || '<p>No modalities found.</p>';
+            modal.style.display = 'flex';
+        }
 
         // Load pricing data on page load
         loadPricing();
