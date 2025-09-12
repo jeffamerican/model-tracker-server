@@ -12,7 +12,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013649"
+    "last_updated": "2025-08-31T20:21:49.526455"
   },
   "H200": {
     "raw": {
@@ -27,7 +27,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013673"
+    "last_updated": "2025-08-31T20:21:49.526455"
   },
   "A100": {
     "raw": {
@@ -42,7 +42,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013698"
+    "last_updated": "2025-08-31T20:21:49.526455"
   },
   "B200": {
     "raw": {
@@ -57,7 +57,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.013702"
+    "last_updated": "2025-08-31T20:21:49.526455"
   },
   "Hunyuan Video": {
     "raw": {
@@ -72,7 +72,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014710",
+    "last_updated": "2025-08-31T20:21:49.527455",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -91,7 +91,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014719",
+    "last_updated": "2025-08-31T20:21:49.527455",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -110,7 +110,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014723",
+    "last_updated": "2025-08-31T20:21:49.527455",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -129,7 +129,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014727",
+    "last_updated": "2025-08-31T20:21:49.527455",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -148,7 +148,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014731",
+    "last_updated": "2025-08-31T20:21:49.527455",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -167,7 +167,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:49.014734",
+    "last_updated": "2025-08-31T20:21:49.527455",
     "modalities": [
       "text-to-video",
       "image-to-video"
@@ -176,7 +176,7 @@
   "fal-ai/flux-pro/kontext": {
     "raw": {
       "endpoint": "fal-ai/flux-pro/kontext",
-      "price": "Your request will cost $0.04 per image. Our transparent, per-image pricing makes it cost-effective for both experimentation and production use Fixed $0.04 cost per image edit"
+      "price": "$? $?"
     },
     "source": "https://fal.ai/models/fal-ai/flux-pro/kontext",
     "api_identifier": "fal",
@@ -184,7 +184,7 @@
     "api_schema": "{\"images\":[{\"height\":1024,\"url\":\"https://fal.media/files/tiger/7dSJbIU_Ni-0Zp9eaLsvR_fe56916811d84ac69c6ffc0d32dca151.jpg\",\"width\":1024}],\"prompt\":\"\"}",
     "generation_latency": null,
     "description": "FLUX.1 Kontext [pro] handles both text and reference images as inputs, seamlessly enabling targeted, local edits and complex transformations of entire scenes.",
-    "last_updated": "2025-08-31T19:46:50.094860"
+    "last_updated": "2025-08-31T20:21:50.526031"
   },
   "fal-ai/imagen4/preview": {
     "raw": {
@@ -197,7 +197,7 @@
     "api_schema": "{\"images\":[{\"url\":\"https://v3.fal.media/files/rabbit/rmgBxhwGYb2d3pl3x9sKf_output.png\"}],\"seed\":42}",
     "generation_latency": "1960s",
     "description": "Google\u2019s highest quality image generation model",
-    "last_updated": "2025-08-31T19:46:52.248034"
+    "last_updated": "2025-08-31T20:21:51.428726"
   },
   "fal-ai/kling-video/v2/master/image-to-video": {
     "raw": {
@@ -210,7 +210,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://v3.fal.media/files/koala/VvGXP5xEhTR9ovGjpulJ7_output.mp4\"}}",
     "generation_latency": "5s",
     "description": "Create premium videos with Kling AI 2.0 Master. Highest quality image-to-video generation, enhanced motion, cinematic results. $1.00/video.",
-    "last_updated": "2025-08-31T19:46:53.244345",
+    "last_updated": "2025-08-31T20:21:52.808276",
     "modalities": [
       "image-to-video"
     ]
@@ -226,7 +226,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://storage.googleapis.com/falserverless/web-examples/wan-effects/cat_video.mp4\"}}",
     "generation_latency": null,
     "description": "Wan Effects generates high-quality videos with popular effects from images",
-    "last_updated": "2025-08-31T19:46:54.104230",
+    "last_updated": "2025-08-31T20:21:53.575298",
     "modalities": [
       "wan-effects"
     ]
@@ -242,7 +242,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://fal.media/files/kangaroo/K1hB3k-IXBzq9rz1kNOxy.mp4\"}}",
     "generation_latency": "6s",
     "description": "Wan-2.1 Pro is a premium image-to-video model that generates high-quality 1080p videos at 30fps with up to 6 seconds duration, delivering exceptional visual quality and motion diversity from images",
-    "last_updated": "2025-08-31T19:46:54.738583",
+    "last_updated": "2025-08-31T20:21:54.170631",
     "modalities": [
       "image-to-video"
     ]
@@ -258,7 +258,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://v3.fal.media/files/monkey/jOYy3rvGB33vumzulpXd5_output.mp4\"}}",
     "generation_latency": "5s",
     "description": "Transform images into videos with Google Veo 2. Realistic motion, high-quality output, up to 8-second clips. Commercial use allowed. Try demo now.",
-    "last_updated": "2025-08-31T19:46:55.326528",
+    "last_updated": "2025-08-31T20:21:54.876189",
     "modalities": [
       "image-to-video"
     ]
@@ -274,7 +274,7 @@
     "api_schema": "{\"video\":{\"url\":\"https://storage.googleapis.com/falserverless/kling/kling_i2v_output.mp4\"}}",
     "generation_latency": "10s",
     "description": "Generate video clips from your images using Kling 1.6 (pro)",
-    "last_updated": "2025-08-31T19:46:56.650758",
+    "last_updated": "2025-08-31T20:21:55.626597",
     "modalities": [
       "image-to-video"
     ]
@@ -290,7 +290,7 @@
     "api_schema": "{\"audio\":{\"file_size\":584109,\"duration\":24.3,\"file_name\":\"33dd5f07-f834-4080-aaac-4a253ce1660b.mp3\",\"content_type\":\"audio/mpeg\",\"url\":\"https://fal-api-audio-uploads.s3.amazonaws.com/33dd5f07-f834-4080-aaac-4a253ce1660b.mp3\"}}",
     "generation_latency": null,
     "description": "Generate natural-sounding multi-speaker dialogues, and audio. Perfect for expressive outputs, storytelling, games, animations, and interactive media.",
-    "last_updated": "2025-08-31T19:46:57.538086"
+    "last_updated": "2025-08-31T20:21:56.385918"
   },
   "fal-ai/flux-pro/v1.1-ultra": {
     "raw": {
@@ -303,7 +303,7 @@
     "api_schema": "{\"images\":[{\"url\":\"\",\"content_type\":\"image/jpeg\"}],\"prompt\":\"\"}",
     "generation_latency": null,
     "description": "FLUX1.1 [pro] ultra is the newest version of FLUX1.1 [pro], maintaining professional-grade image quality while delivering up to 2K resolution with improved photo realism.",
-    "last_updated": "2025-08-31T19:46:58.154708",
+    "last_updated": "2025-08-31T20:21:57.158871",
     "modalities": [
       "v1.1-ultra"
     ]
@@ -319,7 +319,7 @@
     "api_schema": "{\"images\":[{\"url\":\"https://fal.media/files/penguin/852yy3l5DGLmrwAK42RTB_image.webp\"}]}",
     "generation_latency": null,
     "description": "Recraft V3 is a text-to-image model with the ability to generate long texts, vector art, images in brand style, and much more. As of today, it is SOTA in image generation, proven by Hugging Face's industry-leading Text-to-Image Benchmark by Artificial Analysis.",
-    "last_updated": "2025-08-31T19:46:58.717397",
+    "last_updated": "2025-08-31T20:21:57.903232",
     "modalities": [
       "text-to-image"
     ]
@@ -338,7 +338,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:46:59.942819"
+    "last_updated": "2025-08-31T20:22:00.051874"
   },
   "elevenlabs-free": {
     "raw": {
@@ -356,7 +356,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139581"
+    "last_updated": "2025-08-31T20:22:00.847468"
   },
   "elevenlabs-starter": {
     "raw": {
@@ -374,7 +374,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139606"
+    "last_updated": "2025-08-31T20:22:00.847468"
   },
   "elevenlabs-creator": {
     "raw": {
@@ -392,7 +392,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139616"
+    "last_updated": "2025-08-31T20:22:00.847468"
   },
   "elevenlabs-pro": {
     "raw": {
@@ -410,7 +410,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139624"
+    "last_updated": "2025-08-31T20:22:00.847468"
   },
   "elevenlabs-scale": {
     "raw": {
@@ -427,7 +427,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139630"
+    "last_updated": "2025-08-31T20:22:00.847468"
   },
   "elevenlabs-business": {
     "raw": {
@@ -444,7 +444,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.139638"
+    "last_updated": "2025-08-31T20:22:00.847468"
   },
   "Gemini 2.5 Pro": {
     "raw": {
@@ -481,7 +481,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.836195"
+    "last_updated": "2025-08-31T20:22:01.664966"
   },
   "Gemini 2.5 Flash": {
     "raw": {
@@ -522,7 +522,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.837006"
+    "last_updated": "2025-08-31T20:22:01.664966"
   },
   "Gemini 2.5 Flash-Lite": {
     "raw": {
@@ -559,7 +559,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.837720"
+    "last_updated": "2025-08-31T20:22:01.665967"
   },
   "Gemini 2.5 Flash Native Audio": {
     "raw": {
@@ -588,7 +588,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.838283"
+    "last_updated": "2025-08-31T20:22:01.665967"
   },
   "Gemini 2.5 Flash Image Preview": {
     "raw": {
@@ -617,7 +617,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.838754"
+    "last_updated": "2025-08-31T20:22:01.665967"
   },
   "Gemini 2.5 Flash Preview TTS": {
     "raw": {
@@ -646,7 +646,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.839211"
+    "last_updated": "2025-08-31T20:22:01.666967"
   },
   "Gemini 2.5 Pro Preview TTS": {
     "raw": {
@@ -675,7 +675,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.839668"
+    "last_updated": "2025-08-31T20:22:01.666967"
   },
   "Gemini 2.0 Flash": {
     "raw": {
@@ -728,7 +728,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.840672"
+    "last_updated": "2025-08-31T20:22:01.667966"
   },
   "Gemini 2.0 Flash-Lite": {
     "raw": {
@@ -773,7 +773,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.841577"
+    "last_updated": "2025-08-31T20:22:01.667966"
   },
   "Imagen 4": {
     "raw": {
@@ -806,7 +806,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.842621"
+    "last_updated": "2025-08-31T20:22:01.668966"
   },
   "Imagen 3": {
     "raw": {
@@ -831,7 +831,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.843317"
+    "last_updated": "2025-08-31T20:22:01.668966"
   },
   "Veo 3 Preview": {
     "raw": {
@@ -856,7 +856,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.843799"
+    "last_updated": "2025-08-31T20:22:01.668966"
   },
   "Veo 3 Fast Preview": {
     "raw": {
@@ -881,7 +881,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.844281"
+    "last_updated": "2025-08-31T20:22:01.668966"
   },
   "Veo 2": {
     "raw": {
@@ -906,7 +906,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.844755"
+    "last_updated": "2025-08-31T20:22:01.669966"
   },
   "Gemini Embedding": {
     "raw": {
@@ -931,7 +931,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.845149"
+    "last_updated": "2025-08-31T20:22:01.669966"
   },
   "Gemma 3": {
     "raw": {
@@ -976,7 +976,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.845942"
+    "last_updated": "2025-08-31T20:22:01.669966"
   },
   "Gemma 3n": {
     "raw": {
@@ -1021,7 +1021,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.846797"
+    "last_updated": "2025-08-31T20:22:01.670966"
   },
   "Gemini 1.5 Flash": {
     "raw": {
@@ -1066,7 +1066,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.847658"
+    "last_updated": "2025-08-31T20:22:01.671966"
   },
   "Gemini 1.5 Flash-8B": {
     "raw": {
@@ -1111,7 +1111,7 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.848560"
+    "last_updated": "2025-08-31T20:22:01.671966"
   },
   "Gemini 1.5 Pro": {
     "raw": {
@@ -1156,6 +1156,6 @@
     "api_schema": null,
     "generation_latency": null,
     "description": null,
-    "last_updated": "2025-08-31T19:47:01.849500"
+    "last_updated": "2025-08-31T20:22:01.672966"
   }
 }
