@@ -12,14 +12,51 @@ EXPLORER_SEARCH_URL = "https://fal.ai/explore/search"
 MODEL_BASE_URL = "https://fal.ai/models"
 API_IDENTIFIER = "fal"
 
-# Search queries used to progressively discover new models. This list
-# intentionally covers common starting characters and will grow the
-# scraped dataset over time as more runs are performed.
-# Begin with popular queries to ensure high-value endpoints are captured
-# even when the discovery limit is reached early.
-SEARCH_QUERIES = ["", "k", "v"] + [
-    c for c in string.ascii_lowercase + string.digits if c not in {"k", "v"}
-]
+# Comprehensive search queries to discover all available models.
+# This list includes popular model types, techniques, and provider names
+# to ensure maximum model discovery across all categories.
+SEARCH_QUERIES = [
+    # Core searches - empty and popular letters first
+    "", "k", "v", "a", "b", "c", "d", "f", "i", "l", "m", "s", "t", "u",
+    
+    # Model types and techniques
+    "video", "image", "audio", "text", "speech", "music", "voice", "3d",
+    "flux", "lora", "controlnet", "inpainting", "upscale", "enhance", "edit",
+    "diffusion", "transformer", "generation", "style", "portrait", "anime",
+    "realistic", "cartoon", "sketch", "painting", "photo", "art",
+    
+    # Popular model families
+    "stable", "runway", "midjourney", "dalle", "gpt", "claude", "llama",
+    "whisper", "bark", "elevenlabs", "suno", "udio", "minimax", "kling",
+    "hunyuan", "ltx", "alibaba", "wan", "dream", "machine", "schnell",
+    "ultra", "pro", "turbo", "xl", "hd", "4k", "fast", "slow", "quality",
+    
+    # Bytedance and related terms
+    "bytedance", "tiktok", "douyin", "seedream", "seed", "seeddream",
+    "cogvideox", "cog", "cogvideo", "beijing", "china", "douyin-ai",
+    "seedance", "seededit", "dreamina", "omnihuman", "cogview",
+    
+    # Qwen and Alibaba Cloud models
+    "qwen", "qwen2", "qwen2.5", "qwenvl", "alibaba", "aliyun", "tongyi",
+    "qwen-vl", "qwen-audio", "qwen-coder", "qwen-math", "qwen-chat",
+    
+    # Google and DeepMind models  
+    "google", "deepmind", "gemini", "imagen", "bard", "veo", "lumiere",
+    "imagen2", "imagen3", "veo2", "gemma", "palm", "lamda", "musiclm",
+    "phenaki", "parti", "flamingo", "chinchilla", "gopher", "sparrow",
+    
+    # Video Generation Companies and Models
+    "luma", "lumalabs", "dream-machine", "photon", "ray", "luma-ai",
+    "pixverse", "pixart", "pix2pix", "pixe", "pix",
+    "kling", "kuaishou", "klingai", "kling-ai", "kwai",
+    "hailuo", "minimax", "hailuo-ai", "hailuoai", "hai",
+    
+    # Technical terms
+    "api", "endpoint", "model", "ai", "ml", "neural", "deep", "learning",
+    "inference", "training", "fine-tune", "custom", "base", "foundation",
+    
+    # Remaining alphabet and digits for completeness
+] + [c for c in string.ascii_lowercase + string.digits if c not in {"k", "v", "a", "b", "c", "d", "f", "i", "l", "m", "s", "t", "u"}]
 
 # Known model modalities for fal.ai hosted models. These models primarily
 # generate video and generally support both text and image prompting.
@@ -41,19 +78,41 @@ def _get(url: str, **kwargs):
     return CLIENT._client.get(url, **kwargs)
 
 
-def _discover_model_slugs(limit: int = 10) -> list[str]:
-    """Return a list of model slugs discovered via the explore search page."""
+def _discover_model_slugs(limit: int = None) -> list[str]:
+    """Return a list of model slugs discovered via the explore search page.
+    
+    Args:
+        limit: Maximum number of models to discover. If None, discovers all available models.
+        
+    Returns:
+        List of unique model slugs found across all search queries.
+    """
+    import time
+    
     slugs: list[str] = []
     seen: set[str] = set()
-    for query in SEARCH_QUERIES:
-        if len(slugs) >= limit:
+    
+    print(f"Starting comprehensive model discovery across {len(SEARCH_QUERIES)} search queries...")
+    
+    for i, query in enumerate(SEARCH_QUERIES):
+        if limit and len(slugs) >= limit:
             break
+            
         try:
-            resp = _get(EXPLORER_SEARCH_URL, params={"q": query}, timeout=10)
+            # Add rate limiting - respectful 1 second delay between requests
+            if i > 0:
+                time.sleep(1)
+                
+            resp = _get(EXPLORER_SEARCH_URL, params={"q": query}, timeout=15)
             resp.raise_for_status()
-        except Exception:
+            
+        except Exception as e:
+            print(f"Failed to search query '{query}': {e}")
             continue
+            
         soup = BeautifulSoup(resp.text, "html.parser")
+        query_models = 0
+        
         for link in soup.select("a.page-model-card"):
             href = link.get("href", "")
             if "/models/" not in href:
@@ -62,8 +121,14 @@ def _discover_model_slugs(limit: int = 10) -> list[str]:
             if slug and slug not in seen:
                 seen.add(slug)
                 slugs.append(slug)
-                if len(slugs) >= limit:
+                query_models += 1
+                if limit and len(slugs) >= limit:
                     break
+                    
+        if query_models > 0:
+            print(f"Query '{query}': found {query_models} new models (total: {len(slugs)})")
+            
+    print(f"Model discovery complete: {len(slugs)} unique models found")
     return slugs
 
 
@@ -121,34 +186,56 @@ def _extract_api_details(slug: str) -> tuple[str | None, str | None, str | None]
 
 def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
     """Fetch model data from the explore search endpoints."""
+    import time
+    
     results: dict[str, dict] = {}
-    for slug in _discover_model_slugs():
+    discovered_slugs = _discover_model_slugs()
+    
+    print(f"Processing {len(discovered_slugs)} discovered models...")
+    
+    for i, slug in enumerate(discovered_slugs):
         if slug in existing or slug in results:
             continue
-        price = _extract_price(slug)
-        record: dict[str, object] = {
-            "raw": {"endpoint": slug},
-            "source": f"{MODEL_BASE_URL}/{slug}",
-            "api_identifier": API_IDENTIFIER,
-            "service_type": "api_endpoint",
-            "api_schema": None,
-            "generation_latency": None,
-            "description": None,
-            "last_updated": datetime.utcnow().isoformat(),
-        }
-        if price:
-            record["raw"]["price"] = price
-        modality = slug.split("/")[-1]
-        if "-" in modality:
-            record["modalities"] = [modality]
-        schema, latency, description = _extract_api_details(slug)
-        if schema:
-            record["api_schema"] = schema
-        if latency:
-            record["generation_latency"] = latency
-        if description:
-            record["description"] = description
-        results[slug] = record
+            
+        try:
+            # Rate limiting between individual model requests
+            if i > 0 and i % 10 == 0:  # Pause every 10 models
+                print(f"Processed {i} models, taking a brief pause...")
+                time.sleep(2)
+                
+            price = _extract_price(slug)
+            record: dict[str, object] = {
+                "raw": {"endpoint": slug},
+                "source": f"{MODEL_BASE_URL}/{slug}",
+                "api_identifier": API_IDENTIFIER,
+                "service_type": "api_endpoint",
+                "api_schema": None,
+                "generation_latency": None,
+                "description": None,
+                "last_updated": datetime.utcnow().isoformat(),
+            }
+            if price:
+                record["raw"]["price"] = price
+            modality = slug.split("/")[-1]
+            if "-" in modality:
+                record["modalities"] = [modality]
+            schema, latency, description = _extract_api_details(slug)
+            if schema:
+                record["api_schema"] = schema
+            if latency:
+                record["generation_latency"] = latency
+            if description:
+                record["description"] = description
+            results[slug] = record
+            
+            if (i + 1) % 50 == 0:  # Progress indicator every 50 models
+                print(f"Progress: {i + 1}/{len(discovered_slugs)} models processed")
+                
+        except Exception as e:
+            print(f"Failed to process model {slug}: {e}")
+            continue
+            
+    print(f"Explore data processing complete: {len(results)} new models added")
     return results
 
 
