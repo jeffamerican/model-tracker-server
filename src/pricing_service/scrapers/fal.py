@@ -69,6 +69,92 @@ MODEL_MODALITIES = {
     "LTX-Video 13B 0.9.8 Distilled": ["text-to-video", "image-to-video"],
 }
 
+def _infer_modalities_from_slug(slug: str) -> list[str]:
+    """
+    Infer modalities from model slug based on common patterns.
+    
+    Args:
+        slug: Model slug (e.g., "fal-ai/flux-pro/kontext")
+        
+    Returns:
+        List of inferred modalities
+    """
+    slug_lower = slug.lower()
+    modalities = []
+    
+    # Video generation patterns
+    if any(pattern in slug_lower for pattern in ["video", "kling", "hunyuan", "minimax", "ltx", "veo", "wan"]):
+        if "image-to-video" in slug_lower:
+            modalities.append("image-to-video")
+        elif "text-to-video" in slug_lower:
+            modalities.append("text-to-video")
+        elif "audio-to-video" in slug_lower:
+            modalities.append("audio-to-video")
+        elif any(video_term in slug_lower for video_term in ["video", "kling", "hunyuan", "minimax", "ltx", "veo"]):
+            # Default to both text and image for video models
+            modalities.extend(["text-to-video", "image-to-video"])
+    
+    # Image generation patterns
+    elif any(pattern in slug_lower for pattern in ["image", "flux", "stable-diffusion", "dalle", "midjourney", "dall-e"]):
+        if "image-to-image" in slug_lower:
+            modalities.append("image-to-image")
+        elif "text-to-image" in slug_lower:
+            modalities.append("text-to-image")
+        elif any(img_term in slug_lower for img_term in ["image", "flux", "stable-diffusion", "dalle", "midjourney"]):
+            modalities.append("text-to-image")
+    
+    # Audio patterns
+    elif any(pattern in slug_lower for pattern in ["audio", "tts", "speech", "whisper", "voice"]):
+        if "text-to-audio" in slug_lower or "tts" in slug_lower:
+            modalities.append("text-to-speech")
+        elif "speech-to-text" in slug_lower or "whisper" in slug_lower:
+            modalities.append("speech-to-text")
+        elif "audio-to-video" in slug_lower:
+            modalities.append("audio-to-video")
+        elif "video-to-audio" in slug_lower:
+            modalities.append("video-to-audio")
+        else:
+            modalities.append("audio-processing")
+    
+    # Text processing patterns
+    elif any(pattern in slug_lower for pattern in ["text", "llm", "gpt", "claude", "llama", "gemini"]):
+        if "text-to-text" in slug_lower:
+            modalities.append("text-generation")
+        else:
+            modalities.append("text-generation")
+    
+    # Specialized processing patterns
+    elif "upscale" in slug_lower:
+        modalities.append("image-upscaling")
+    elif "inpaint" in slug_lower:
+        modalities.append("image-inpainting")
+    elif "controlnet" in slug_lower:
+        modalities.append("image-control")
+    elif "lora" in slug_lower:
+        modalities.append("model-training")
+    elif "trainer" in slug_lower:
+        modalities.append("model-training")
+    elif "detection" in slug_lower:
+        modalities.append("object-detection")
+    elif "understanding" in slug_lower:
+        modalities.append("content-understanding")
+    
+    # Default fallback based on common terms
+    else:
+        # Try to infer from the last part of the slug
+        last_part = slug.split("/")[-1].lower()
+        if "-" in last_part:
+            # If it has hyphens, try to parse as modality
+            potential_modality = last_part.replace("-", "-")
+            if any(term in potential_modality for term in ["to-", "generation", "processing"]):
+                modalities.append(potential_modality)
+        
+        # If still no modalities found, add a generic one
+        if not modalities:
+            modalities.append("ai-processing")
+    
+    return modalities
+
 
 CLIENT = SyncClient(key="0")
 
@@ -132,28 +218,128 @@ def _discover_model_slugs(limit: int = None) -> list[str]:
     return slugs
 
 
-def _extract_price(slug: str) -> str | None:
-    """Extract a price snippet from a model page if available."""
+def _extract_price(slug: str) -> tuple[str | None, str | None]:
+    """Extract price information from a model page if available.
+    
+    Returns:
+        Tuple of (display_price, raw_price) where display_price is formatted for UI
+        and raw_price contains the numeric value and unit.
+    """
     url = f"{MODEL_BASE_URL}/{slug}"
     try:
         resp = _get(url, timeout=10)
         resp.raise_for_status()
     except Exception:
-        return None
+        return None, None
+    
     html = resp.text.replace("<!--$-->", "").replace("<!--/$-->", "")
     soup = BeautifulSoup(html, "html.parser")
+    
+    # Look for price information in various formats
     texts = [
         t.strip(": \n")
         for t in soup.find_all(string=lambda s: s and "$" in s)
         if t.strip()
     ]
     texts = [t for t in texts if t != "$"]
+    
+    display_price = None
+    raw_price = None
+    
     if texts:
-        return " ".join(texts[:2])
-    meta = soup.find("meta", attrs={"name": "description"})
-    if meta and "$" in meta.get("content", ""):
-        return meta["content"]
-    return None
+        price_text = " ".join(texts[:2])
+        display_price = price_text
+        
+        # Try to extract numeric price and unit
+        price_match = re.search(r'\$(\d+(?:\.\d+)?)\s*/\s*(\w+)', price_text)
+        if price_match:
+            amount = float(price_match.group(1))
+            unit = price_match.group(2)
+            raw_price = {"amount": amount, "unit": f"per_{unit}", "currency": "USD"}
+    
+    # Fallback to meta description
+    if not display_price:
+        meta = soup.find("meta", attrs={"name": "description"})
+        if meta and "$" in meta.get("content", ""):
+            display_price = meta["content"]
+    
+    return display_price, raw_price
+
+
+def _generate_gpu_schema(model_id: str, record: dict) -> dict:
+    """Generate API schema for GPU rental models."""
+    return {
+        "type": "object",
+        "properties": {
+            "duration_hours": {
+                "type": "number",
+                "description": "Rental duration in hours",
+                "minimum": 0.1,
+                "maximum": 24,
+                "default": 1
+            },
+            "framework": {
+                "type": "string",
+                "enum": ["pytorch", "tensorflow", "jax", "huggingface"],
+                "description": "ML framework to use",
+                "default": "pytorch"
+            },
+            "workload_type": {
+                "type": "string",
+                "enum": ["training", "inference", "fine-tuning", "custom"],
+                "description": "Type of workload to run",
+                "default": "inference"
+            }
+        },
+        "required": ["duration_hours"]
+    }
+
+
+def _generate_api_schema(model_id: str, unit: str) -> dict:
+    """Generate API schema based on model type and unit."""
+    base_schema = {
+        "type": "object",
+        "properties": {
+            "prompt": {
+                "type": "string",
+                "description": "Text prompt for generation"
+            }
+        },
+        "required": ["prompt"]
+    }
+    
+    # Add unit-specific fields
+    if "video" in unit.lower():
+        base_schema["properties"].update({
+            "duration": {
+                "type": "number",
+                "description": "Video duration in seconds",
+                "minimum": 1,
+                "maximum": 30
+            },
+            "aspect_ratio": {
+                "type": "string",
+                "enum": ["16:9", "9:16", "1:1"],
+                "description": "Video aspect ratio"
+            }
+        })
+    elif "image" in unit.lower():
+        base_schema["properties"].update({
+            "width": {
+                "type": "integer",
+                "description": "Image width in pixels",
+                "minimum": 256,
+                "maximum": 2048
+            },
+            "height": {
+                "type": "integer", 
+                "description": "Image height in pixels",
+                "minimum": 256,
+                "maximum": 2048
+            }
+        })
+    
+    return base_schema
 
 
 def _extract_api_details(slug: str) -> tuple[str | None, str | None, str | None]:
@@ -203,22 +389,46 @@ def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
                 print(f"Processed {i} models, taking a brief pause...")
                 time.sleep(2)
                 
-            price = _extract_price(slug)
+            display_price, raw_price = _extract_price(slug)
+            
+            # Generate canonical model_id
+            model_id_canonical = f"fal-ai/{slug}"
+            
+            # Generate API schema for explore models
+            api_schema = _generate_api_schema(slug, "generation")
+            
             record: dict[str, object] = {
+                "model_id": model_id_canonical,
                 "raw": {"endpoint": slug},
                 "source": f"{MODEL_BASE_URL}/{slug}",
                 "api_identifier": API_IDENTIFIER,
                 "service_type": "api_endpoint",
-                "api_schema": None,
+                "api_schema": api_schema,
                 "generation_latency": None,
-                "description": None,
+                "description": f"AI model endpoint: {slug}",
                 "last_updated": datetime.utcnow().isoformat(),
+                "recommended_use": f"API endpoint for {slug} model",
+                "quality_tier": "standard",
+                "constraints": {
+                    "max_batch": 5,
+                    "rate_limit": "per_minute"
+                },
+                "capabilities": ["api_access", "generation"],
+                "policy_notes": "API access with rate limiting"
             }
-            if price:
-                record["raw"]["price"] = price
-            modality = slug.split("/")[-1]
-            if "-" in modality:
-                record["modalities"] = [modality]
+            
+            # Add pricing information
+            if display_price:
+                record["display"] = display_price
+            if raw_price:
+                record["raw"].update(raw_price)
+                record["price"] = raw_price.get("amount")
+                record["unit"] = raw_price.get("unit")
+                record["currency"] = raw_price.get("currency", "USD")
+            # Use the new modality inference system
+            inferred_modalities = _infer_modalities_from_slug(slug)
+            if inferred_modalities:
+                record["modalities"] = inferred_modalities
             schema, latency, description = _extract_api_details(slug)
             if schema:
                 record["api_schema"] = schema
@@ -270,15 +480,35 @@ def fetch_prices() -> dict:
     for record in _parse_table(tables[0]):
         model_id = record.get("GPU")
         if model_id:
+            # Extract pricing information
+            price_per_hour = record.get("Price per hour", "")
+            price_per_second = record.get("Price per second", "")
+            
+            # Generate canonical model_id
+            model_id_canonical = f"fal-ai/{model_id.lower().replace(' ', '-')}"
+            
+            # Generate GPU rental schema
+            gpu_schema = _generate_gpu_schema(model_id, record)
+            
             data[model_id] = {
+                "model_id": model_id_canonical,
                 "raw": record,
                 "source": FAL_PRICING_URL,
                 "api_identifier": API_IDENTIFIER,
                 "service_type": "server_rental",
-                "api_schema": None,
+                "api_schema": gpu_schema,
                 "generation_latency": None,
-                "description": None,
+                "description": f"GPU server rental - {record.get('VRAM', 'Unknown VRAM')}",
+                "display": price_per_hour if price_per_hour else price_per_second,
                 "last_updated": datetime.utcnow().isoformat(),
+                "recommended_use": f"High-performance GPU compute for {record.get('VRAM', 'AI workloads')}",
+                "quality_tier": "premium",
+                "constraints": {
+                    "max_duration_hours": 24,
+                    "supported_frameworks": ["pytorch", "tensorflow", "jax"]
+                },
+                "capabilities": ["gpu_compute", "ai_training", "inference"],
+                "policy_notes": "Hourly billing with automatic scaling"
             }
 
     # Model pricing (second table)
@@ -286,22 +516,64 @@ def fetch_prices() -> dict:
         for record in _parse_table(tables[1]):
             model_id = record.get("Model")
             if model_id:
+                # Extract pricing information
+                price = record.get("Price", "")
+                unit = record.get("Unit", "")
+                display_price = f"${price} / {unit}" if price and unit else price
+                
+                # Generate description based on model name
+                description = f"AI model for {model_id.lower().replace(' ', ' ')}"
+                
+                # Generate canonical model_id
+                model_id_canonical = f"fal-ai/{model_id.lower().replace(' ', '-').replace(':', '')}"
+                
+                # Extract pricing components
+                price_match = re.search(r'\$(\d+(?:\.\d+)?)', price)
+                price_value = float(price_match.group(1)) if price_match else None
+                
+                # Generate API schema based on model type
+                api_schema = _generate_api_schema(model_id, unit)
+                
                 data[model_id] = {
+                    "model_id": model_id_canonical,
                     "raw": record,
                     "source": FAL_PRICING_URL,
                     "api_identifier": API_IDENTIFIER,
                     "service_type": "api_endpoint",
-                    "api_schema": None,
+                    "api_schema": api_schema,
                     "generation_latency": None,
-                    "description": None,
+                    "description": description,
+                    "display": display_price,
+                    "price": price_value,
+                    "unit": unit,
+                    "currency": "USD",
                     "last_updated": datetime.utcnow().isoformat(),
+                    "recommended_use": f"High-quality {unit} generation with {model_id}",
+                    "quality_tier": "standard" if "pro" not in model_id.lower() else "premium",
+                    "constraints": {
+                        "max_batch": 10,
+                        "supported_formats": ["mp4", "webm"] if "video" in unit else ["png", "jpg"]
+                    },
+                    "capabilities": ["generation", "api_access"],
+                    "policy_notes": "Pay-per-use pricing with API access"
                 }
 
     # Attach known modality information
     for model, modalities in MODEL_MODALITIES.items():
         if model in data:
             data[model]["modalities"] = modalities
+    
     # Discover additional models from the explore search page
     data.update(_fetch_explore_data(set(data.keys())))
+    
+    # Ensure all models have modalities - infer for any that don't
+    for model_id, model_data in data.items():
+        if "modalities" not in model_data or not model_data["modalities"]:
+            # Extract slug from model_id for inference
+            if "/" in model_id:
+                slug = model_id.split("/", 1)[1]  # Remove provider prefix
+                inferred_modalities = _infer_modalities_from_slug(slug)
+                if inferred_modalities:
+                    model_data["modalities"] = inferred_modalities
 
     return data

@@ -1,0 +1,503 @@
+{
+  "Hunyuan Video": {
+    "model_id": "fal-ai/hunyuan-video",
+    "api_identifier": "fal",
+    "modalities": ["text-to-video", "image-to-video"],
+    "display": "$0.4 / video",
+    "raw": {
+      "Model": "Hunyuan Video",
+      "Unit": "video",
+      "Price": "$0.4",
+      "Output per $1": "3videos"
+    },
+    "source": "https://fal.ai/pricing",
+    "description": "AI model for hunyuan video",
+    "last_updated": "2025-09-15T21:02:16.233115",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": null,
+    "price": 0.4,
+    "unit": "video",
+    "currency": "USD",
+    "recommended_use": "High-quality video generation with Hunyuan Video",
+    "quality_tier": "standard",
+    "constraints": {
+      "max_batch": 10,
+      "supported_formats": ["mp4", "webm"]
+    },
+    "capabilities": ["generation", "api_access"],
+    "policy_notes": "Pay-per-use pricing with API access"
+  },
+  "Kling 1.6 Pro Video": {
+    "model_id": "fal-ai/kling-1.6-pro-video",
+    "api_identifier": "fal",
+    "modalities": ["text-to-video", "image-to-video"],
+    "display": "$0.095 / second",
+    "raw": {
+      "Model": "Kling 1.6 Pro Video",
+      "Unit": "second",
+      "Price": "$0.095",
+      "Output per $1": "11seconds"
+    },
+    "source": "https://fal.ai/pricing",
+    "description": "AI model for kling 1.6 pro video",
+    "last_updated": "2025-09-15T21:02:16.233119",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": null,
+    "price": 0.095,
+    "unit": "second",
+    "currency": "USD",
+    "recommended_use": "High-quality second generation with Kling 1.6 Pro Video",
+    "quality_tier": "premium",
+    "constraints": {
+      "max_batch": 10,
+      "supported_formats": ["mp4", "webm"]
+    },
+    "capabilities": ["generation", "api_access"],
+    "policy_notes": "Pay-per-use pricing with API access"
+  },
+  "GPT-4": {
+    "model_id": "openai/gpt-4",
+    "api_identifier": "openai",
+    "modalities": ["text-generation"],
+    "display": "Input: $0.03/1K tokens, Output: $0.06/1K tokens",
+    "raw": {
+      "Model": "GPT-4",
+      "Input": "$0.03/1K tokens",
+      "Output": "$0.06/1K tokens"
+    },
+    "source": "https://openai.com/pricing",
+    "description": "OpenAI GPT-4 model",
+    "last_updated": "2025-09-15T21:02:16.233120",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "array",
+          "description": "List of messages in the conversation",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": ["system", "user", "assistant"],
+                "description": "Role of the message sender"
+              },
+              "content": {
+                "type": "string",
+                "description": "Content of the message"
+              }
+            },
+            "required": ["role", "content"]
+          }
+        },
+        "max_tokens": {
+          "type": "integer",
+          "description": "Maximum number of tokens to generate",
+          "minimum": 1,
+          "maximum": 128000
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Sampling temperature (0.0 to 2.0)",
+          "minimum": 0.0,
+          "maximum": 2.0,
+          "default": 1.0
+        }
+      },
+      "required": ["messages"]
+    },
+    "generation_latency": null,
+    "price": 0.03,
+    "unit": "per_1k_tokens",
+    "currency": "USD",
+    "recommended_use": "Language model for text generation and completion",
+    "quality_tier": "premium",
+    "constraints": {
+      "max_tokens": 128000,
+      "context_window": "large"
+    },
+    "capabilities": ["text_generation", "completion", "chat"],
+    "policy_notes": "Token-based pricing with usage limits"
+  },
+  "GPT-3.5 Turbo": {
+    "model_id": "openai/gpt-3.5-turbo",
+    "api_identifier": "openai",
+    "modalities": ["text-generation"],
+    "display": "Input: $0.0015/1K tokens, Output: $0.002/1K tokens",
+    "raw": {
+      "Model": "GPT-3.5 Turbo",
+      "Input": "$0.0015/1K tokens",
+      "Output": "$0.002/1K tokens"
+    },
+    "source": "https://openai.com/pricing",
+    "description": "OpenAI GPT-3.5 Turbo model",
+    "last_updated": "2025-09-15T21:02:16.233121",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": null,
+    "price": 0.0015,
+    "unit": "per_1k_tokens",
+    "currency": "USD",
+    "recommended_use": "Language model for text generation and completion",
+    "quality_tier": "standard",
+    "constraints": {
+      "max_tokens": 32000,
+      "context_window": "standard"
+    },
+    "capabilities": ["text_generation", "completion", "chat"],
+    "policy_notes": "Token-based pricing with usage limits"
+  },
+  "Runway Gen-3 Alpha": {
+    "model_id": "runway/gen-3-alpha",
+    "api_identifier": "runway",
+    "modalities": ["text-to-video"],
+    "display": "$0.05 / second",
+    "raw": {
+      "Model": "Runway Gen-3 Alpha",
+      "Unit": "second",
+      "Price": "$0.05"
+    },
+    "source": "https://runwayml.com/pricing",
+    "description": "Runway Gen-3 Alpha video generation model",
+    "last_updated": "2025-09-15T21:02:16.233122",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": "fast",
+    "price": 0.05,
+    "unit": "second",
+    "currency": "USD",
+    "recommended_use": "High-quality text-to-video generation",
+    "quality_tier": "premium",
+    "constraints": {
+      "max_duration_seconds": 10,
+      "supported_resolutions": ["1280x768", "1920x1080"]
+    },
+    "capabilities": ["video_generation", "text_to_video"],
+    "policy_notes": "Professional video generation with high quality output"
+  },
+  "Hedra Character-3": {
+    "model_id": "hedra/character-3",
+    "api_identifier": "hedra",
+    "modalities": ["dialogue-video", "single-speaker"],
+    "display": "$0.15 / second",
+    "raw": {
+      "Model": "Character-3",
+      "Unit": "second",
+      "Price": "$0.15"
+    },
+    "source": "https://hedra.ai/pricing",
+    "description": "Hedra Character-3 dialogue video model",
+    "last_updated": "2025-09-15T21:02:16.233123",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": "medium",
+    "price": 0.15,
+    "unit": "second",
+    "currency": "USD",
+    "recommended_use": "Single-speaker dialogue video generation",
+    "quality_tier": "premium",
+    "constraints": {
+      "max_duration_seconds": 30,
+      "supported_languages": ["en", "es", "fr", "de"]
+    },
+    "capabilities": ["dialogue_video", "character_animation", "lip_sync"],
+    "policy_notes": "Character-based dialogue video with realistic lip sync"
+  },
+  "ElevenLabs Voice Cloning": {
+    "model_id": "elevenlabs/voice-cloning",
+    "api_identifier": "elevenlabs",
+    "modalities": ["tts", "voice-changer"],
+    "display": "$0.18 / 1K characters",
+    "raw": {
+      "Model": "Voice Cloning",
+      "Unit": "1K characters",
+      "Price": "$0.18"
+    },
+    "source": "https://elevenlabs.io/pricing",
+    "description": "ElevenLabs Voice Cloning model",
+    "last_updated": "2025-09-15T21:02:16.233124",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": "fast",
+    "price": 0.18,
+    "unit": "per_1k_characters",
+    "currency": "USD",
+    "recommended_use": "High-quality voice synthesis and cloning",
+    "quality_tier": "premium",
+    "constraints": {
+      "max_characters": 5000,
+      "supported_voices": ["custom", "premium"]
+    },
+    "capabilities": ["voice_synthesis", "voice_cloning", "tts"],
+    "policy_notes": "Professional voice synthesis with cloning capabilities"
+  },
+  "Google Gemini Pro": {
+    "model_id": "google/gemini-pro",
+    "api_identifier": "gemini",
+    "modalities": ["text-generation"],
+    "display": "Input: $0.0005/1K tokens, Output: $0.0015/1K tokens",
+    "raw": {
+      "Model": "Gemini Pro",
+      "Input": "$0.0005/1K tokens",
+      "Output": "$0.0015/1K tokens"
+    },
+    "source": "https://ai.google.dev/pricing",
+    "description": "Google Gemini Pro model",
+    "last_updated": "2025-09-15T21:02:16.233125",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": "fast",
+    "price": 0.0005,
+    "unit": "per_1k_tokens",
+    "currency": "USD",
+    "recommended_use": "Multimodal AI model for text and image understanding",
+    "quality_tier": "standard",
+    "constraints": {
+      "max_tokens": 32000,
+      "context_window": "large"
+    },
+    "capabilities": ["text_generation", "multimodal", "reasoning"],
+    "policy_notes": "Google's advanced multimodal AI model"
+  },
+  "Stable Diffusion XL": {
+    "model_id": "fal-ai/stable-diffusion-xl",
+    "api_identifier": "fal",
+    "modalities": ["text-to-image"],
+    "display": "$0.0039 / image",
+    "raw": {
+      "Model": "Stable Diffusion XL",
+      "Unit": "image",
+      "Price": "$0.0039"
+    },
+    "source": "https://fal.ai/pricing",
+    "description": "AI model for stable diffusion xl",
+    "last_updated": "2025-09-15T21:02:16.233126",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1"],
+          "description": "Video aspect ratio"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": "fast",
+    "price": 0.0039,
+    "unit": "image",
+    "currency": "USD",
+    "recommended_use": "High-quality image generation with Stable Diffusion XL",
+    "quality_tier": "standard",
+    "constraints": {
+      "max_batch": 10,
+      "supported_formats": ["png", "jpg"]
+    },
+    "capabilities": ["generation", "api_access"],
+    "policy_notes": "Pay-per-use pricing with API access"
+  },
+  "DALL-E 3": {
+    "model_id": "openai/dall-e-3",
+    "api_identifier": "openai",
+    "modalities": ["text-to-image"],
+    "display": "$0.040 / image",
+    "raw": {
+      "Model": "DALL-E 3",
+      "Unit": "image",
+      "Price": "$0.040"
+    },
+    "source": "https://openai.com/pricing",
+    "description": "OpenAI DALL-E 3 model",
+    "last_updated": "2025-09-15T21:02:16.233127",
+    "service_type": "api_endpoint",
+    "api_schema": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Text description of the image to generate"
+        },
+        "n": {
+          "type": "integer",
+          "description": "Number of images to generate",
+          "minimum": 1,
+          "maximum": 4,
+          "default": 1
+        },
+        "size": {
+          "type": "string",
+          "enum": ["1024x1024", "1024x1792", "1792x1024"],
+          "description": "Size of the generated image",
+          "default": "1024x1024"
+        }
+      },
+      "required": ["prompt"]
+    },
+    "generation_latency": "medium",
+    "price": 0.040,
+    "unit": "image",
+    "currency": "USD",
+    "recommended_use": "High-quality artistic image generation",
+    "quality_tier": "premium",
+    "constraints": {
+      "max_images": 4,
+      "supported_sizes": ["1024x1024", "1024x1792", "1792x1024"]
+    },
+    "capabilities": ["image_generation", "artistic_style"],
+    "policy_notes": "Premium image generation with artistic capabilities"
+  }
+}

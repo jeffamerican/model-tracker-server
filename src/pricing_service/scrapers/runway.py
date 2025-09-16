@@ -36,6 +36,7 @@ def fetch_prices() -> Dict[str, Dict]:
         "source": "https://api.runwayml.com/v1/organization",
         "api_identifier": API_IDENTIFIER,
         "service_type": "subscription",
+        "modalities": ["text-to-video", "image-to-video"],
         "api_schema": None,
         "generation_latency": None,
         "description": None,

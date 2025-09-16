@@ -265,6 +265,16 @@
         tr:hover {
             background-color: #f8f9fa;
         }
+        .no-schema {
+            color: #d32f2f !important;
+            background-color: #ffebee !important;
+        }
+        .no-schema:hover {
+            background-color: #ffcdd2 !important;
+        }
+        .no-schema td {
+            color: #d32f2f !important;
+        }
         .modality-badges {
             display: flex;
             gap: 4px;
@@ -1141,7 +1151,8 @@
             mainTable.appendChild(mainThead);
             
             const tbody = document.createElement('tbody');
-            data.forEach(item => {
+
+            const buildRow = (item) => {
                 const tr = document.createElement('tr');
 
                 const isNew = item.lastUpdated && (Date.now() - new Date(item.lastUpdated).getTime() < 7 * 24 * 60 * 60 * 1000);
@@ -1149,7 +1160,23 @@
                     tr.classList.add('new-model');
                 }
 
-                // Model cell
+                const schemaValue = item.apiSchema;
+                const hasSchema = (() => {
+                    if (!schemaValue) {
+                        return false;
+                    }
+                    if (typeof schemaValue === 'string') {
+                        return schemaValue.trim().length > 0;
+                    }
+                    if (typeof schemaValue === 'object') {
+                        return Object.keys(schemaValue).length > 0;
+                    }
+                    return false;
+                })();
+                if (!hasSchema) {
+                    tr.classList.add('no-schema');
+                }
+
                 const modelCell = document.createElement('td');
                 modelCell.style.width = modelWidth;
                 modelCell.innerHTML = `
@@ -1159,7 +1186,6 @@
                 `;
                 tr.appendChild(modelCell);
 
-                // Modalities cell
                 const modalitiesCell = document.createElement('td');
                 modalitiesCell.style.width = modalitiesWidth;
                 if (item.modalities && item.modalities.length > 0) {
@@ -1177,22 +1203,19 @@
                 }
                 tr.appendChild(modalitiesCell);
 
-                // Pricing data cells
                 columns.forEach(key => {
                     const td = document.createElement('td');
                     const colWidth = columnWidths[key] || 'auto';
                     td.style.width = colWidth;
                     const value = item.details[key];
-                    if (typeof value === 'object') {
-                        // Handle nested objects (like Google's pricing structure)
+                    if (typeof value === 'object' && value !== null) {
                         td.innerHTML = formatNestedValue(value);
                     } else {
-                        td.textContent = value || '';
+                        td.textContent = value ?? '';
                     }
                     tr.appendChild(td);
                 });
 
-                // Source cell
                 const sourceCell = document.createElement('td');
                 sourceCell.style.width = sourceWidth;
                 if (item.source) {
@@ -1206,8 +1229,40 @@
                     }
                 });
 
-                tbody.appendChild(tr);
-            });
+                return tr;
+            };
+
+            const chunkSize = 40;
+            let rowIndex = 0;
+
+            const appendChunk = () => {
+                if (rowIndex >= data.length) {
+                    requestAnimationFrame(() => {
+                        const tableWidth = mainTable.scrollWidth;
+                        spacer.style.width = tableWidth + 'px';
+                    });
+                    return;
+                }
+
+                const fragment = document.createDocumentFragment();
+                const end = Math.min(rowIndex + chunkSize, data.length);
+                for (; rowIndex < end; rowIndex += 1) {
+                    fragment.appendChild(buildRow(data[rowIndex]));
+                }
+                tbody.appendChild(fragment);
+
+                requestAnimationFrame(() => {
+                    spacer.style.width = mainTable.scrollWidth + 'px';
+                });
+
+                requestAnimationFrame(appendChunk);
+            };
+
+            if (data.length === 0) {
+                spacer.style.width = '100%';
+            } else {
+                requestAnimationFrame(appendChunk);
+            }
 
             mainTable.appendChild(tbody);
             bodyContainer.appendChild(mainTable);
@@ -1221,12 +1276,6 @@
                 topScrollbar.scrollLeft = bodyContainer.scrollLeft;
             });
             
-            // Update spacer width to match table width after rendering
-            setTimeout(() => {
-                const tableWidth = mainTable.scrollWidth;
-                spacer.style.width = tableWidth + 'px';
-            }, 0);
-            
             // Add elements to container
             container.appendChild(bodyContainer);
             
@@ -1234,8 +1283,7 @@
             wrapper.appendChild(topScrollbar);
             wrapper.appendChild(container);
 
-            content.innerHTML = '';
-            content.appendChild(wrapper);
+            content.replaceChildren(wrapper);
         }
 
         function formatNestedValue(obj) {
