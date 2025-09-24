@@ -4,8 +4,10 @@ from __future__ import annotations
 from bs4 import BeautifulSoup
 from fal_client import SyncClient
 from datetime import datetime
+from copy import deepcopy
 import string
 import re
+import json
 
 FAL_PRICING_URL = "https://fal.ai/pricing"
 EXPLORER_SEARCH_URL = "https://fal.ai/explore/search"
@@ -156,6 +158,180 @@ def _infer_modalities_from_slug(slug: str) -> list[str]:
     return modalities
 
 
+def _normalize_field_key(name: str) -> str:
+    """Return a normalized snake_case field key."""
+    cleaned = re.sub(r"[^0-9a-zA-Z]+", "_", name).strip("_")
+    return cleaned.lower() or name.lower()
+
+
+def _title_from_parts(parts: list[str]) -> str:
+    """Generate a human friendly title from path segments."""
+    label = " ".join(part.replace("_", " ").replace("-", " ").strip() for part in parts if part)
+    label = re.sub(r"\s+", " ", label).strip()
+    return label.title() if label else "Parameter"
+
+
+def _looks_like_fields_map(payload: dict) -> bool:
+    """Best-effort detection for a flat fields map structure."""
+    if not payload:
+        return False
+    return all(isinstance(value, dict) and "type" in value for value in payload.values())
+
+
+def _looks_like_json_schema(payload: dict) -> bool:
+    """Return True when payload already resembles a JSON schema object."""
+    return isinstance(payload, dict) and payload.get("type") == "object" and "properties" in payload
+
+
+def _infer_schema_from_example(value, path: list[str] | None = None):
+    """Convert an example payload into a JSON schema fragment."""
+    path = path or []
+    title = _title_from_parts(path) if path else None
+
+    if isinstance(value, dict):
+        properties: dict[str, dict] = {}
+        for key, child in value.items():
+            child_schema = _infer_schema_from_example(child, path + [key])
+            if child_schema:
+                properties[key] = child_schema
+        schema: dict[str, object] = {"type": "object"}
+        if properties:
+            schema["properties"] = properties
+        if title:
+            schema["title"] = title
+        return schema
+
+    if isinstance(value, list):
+        schema = {"type": "array"}
+        if value:
+            item_schema = _infer_schema_from_example(value[0], path + ["item"])
+            if item_schema:
+                schema["items"] = item_schema
+            if all(isinstance(item, (str, int, float)) for item in value) and len(value) <= 10:
+                schema["enum"] = value
+        if title:
+            schema["title"] = title
+        return schema
+
+    schema: dict[str, object] = {}
+    if isinstance(value, bool):
+        schema["type"] = "boolean"
+        schema["default"] = value
+    elif isinstance(value, int) and not isinstance(value, bool):
+        schema["type"] = "integer"
+        schema["default"] = value
+    elif isinstance(value, float):
+        schema["type"] = "number"
+        schema["default"] = value
+    elif isinstance(value, str):
+        schema["type"] = "string"
+        if re.match(r"^https?://", value):
+            schema["format"] = "uri"
+        if value:
+            schema["example"] = value
+    else:
+        schema["type"] = "string"
+
+    if title:
+        schema["title"] = title
+    return schema
+
+
+def _normalize_api_schema_payload(payload) -> dict | None:
+    """Normalize scraped schema content into a JSON schema object."""
+    if not payload:
+        return None
+
+    if isinstance(payload, dict):
+        if _looks_like_json_schema(payload):
+            return payload
+        if _looks_like_fields_map(payload):
+            return {
+                "type": "object",
+                "properties": {
+                    key: {**value, "title": value.get("title", _title_from_parts([key]))}
+                    for key, value in payload.items()
+                }
+            }
+        inferred = _infer_schema_from_example(payload)
+        if inferred and inferred.get("type") == "object":
+            return inferred
+        return None
+
+    if isinstance(payload, list):
+        if all(isinstance(item, dict) and "name" in item for item in payload):
+            properties: dict[str, dict] = {}
+            required: list[str] = []
+            for item in payload:
+                name = item["name"]
+                key = _normalize_field_key(name)
+                schema = {k: v for k, v in item.items() if k != "name"}
+                schema.setdefault("type", "string")
+                schema.setdefault("title", _title_from_parts([name]))
+                if item.get("required"):
+                    required.append(key)
+                properties[key] = schema
+            result: dict[str, object] = {"type": "object", "properties": properties}
+            if required:
+                result["required"] = required
+            return result
+        return None
+
+    return None
+
+
+def _merge_json_schemas(base: dict, extra: dict | None) -> dict:
+    """Merge two JSON schema objects describing request parameters."""
+    if not extra:
+        return base
+    if not base or not isinstance(base, dict):
+        return extra
+
+    result = deepcopy(base)
+    if result.get("type") != "object":
+        return extra
+
+    base_props = result.setdefault("properties", {})
+    extra_props = extra.get("properties", {}) if isinstance(extra, dict) else {}
+
+    for key, schema in extra_props.items():
+        if key in base_props and isinstance(base_props[key], dict):
+            merged = {**base_props[key], **schema}
+            if "title" not in merged:
+                merged["title"] = _title_from_parts([key])
+            base_props[key] = merged
+        else:
+            base_props[key] = schema
+
+    base_required = set(result.get("required", []))
+    extra_required = set(extra.get("required", []))
+    merged_required = sorted(base_required | extra_required)
+    if merged_required:
+        result["required"] = merged_required
+
+    return result
+
+
+def _collapse_duplicate_prefix(model_id: str) -> str:
+    """Collapse duplicated leading path segments (e.g., fal-ai/fal-ai/...)."""
+    if not model_id:
+        return model_id
+    parts = [part for part in model_id.split("/") if part]
+    if len(parts) >= 2 and parts[0].lower() == parts[1].lower():
+        parts = [parts[0]] + parts[2:]
+    return "/".join(parts)
+
+
+def _normalize_model_id(slug: str) -> str:
+    """Return a canonical model identifier with provider prefix."""
+    if not slug:
+        return slug
+    slug = slug.strip("/")
+    if not slug.startswith("fal-ai/"):
+        slug = f"fal-ai/{slug}"
+    return _collapse_duplicate_prefix(slug)
+
+
 CLIENT = SyncClient(key="0")
 
 
@@ -270,9 +446,11 @@ def _generate_gpu_schema(model_id: str, record: dict) -> dict:
     """Generate API schema for GPU rental models."""
     return {
         "type": "object",
+        "title": "GPU Rental Parameters",
         "properties": {
             "duration_hours": {
                 "type": "number",
+                "title": "Duration (Hours)",
                 "description": "Rental duration in hours",
                 "minimum": 0.1,
                 "maximum": 24,
@@ -281,12 +459,14 @@ def _generate_gpu_schema(model_id: str, record: dict) -> dict:
             "framework": {
                 "type": "string",
                 "enum": ["pytorch", "tensorflow", "jax", "huggingface"],
+                "title": "Framework",
                 "description": "ML framework to use",
                 "default": "pytorch"
             },
             "workload_type": {
                 "type": "string",
                 "enum": ["training", "inference", "fine-tuning", "custom"],
+                "title": "Workload Type",
                 "description": "Type of workload to run",
                 "default": "inference"
             }
@@ -297,11 +477,15 @@ def _generate_gpu_schema(model_id: str, record: dict) -> dict:
 
 def _generate_api_schema(model_id: str, unit: str) -> dict:
     """Generate API schema based on model type and unit."""
+    unit_lower = unit.lower()
+    model_lower = model_id.lower()
     base_schema = {
         "type": "object",
+        "title": "Request Parameters",
         "properties": {
             "prompt": {
                 "type": "string",
+                "title": "Prompt",
                 "description": "Text prompt for generation"
             }
         },
@@ -309,30 +493,34 @@ def _generate_api_schema(model_id: str, unit: str) -> dict:
     }
     
     # Add unit-specific fields
-    if "video" in unit.lower():
+    if "video" in unit_lower or "video" in model_lower:
         base_schema["properties"].update({
             "duration": {
                 "type": "number",
+                "title": "Duration",
                 "description": "Video duration in seconds",
                 "minimum": 1,
                 "maximum": 30
             },
             "aspect_ratio": {
                 "type": "string",
+                "title": "Aspect Ratio",
                 "enum": ["16:9", "9:16", "1:1"],
                 "description": "Video aspect ratio"
             }
         })
-    elif "image" in unit.lower():
+    elif "image" in unit_lower or "image" in model_lower:
         base_schema["properties"].update({
             "width": {
                 "type": "integer",
+                "title": "Width",
                 "description": "Image width in pixels",
                 "minimum": 256,
                 "maximum": 2048
             },
             "height": {
                 "type": "integer", 
+                "title": "Height",
                 "description": "Image height in pixels",
                 "minimum": 256,
                 "maximum": 2048
@@ -342,7 +530,18 @@ def _generate_api_schema(model_id: str, unit: str) -> dict:
     return base_schema
 
 
-def _extract_api_details(slug: str) -> tuple[str | None, str | None, str | None]:
+def _parse_schema_block(text: str) -> dict | list | str:
+    """Best-effort parsing of a schema code block from model detail pages."""
+    stripped = text.strip()
+    if not stripped:
+        return ""
+    try:
+        return json.loads(stripped)
+    except json.JSONDecodeError:
+        return stripped
+
+
+def _extract_api_details(slug: str) -> tuple[dict | list | str | None, str | None, str | None]:
     """Return usage schema, generation latency, and description from a model page if present."""
     url = f"{MODEL_BASE_URL}/{slug}"
     try:
@@ -352,12 +551,12 @@ def _extract_api_details(slug: str) -> tuple[str | None, str | None, str | None]
         return None, None, None
     html = resp.text.replace("<!--$-->", "").replace("<!--/$-->", "")
     soup = BeautifulSoup(html, "html.parser")
-    schema = None
+    schema: dict | list | str | None = None
     code = soup.select_one("pre code")
     if code:
         text = code.get_text(strip=True)
         if text:
-            schema = text
+            schema = _parse_schema_block(text)
     latency = None
     text_blob = soup.get_text(" ", strip=True).lower()
     match = re.search(r"(\d+(?:\.\d+)?)\s*(?:s|sec|seconds)", text_blob)
@@ -375,12 +574,17 @@ def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
     import time
     
     results: dict[str, dict] = {}
+    existing_normalized = {
+        _normalize_model_id(item) or item
+        for item in existing
+    }
     discovered_slugs = _discover_model_slugs()
     
     print(f"Processing {len(discovered_slugs)} discovered models...")
     
     for i, slug in enumerate(discovered_slugs):
-        if slug in existing or slug in results:
+        normalized_slug = _normalize_model_id(slug)
+        if normalized_slug in existing_normalized or normalized_slug in results:
             continue
             
         try:
@@ -392,18 +596,17 @@ def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
             display_price, raw_price = _extract_price(slug)
             
             # Generate canonical model_id
-            model_id_canonical = f"fal-ai/{slug}"
+            model_id_canonical = normalized_slug
             
             # Generate API schema for explore models
             api_schema = _generate_api_schema(slug, "generation")
             
             record: dict[str, object] = {
                 "model_id": model_id_canonical,
-                "raw": {"endpoint": slug},
+                "raw": {"endpoint": normalized_slug},
                 "source": f"{MODEL_BASE_URL}/{slug}",
                 "api_identifier": API_IDENTIFIER,
                 "service_type": "api_endpoint",
-                "api_schema": api_schema,
                 "generation_latency": None,
                 "description": f"AI model endpoint: {slug}",
                 "last_updated": datetime.utcnow().isoformat(),
@@ -429,14 +632,15 @@ def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
             inferred_modalities = _infer_modalities_from_slug(slug)
             if inferred_modalities:
                 record["modalities"] = inferred_modalities
-            schema, latency, description = _extract_api_details(slug)
-            if schema:
-                record["api_schema"] = schema
+            schema_payload, latency, description = _extract_api_details(slug)
+            normalized_schema = _normalize_api_schema_payload(schema_payload)
+            record["api_schema"] = _merge_json_schemas(api_schema, normalized_schema)
             if latency:
                 record["generation_latency"] = latency
             if description:
                 record["description"] = description
-            results[slug] = record
+            normalized_slug = _normalize_model_id(slug)
+            results[normalized_slug] = record
             
             if (i + 1) % 50 == 0:  # Progress indicator every 50 models
                 print(f"Progress: {i + 1}/{len(discovered_slugs)} models processed")
@@ -485,7 +689,8 @@ def fetch_prices() -> dict:
             price_per_second = record.get("Price per second", "")
             
             # Generate canonical model_id
-            model_id_canonical = f"fal-ai/{model_id.lower().replace(' ', '-')}"
+            model_slug = model_id.lower().replace(' ', '-')
+            model_id_canonical = _normalize_model_id(f"fal-ai/{model_slug}")
             
             # Generate GPU rental schema
             gpu_schema = _generate_gpu_schema(model_id, record)
@@ -525,7 +730,8 @@ def fetch_prices() -> dict:
                 description = f"AI model for {model_id.lower().replace(' ', ' ')}"
                 
                 # Generate canonical model_id
-                model_id_canonical = f"fal-ai/{model_id.lower().replace(' ', '-').replace(':', '')}"
+                model_slug = model_id.lower().replace(' ', '-').replace(':', '')
+                model_id_canonical = _normalize_model_id(f"fal-ai/{model_slug}")
                 
                 # Extract pricing components
                 price_match = re.search(r'\$(\d+(?:\.\d+)?)', price)

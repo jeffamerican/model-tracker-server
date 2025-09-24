@@ -27,13 +27,15 @@ curl -I http://localhost:8001/
 ### 2. Get All Pricing Data
 **GET** `/api/pricing`
 
-Returns all available pricing data from all scrapers. Supports optional filtering by service type.
+Returns all available pricing data from all scrapers. Supports optional filtering by service type, provider, and modality.
 
 **Query Parameters:**
 
 | Name | Type | Description |
 |------|------|-------------|
 | `service_type` | string | Filter results by service type (e.g. `api_endpoint`, `server_rental`, `subscription`) |
+| `provider` | string | Filter by provider code (e.g. `fal`, `openai`, `runway`) |
+| `modality` | string | Filter by modality tag (e.g. `text-to-video`) |
 
 **Response:**
 - **Status:** 200 OK
@@ -42,35 +44,38 @@ Returns all available pricing data from all scrapers. Supports optional filterin
 **Response Body:**
 ```json
 {
-  "gpt-4": {
+  "Runway Gen-3": {
+    "model_id": "runway/gen-3",
     "raw": {
-      "Model": "GPT-4",
-      "Input": "$0.03/1K tokens",
-      "Output": "$0.06/1K tokens",
-      "Context": "8K tokens"
+      "Model": "Runway Gen-3",
+      "Unit": "second",
+      "Price": "$0.05"
     },
-    "source": "https://openai.com/pricing",
-    "api_identifier": "openai",
+    "source": "https://runwayml.com/pricing",
+    "api_identifier": "runway",
     "service_type": "api_endpoint",
-    "api_schema": null,
-    "generation_latency": null,
-    "description": null,
-    "last_updated": "2024-01-01T00:00:00"
-  },
-  "gpt-3.5-turbo": {
-    "raw": {
-      "Model": "GPT-3.5 Turbo",
-      "Input": "$0.0015/1K tokens",
-      "Output": "$0.002/1K tokens",
-      "Context": "4K tokens"
+    "api_schema": {
+      "type": "object",
+      "title": "Request Parameters",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "title": "Prompt",
+          "description": "Text prompt for generation"
+        },
+        "duration": {
+          "type": "number",
+          "title": "Duration",
+          "description": "Video duration in seconds",
+          "minimum": 1,
+          "maximum": 30
+        }
+      },
+      "required": ["prompt"]
     },
-    "source": "https://openai.com/pricing",
-    "api_identifier": "openai",
-    "service_type": "api_endpoint",
-    "api_schema": null,
-    "generation_latency": null,
-    "description": null,
-    "last_updated": "2024-01-01T00:00:00"
+    "generation_latency": "fast",
+    "description": "Text-to-video generation",
+    "last_updated": "2024-01-01T00:00:00Z"
   }
 }
 ```
@@ -80,8 +85,11 @@ Returns all available pricing data from all scrapers. Supports optional filterin
 # All services
 curl http://localhost:8001/api/pricing
 
-# Only API endpoints
-curl http://localhost:8001/api/pricing?service_type=api_endpoint
+# Only API endpoints from fal.ai
+curl "http://localhost:8001/api/pricing?service_type=api_endpoint&provider=fal"
+
+# All text-to-video models
+curl "http://localhost:8001/api/pricing?modality=text-to-video"
 ```
 
 **Empty Response (when no data available):**
@@ -89,7 +97,76 @@ curl http://localhost:8001/api/pricing?service_type=api_endpoint
 {}
 ```
 
-### 3. Get Specific Model Pricing
+### 3. List Models (Array Shape)
+**GET** `/api/models`
+
+Returns pricing data as an array of records for clients that prefer list-shaped payloads.
+
+**Query Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `service_type` | string | Filter results by service type |
+| `provider` | string | Filter by provider code |
+| `modality` | string | Filter by modality tag |
+
+**Response:**
+- **Status:** 200 OK
+- **Content-Type:** `application/json`
+
+**Response Body:**
+```json
+[
+  {
+    "name": "Runway Gen-3",
+    "model_id": "runway/gen-3",
+    "provider": "runway",
+    "service_type": "api_endpoint",
+    "modalities": ["text-to-video"],
+    "display": "$0.05 / second",
+    "description": "Text-to-video generation",
+    "last_updated": "2024-01-01T00:00:00Z",
+    "api_schema": { "type": "object", "properties": { ... } }
+  }
+]
+```
+
+### 4. List Providers
+**GET** `/api/providers`
+
+Returns summary rows for each provider with model counts and coverage.
+
+**Response Body:**
+```json
+[
+  {
+    "provider": "fal",
+    "model_count": 320,
+    "service_types": ["api_endpoint", "server_rental"],
+    "modalities": ["text-to-video", "image-to-video", "text-to-image"],
+    "last_updated": "2024-01-01T00:00:00Z"
+  }
+]
+```
+
+### 5. List Modalities
+**GET** `/api/modalities`
+
+Returns all discovered modalities with counts and provider coverage.
+
+**Response Body:**
+```json
+[
+  {
+    "modality": "text-to-video",
+    "model_count": 180,
+    "providers": ["fal", "runway", "hedra"],
+    "service_types": ["api_endpoint"]
+  }
+]
+```
+
+### 6. Get Specific Model Pricing
 **GET** `/api/pricing/{model_id}`
 
 Returns pricing information for a specific model.
@@ -145,7 +222,7 @@ curl http://localhost:8001/api/pricing/gpt-4
 curl http://localhost:8001/api/pricing/non-existent-model
 ```
 
-### 4. Web UI
+### 7. Web UI
 **GET** `/ui/`
 
 Serves the web interface for viewing pricing data.
