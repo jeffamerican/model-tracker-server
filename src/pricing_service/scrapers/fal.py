@@ -476,7 +476,7 @@ def _generate_gpu_schema(model_id: str, record: dict) -> dict:
 
 
 def _generate_api_schema(model_id: str, unit: str) -> dict:
-    """Generate API schema based on model type and unit."""
+    """Generate API schema based on model type and unit with enhanced enum information."""
     unit_lower = unit.lower()
     model_lower = model_id.lower()
     base_schema = {
@@ -486,13 +486,15 @@ def _generate_api_schema(model_id: str, unit: str) -> dict:
             "prompt": {
                 "type": "string",
                 "title": "Prompt",
-                "description": "Text prompt for generation"
+                "description": "Text prompt for generation",
+                "minLength": 1,
+                "maxLength": 2000
             }
         },
         "required": ["prompt"]
     }
     
-    # Add unit-specific fields
+    # Add unit-specific fields with enhanced enum information
     if "video" in unit_lower or "video" in model_lower:
         base_schema["properties"].update({
             "duration": {
@@ -500,13 +502,29 @@ def _generate_api_schema(model_id: str, unit: str) -> dict:
                 "title": "Duration",
                 "description": "Video duration in seconds",
                 "minimum": 1,
-                "maximum": 30
+                "maximum": 30,
+                "default": 5
             },
             "aspect_ratio": {
                 "type": "string",
                 "title": "Aspect Ratio",
-                "enum": ["16:9", "9:16", "1:1"],
-                "description": "Video aspect ratio"
+                "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"],
+                "description": "Video aspect ratio",
+                "default": "16:9"
+            },
+            "quality": {
+                "type": "string",
+                "title": "Quality",
+                "enum": ["low", "medium", "high", "ultra"],
+                "description": "Video quality setting",
+                "default": "high"
+            },
+            "fps": {
+                "type": "integer",
+                "title": "Frame Rate",
+                "enum": [24, 30, 60],
+                "description": "Frames per second",
+                "default": 24
             }
         })
     elif "image" in unit_lower or "image" in model_lower:
@@ -516,14 +534,55 @@ def _generate_api_schema(model_id: str, unit: str) -> dict:
                 "title": "Width",
                 "description": "Image width in pixels",
                 "minimum": 256,
-                "maximum": 2048
+                "maximum": 2048,
+                "default": 1024
             },
             "height": {
                 "type": "integer", 
                 "title": "Height",
                 "description": "Image height in pixels",
                 "minimum": 256,
-                "maximum": 2048
+                "maximum": 2048,
+                "default": 1024
+            },
+            "style": {
+                "type": "string",
+                "title": "Style",
+                "enum": ["realistic", "artistic", "cartoon", "anime", "photorealistic", "painting"],
+                "description": "Image generation style",
+                "default": "realistic"
+            },
+            "quality": {
+                "type": "string",
+                "title": "Quality",
+                "enum": ["standard", "hd", "ultra"],
+                "description": "Image quality setting",
+                "default": "hd"
+            }
+        })
+    elif "audio" in unit_lower or "audio" in model_lower:
+        base_schema["properties"].update({
+            "voice": {
+                "type": "string",
+                "title": "Voice",
+                "enum": ["male", "female", "neutral", "child", "elderly"],
+                "description": "Voice type for audio generation",
+                "default": "neutral"
+            },
+            "language": {
+                "type": "string",
+                "title": "Language",
+                "enum": ["en", "es", "fr", "de", "it", "pt", "ru", "zh", "ja", "ko"],
+                "description": "Language code for audio generation",
+                "default": "en"
+            },
+            "speed": {
+                "type": "number",
+                "title": "Speed",
+                "description": "Speech speed multiplier",
+                "minimum": 0.5,
+                "maximum": 2.0,
+                "default": 1.0
             }
         })
     
@@ -541,14 +600,165 @@ def _parse_schema_block(text: str) -> dict | list | str:
         return stripped
 
 
-def _extract_api_details(slug: str) -> tuple[dict | list | str | None, str | None, str | None]:
-    """Return usage schema, generation latency, and description from a model page if present."""
+def _extract_thumbnails_and_samples(slug: str) -> dict:
+    """Extract thumbnail URLs and sample outputs from a model page."""
     url = f"{MODEL_BASE_URL}/{slug}"
     try:
         resp = _get(url, timeout=10)
         resp.raise_for_status()
     except Exception:
-        return None, None, None
+        return {}
+    
+    html = resp.text.replace("<!--$-->", "").replace("<!--/$-->", "")
+    soup = BeautifulSoup(html, "html.parser")
+    
+    visual_data = {
+        "thumbnail_url": None,
+        "sample_outputs": [],
+        "demo_video": None
+    }
+    
+    # Look for main model thumbnail/preview image
+    # Common selectors for model preview images
+    thumbnail_selectors = [
+        "img[alt*='preview']",
+        "img[alt*='example']", 
+        "img[alt*='sample']",
+        "img[alt*='demo']",
+        ".model-preview img",
+        ".preview-image img",
+        ".example-image img",
+        "img[src*='preview']",
+        "img[src*='example']",
+        "img[src*='sample']"
+    ]
+    
+    for selector in thumbnail_selectors:
+        img = soup.select_one(selector)
+        if img and img.get("src"):
+            src = img.get("src")
+            # Convert relative URLs to absolute
+            if src.startswith("/"):
+                src = f"https://fal.ai{src}"
+            elif src.startswith("//"):
+                src = f"https:{src}"
+            elif not src.startswith("http"):
+                src = f"https://fal.ai/{src}"
+            visual_data["thumbnail_url"] = src
+            break
+    
+    # Look for sample output images
+    sample_selectors = [
+        ".sample img",
+        ".example img", 
+        ".output img",
+        ".result img",
+        ".gallery img",
+        ".showcase img"
+    ]
+    
+    for selector in sample_selectors:
+        imgs = soup.select(selector)
+        for img in imgs[:5]:  # Limit to first 5 samples
+            if img.get("src"):
+                src = img.get("src")
+                # Convert relative URLs to absolute
+                if src.startswith("/"):
+                    src = f"https://fal.ai{src}"
+                elif src.startswith("//"):
+                    src = f"https:{src}"
+                elif not src.startswith("http"):
+                    src = f"https://fal.ai/{src}"
+                if src not in visual_data["sample_outputs"]:
+                    visual_data["sample_outputs"].append(src)
+    
+    # Look for demo videos
+    video_selectors = [
+        "video source",
+        "video[src]",
+        ".demo-video source",
+        ".video-demo source"
+    ]
+    
+    for selector in video_selectors:
+        video = soup.select_one(selector)
+        if video:
+            src = video.get("src")
+            if src:
+                # Convert relative URLs to absolute
+                if src.startswith("/"):
+                    src = f"https://fal.ai{src}"
+                elif src.startswith("//"):
+                    src = f"https:{src}"
+                elif not src.startswith("http"):
+                    src = f"https://fal.ai/{src}"
+                visual_data["demo_video"] = src
+                break
+    
+    return visual_data
+
+
+def _enhance_schema_with_enums(schema: dict | list | str | None) -> dict | list | str | None:
+    """Enhance schema by extracting enum values and constraints from the original schema."""
+    if not isinstance(schema, dict):
+        return schema
+    
+    enhanced = deepcopy(schema)
+    
+    # Look for properties and enhance them with enum information
+    if "properties" in enhanced:
+        for prop_name, prop_def in enhanced["properties"].items():
+            if isinstance(prop_def, dict):
+                # Extract enum values from various sources
+                enum_values = []
+                
+                # Check if enum is already defined
+                if "enum" in prop_def:
+                    enum_values = prop_def["enum"]
+                else:
+                    # Try to infer enum values from description or other fields
+                    description = prop_def.get("description", "")
+                    
+                    # Look for common enum patterns in descriptions
+                    if "one of" in description.lower():
+                        # Extract values from "one of: value1, value2, value3"
+                        match = re.search(r"one of:\s*([^.]*)", description, re.IGNORECASE)
+                        if match:
+                            values_text = match.group(1)
+                            enum_values = [v.strip() for v in values_text.split(",") if v.strip()]
+                    
+                    # Look for specific common enum types
+                    elif prop_name.lower() in ["format", "style", "quality", "size", "aspect_ratio"]:
+                        # Add common values for these fields
+                        if prop_name.lower() == "format":
+                            enum_values = ["mp4", "webm", "avi", "mov", "png", "jpg", "jpeg", "webp"]
+                        elif prop_name.lower() == "style":
+                            enum_values = ["realistic", "artistic", "cartoon", "anime", "photorealistic"]
+                        elif prop_name.lower() == "quality":
+                            enum_values = ["low", "medium", "high", "ultra", "premium"]
+                        elif prop_name.lower() == "size":
+                            enum_values = ["256x256", "512x512", "1024x1024", "2048x2048"]
+                        elif prop_name.lower() == "aspect_ratio":
+                            enum_values = ["16:9", "9:16", "1:1", "4:3", "3:4"]
+                
+                # Add enum values if found
+                if enum_values:
+                    enhanced["properties"][prop_name]["enum"] = enum_values
+                    # Add enum description if not present
+                    if "description" not in enhanced["properties"][prop_name]:
+                        enhanced["properties"][prop_name]["description"] = f"Must be one of: {', '.join(enum_values)}"
+    
+    return enhanced
+
+
+def _extract_api_details(slug: str) -> tuple[dict | list | str | None, str | None, str | None, dict]:
+    """Return usage schema, generation latency, description, and visual content from a model page if present."""
+    url = f"{MODEL_BASE_URL}/{slug}"
+    try:
+        resp = _get(url, timeout=10)
+        resp.raise_for_status()
+    except Exception:
+        return None, None, None, {}
     html = resp.text.replace("<!--$-->", "").replace("<!--/$-->", "")
     soup = BeautifulSoup(html, "html.parser")
     schema: dict | list | str | None = None
@@ -557,6 +767,8 @@ def _extract_api_details(slug: str) -> tuple[dict | list | str | None, str | Non
         text = code.get_text(strip=True)
         if text:
             schema = _parse_schema_block(text)
+            # Enhance schema with enum information
+            schema = _enhance_schema_with_enums(schema)
     latency = None
     text_blob = soup.get_text(" ", strip=True).lower()
     match = re.search(r"(\d+(?:\.\d+)?)\s*(?:s|sec|seconds)", text_blob)
@@ -566,7 +778,11 @@ def _extract_api_details(slug: str) -> tuple[dict | list | str | None, str | Non
     meta = soup.find("meta", attrs={"name": "description"})
     if meta:
         description = meta.get("content")
-    return schema, latency, description
+    
+    # Extract visual content
+    visual_content = _extract_thumbnails_and_samples(slug)
+    
+    return schema, latency, description, visual_content
 
 
 def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
@@ -632,13 +848,17 @@ def _fetch_explore_data(existing: set[str]) -> dict[str, dict]:
             inferred_modalities = _infer_modalities_from_slug(slug)
             if inferred_modalities:
                 record["modalities"] = inferred_modalities
-            schema_payload, latency, description = _extract_api_details(slug)
+            schema_payload, latency, description, visual_content = _extract_api_details(slug)
             normalized_schema = _normalize_api_schema_payload(schema_payload)
             record["api_schema"] = _merge_json_schemas(api_schema, normalized_schema)
             if latency:
                 record["generation_latency"] = latency
             if description:
                 record["description"] = description
+            
+            # Add visual content
+            if visual_content:
+                record.update(visual_content)
             normalized_slug = _normalize_model_id(slug)
             results[normalized_slug] = record
             

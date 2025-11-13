@@ -5,10 +5,8 @@
 ### 1. Setup Environment
 ```bash
 # Create and activate virtual environment
-python -m venv venv
-.\venv\Scripts\Activate.ps1  # Windows
-# OR
-source venv/bin/activate     # Linux/Mac
+python3 -m venv venv
+source venv/bin/activate     # macOS/Linux
 
 # Install dependencies
 pip install -e .
@@ -50,7 +48,7 @@ curl http://localhost:8001/api/pricing
 1. Create `src/pricing_service/scrapers/new_provider.py`
 2. Implement `fetch_prices()` function
 3. Add to `SCRAPER_MODULES` in `scraper.py`
-4. Test with `python -m pricing_service.scraper`
+4. Test with `python3 -m pricing_service.scraper`
 
 ### Test API Endpoints
 ```bash
@@ -67,7 +65,7 @@ curl http://localhost:8001/ui/
 ### Debug Issues
 ```bash
 # Check scraper output
-python -m pricing_service.scraper
+python3 -m pricing_service.scraper
 
 # Run with debug logging
 uvicorn pricing_service.server:app --log-level debug
@@ -82,6 +80,7 @@ cat data/model_pricing.json
 |-------|----------|
 | Port 8000 in use | Use `--port 8001` |
 | Import errors | Activate virtual environment |
+| Venv created on different OS | Delete `venv/` folder and recreate with `python3 -m venv venv` |
 | 403 errors | Expected for some scrapers |
 | Empty data | Scrapers may be blocked |
 

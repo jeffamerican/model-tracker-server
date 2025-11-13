@@ -297,6 +297,102 @@
             border-radius: 10px;
             font-size: 10px;
             font-weight: 500;
+        }
+        .new-badge {
+            background: #4caf50;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+        .changed-badge {
+            background: #ff9800;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .deprecated-badge {
+            background: #f44336;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .status-new {
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+        .status-changed {
+            background: #ff9800;
+        }
+        .status-deprecated {
+            background: #f44336;
+        }
+        .status-active {
+            background: #2196f3;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .model-row-new {
+            border-left: 4px solid #4caf50;
+        }
+        .model-row-changed {
+            border-left: 4px solid #ff9800;
+        }
+        .model-row-deprecated {
+            background-color: #ffebee !important;
+            opacity: 0.7;
+        }
+        .model-row-deprecated:hover {
+            background-color: #ffcdd2 !important;
+        }
+        .model-thumbnail {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 1px solid #ddd;
+            background: #f5f5f5;
+        }
+        .model-thumbnail-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            border: 1px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+        .model-info {
+            display: flex;
+            align-items: center;
+        }
+        .model-details {
+            flex: 1;
+        }
             margin-top: 4px;
             display: inline-block;
         }
@@ -648,6 +744,17 @@
                         <!-- Provider list will be populated here -->
                     </div>
                 </div>
+                <div class="dropdown-container">
+                    <button class="dropdown-btn" onclick="toggleDropdown('status')">
+                        Status <span class="service-count" id="statusCount">0</span> ▼
+                    </button>
+                    <div class="dropdown-content" id="statusDropdown">
+                        <!-- Status filters will be populated here -->
+                    </div>
+                </div>
+                <button onclick="showNewModels()" title="Show recently added models" style="background: #4caf50; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">🆕 New Models</button>
+                <button onclick="showChangedModels()" title="Show recently updated models" style="background: #ff9800; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">🔄 Updated</button>
+                <button onclick="showDeprecatedModels()" title="Show deprecated models" style="background: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">⚠️ Deprecated</button>
                 <label class="api-toggle"><input type="checkbox" id="apiFilter" onchange="filterTable()"> API endpoints only</label>
                 <button id="themeToggle" class="toggle-btn">Toggle Dark Mode</button>
             </div>
@@ -820,6 +927,7 @@
                 renderModalityControls();
                 renderColumnControls(allColumns);
                 renderProviderList();
+                renderStatusControls();
                 updateStats();
                 renderTable(tableData);
 
@@ -1155,9 +1263,31 @@
             const buildRow = (item) => {
                 const tr = document.createElement('tr');
 
-                const isNew = item.lastUpdated && (Date.now() - new Date(item.lastUpdated).getTime() < 7 * 24 * 60 * 60 * 1000);
-                if (isNew) {
-                    tr.classList.add('new-model');
+                // Determine model status based on new metadata fields
+                const now = Date.now();
+                const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
+                const thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000);
+                
+                let modelStatus = 'active';
+                let statusBadge = '';
+                
+                // Check if model is deprecated
+                if (item.status === 'deprecated') {
+                    modelStatus = 'deprecated';
+                    statusBadge = '<span class="deprecated-badge">DEPRECATED</span>';
+                    tr.classList.add('model-row-deprecated');
+                }
+                // Check if model is new (first seen within last 7 days)
+                else if (item.firstSeen && new Date(item.firstSeen).getTime() > sevenDaysAgo) {
+                    modelStatus = 'new';
+                    statusBadge = '<span class="new-badge">NEW</span>';
+                    tr.classList.add('model-row-new');
+                }
+                // Check if model was recently changed (last changed within last 7 days)
+                else if (item.lastChanged && new Date(item.lastChanged).getTime() > sevenDaysAgo) {
+                    modelStatus = 'changed';
+                    statusBadge = '<span class="changed-badge">UPDATED</span>';
+                    tr.classList.add('model-row-changed');
                 }
 
                 const schemaValue = item.apiSchema;
@@ -1179,10 +1309,29 @@
 
                 const modelCell = document.createElement('td');
                 modelCell.style.width = modelWidth;
+                const statusIndicator = `<span class="status-indicator status-${modelStatus}"></span>`;
+                
+                // Create thumbnail element
+                let thumbnailHtml = '';
+                if (item.thumbnailUrl) {
+                    thumbnailHtml = `<img src="/api/thumbnail/${encodeURIComponent(item.modelId)}" 
+                                         class="model-thumbnail" 
+                                         alt="${item.modelId} preview"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="model-thumbnail-placeholder" style="display:none;">📷</div>`;
+                } else {
+                    thumbnailHtml = `<div class="model-thumbnail-placeholder">📷</div>`;
+                }
+                
                 modelCell.innerHTML = `
-                    <div>${item.modelId}${isNew ? '<span class="new-badge">NEW</span>' : ''}</div>
-                    <div class="service-type">${item.serviceType}</div>
-                    <div class="api-identifier">${item.apiIdentifier}</div>
+                    <div class="model-info">
+                        ${thumbnailHtml}
+                        <div class="model-details">
+                            <div>${statusIndicator}${item.modelId}${statusBadge}</div>
+                            <div class="service-type">${item.serviceType}</div>
+                            <div class="api-identifier">${item.apiIdentifier}</div>
+                        </div>
+                    </div>
                 `;
                 tr.appendChild(modelCell);
 
@@ -1355,6 +1504,90 @@
             });
             
             renderTable(filtered);
+        }
+
+        // Status filtering functions
+        function showNewModels() {
+            const sevenDaysAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+            const newModels = tableData.filter(item => 
+                item.firstSeen && new Date(item.firstSeen).getTime() > sevenDaysAgo
+            );
+            renderTable(newModels);
+            document.getElementById('searchInput').value = '';
+        }
+
+        function showChangedModels() {
+            const sevenDaysAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+            const changedModels = tableData.filter(item => 
+                item.lastChanged && new Date(item.lastChanged).getTime() > sevenDaysAgo
+            );
+            renderTable(changedModels);
+            document.getElementById('searchInput').value = '';
+        }
+
+        function showDeprecatedModels() {
+            const deprecatedModels = tableData.filter(item => 
+                item.status === 'deprecated'
+            );
+            renderTable(deprecatedModels);
+            document.getElementById('searchInput').value = '';
+        }
+
+        function renderStatusControls() {
+            const container = document.getElementById('statusDropdown');
+            container.innerHTML = '<div class="dropdown-header">Filter by Status</div>';
+            
+            // Add "All" option
+            const allItem = document.createElement('div');
+            allItem.className = 'dropdown-item';
+            allItem.innerHTML = `
+                <input type="checkbox" id="status-all" checked onchange="toggleStatusFilter('all')">
+                <label for="status-all">All Models</label>
+            `;
+            container.appendChild(allItem);
+
+            // Add status options
+            const statuses = [
+                { key: 'new', label: 'New (Last 7 days)', count: 0 },
+                { key: 'changed', label: 'Recently Updated', count: 0 },
+                { key: 'active', label: 'Active', count: 0 },
+                { key: 'deprecated', label: 'Deprecated', count: 0 }
+            ];
+
+            // Count models for each status
+            const now = Date.now();
+            const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
+            
+            tableData.forEach(item => {
+                if (item.status === 'deprecated') {
+                    statuses[3].count++;
+                } else if (item.firstSeen && new Date(item.firstSeen).getTime() > sevenDaysAgo) {
+                    statuses[0].count++;
+                } else if (item.lastChanged && new Date(item.lastChanged).getTime() > sevenDaysAgo) {
+                    statuses[1].count++;
+                } else {
+                    statuses[2].count++;
+                }
+            });
+
+            statuses.forEach(status => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.innerHTML = `
+                    <input type="checkbox" id="status-${status.key}" checked onchange="toggleStatusFilter('${status.key}')">
+                    <label for="status-${status.key}">${status.label} (${status.count})</label>
+                `;
+                container.appendChild(item);
+            });
+
+            // Update status count
+            document.getElementById('statusCount').textContent = statuses.reduce((sum, s) => sum + s.count, 0);
+        }
+
+        function toggleStatusFilter(status) {
+            // This would integrate with the existing filter system
+            // For now, we'll implement a simple version
+            filterTable();
         }
 
         // Column resize functionality

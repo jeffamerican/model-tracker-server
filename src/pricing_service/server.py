@@ -10,9 +10,10 @@ from datetime import datetime
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, Response
+import httpx
 
-from .scraper import write_pricing_file
+from .scraper import write_pricing_file, incremental_update_pricing_file
 
 try:  # Optional import to enrich fal.ai schemas when dependencies are present
     from .scrapers import fal as fal_scraper
@@ -38,6 +39,15 @@ app.mount(
     name="ui",
 )
 
+# Serve thumbnails and assets (only if directory exists)
+assets_path = Path(__file__).resolve().parents[2] / "assets"
+if assets_path.exists():
+    app.mount(
+        "/assets",
+        StaticFiles(directory=assets_path, html=False),
+        name="assets",
+    )
+
 
 @app.get("/")
 async def root() -> RedirectResponse:
@@ -46,6 +56,7 @@ async def root() -> RedirectResponse:
 
 _cache: Dict[str, dict] | None = None
 _last_updated: Optional[datetime] = None
+_last_change_summary: Optional[dict] = None
 _refresh_lock = asyncio.Lock()
 
 
@@ -107,16 +118,23 @@ def _normalize_cache(data: Dict[str, dict]) -> Dict[str, dict]:
     return normalized_data
 
 
+async def _run_incremental_update_task() -> tuple[dict, dict]:
+    """Run the incremental update pipeline in a background thread."""
+    return await asyncio.to_thread(incremental_update_pricing_file, DATA_PATH)
+
+
 async def _run_write_task() -> dict:
-    """Run the blocking scraper pipeline in a background thread."""
+    """Run the blocking scraper pipeline in a background thread (legacy method)."""
     return await asyncio.to_thread(write_pricing_file, DATA_PATH)
 
 
 async def _refresh_cache() -> None:
-    """Populate the in-memory cache with fresh data."""
-    global _cache, _last_updated
-    _cache = _normalize_cache(await _run_write_task())
+    """Populate the in-memory cache with fresh data using incremental updates."""
+    global _cache, _last_updated, _last_change_summary
+    updated_data, change_summary = await _run_incremental_update_task()
+    _cache = _normalize_cache(updated_data)
     _last_updated = datetime.utcnow()
+    _last_change_summary = change_summary
 
 
 async def refresh_pricing() -> None:
@@ -137,14 +155,19 @@ async def refresh_pricing() -> None:
 async def startup_event() -> None:
     global _cache, _last_updated
     if DATA_PATH.exists():
+        print(f"📊 Loading pricing data from {DATA_PATH}")
         _cache = _normalize_cache(json.loads(DATA_PATH.read_text()))
         _last_updated = datetime.utcnow()
+        print(f"✅ Loaded {len(_cache)} pricing records")
     else:
         # Start with empty cache and refresh in background
+        print("⚠️  No existing pricing data found. Initializing scrapers...")
+        print("   First request may take 30-60 seconds while data is collected.")
         _cache = {}
         _last_updated = None
     # Start background tasks
     asyncio.create_task(refresh_pricing())
+    print("🚀 Pricing Service started and ready to serve requests")
 
 
 def _get_filtered_data(
@@ -211,6 +234,10 @@ def _model_record(name: str, payload: dict) -> dict:
         "description": payload.get("description", ""),
         "source": payload.get("source"),
         "last_updated": payload.get("last_updated"),
+        "first_seen": payload.get("first_seen"),
+        "last_changed": payload.get("last_changed"),
+        "status": payload.get("status", "active"),
+        "change_count": payload.get("change_count", 0),
         "generation_latency": payload.get("generation_latency"),
         "recommended_use": payload.get("recommended_use"),
         "quality_tier": payload.get("quality_tier"),
@@ -218,6 +245,9 @@ def _model_record(name: str, payload: dict) -> dict:
         "capabilities": payload.get("capabilities"),
         "policy_notes": payload.get("policy_notes"),
         "api_schema": payload.get("api_schema"),
+        "thumbnail_url": payload.get("thumbnail_url"),
+        "sample_outputs": payload.get("sample_outputs", []),
+        "demo_video": payload.get("demo_video"),
         "raw": payload.get("raw"),
     }
 
@@ -325,6 +355,138 @@ async def health_check() -> dict:
         "updated": _last_updated.isoformat() if _last_updated else None,
         "cache_size": len(_cache) if _cache else 0
     }
+
+
+@app.get("/api/changes")
+async def get_recent_changes() -> dict:
+    """Get summary of recent changes (new, changed, deprecated models)."""
+    if not _last_change_summary:
+        return {
+            "message": "No recent changes available",
+            "last_update": _last_updated.isoformat() if _last_updated else None
+        }
+    
+    return _last_change_summary
+
+
+@app.get("/api/models/new")
+async def get_new_models(
+    days: int = Query(7, description="Number of days to look back for new models"),
+    limit: int = Query(50, description="Maximum number of models to return")
+) -> List[dict]:
+    """Get recently added models."""
+    if not _cache:
+        raise HTTPException(status_code=503, detail="Pricing cache not ready")
+    
+    cutoff_date = datetime.utcnow().timestamp() - (days * 24 * 60 * 60)
+    new_models = []
+    
+    for model_id, model_data in _cache.items():
+        first_seen = model_data.get("first_seen")
+        if first_seen:
+            try:
+                first_seen_dt = datetime.fromisoformat(first_seen.replace('Z', '+00:00'))
+                if first_seen_dt.timestamp() >= cutoff_date:
+                    new_models.append(_model_record(model_id, model_data))
+            except (ValueError, TypeError):
+                continue
+    
+    # Sort by first_seen date (newest first)
+    new_models.sort(key=lambda x: x.get("first_seen", ""), reverse=True)
+    return new_models[:limit]
+
+
+@app.get("/api/models/changed")
+async def get_changed_models(
+    days: int = Query(7, description="Number of days to look back for changed models"),
+    limit: int = Query(50, description="Maximum number of models to return")
+) -> List[dict]:
+    """Get recently changed models."""
+    if not _cache:
+        raise HTTPException(status_code=503, detail="Pricing cache not ready")
+    
+    cutoff_date = datetime.utcnow().timestamp() - (days * 24 * 60 * 60)
+    changed_models = []
+    
+    for model_id, model_data in _cache.items():
+        last_changed = model_data.get("last_changed")
+        if last_changed:
+            try:
+                last_changed_dt = datetime.fromisoformat(last_changed.replace('Z', '+00:00'))
+                if last_changed_dt.timestamp() >= cutoff_date:
+                    record = _model_record(model_id, model_data)
+                    record["change_count"] = model_data.get("change_count", 0)
+                    changed_models.append(record)
+            except (ValueError, TypeError):
+                continue
+    
+    # Sort by last_changed date (most recent first)
+    changed_models.sort(key=lambda x: x.get("last_changed", ""), reverse=True)
+    return changed_models[:limit]
+
+
+@app.get("/api/models/deprecated")
+async def get_deprecated_models(
+    days: int = Query(30, description="Number of days to look back for deprecated models"),
+    limit: int = Query(50, description="Maximum number of models to return")
+) -> List[dict]:
+    """Get recently deprecated models."""
+    if not _cache:
+        raise HTTPException(status_code=503, detail="Pricing cache not ready")
+    
+    cutoff_date = datetime.utcnow().timestamp() - (days * 24 * 60 * 60)
+    deprecated_models = []
+    
+    for model_id, model_data in _cache.items():
+        if model_data.get("status") == "deprecated":
+            deprecated_at = model_data.get("deprecated_at")
+            if deprecated_at:
+                try:
+                    deprecated_dt = datetime.fromisoformat(deprecated_at.replace('Z', '+00:00'))
+                    if deprecated_dt.timestamp() >= cutoff_date:
+                        record = _model_record(model_id, model_data)
+                        record["deprecated_at"] = deprecated_at
+                        deprecated_models.append(record)
+                except (ValueError, TypeError):
+                    continue
+    
+    # Sort by deprecated_at date (most recent first)
+    deprecated_models.sort(key=lambda x: x.get("deprecated_at", ""), reverse=True)
+    return deprecated_models[:limit]
+
+
+@app.get("/api/thumbnail/{model_id}")
+async def get_model_thumbnail(model_id: str) -> Response:
+    """Get thumbnail image for a specific model."""
+    if not _cache:
+        raise HTTPException(status_code=503, detail="Pricing cache not ready")
+    
+    model = _cache.get(model_id)
+    if not model:
+        raise HTTPException(status_code=404, detail="Model not found")
+    
+    thumbnail_url = model.get("thumbnail_url")
+    if not thumbnail_url:
+        raise HTTPException(status_code=404, detail="No thumbnail available for this model")
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(thumbnail_url, timeout=10.0)
+            response.raise_for_status()
+            
+            # Determine content type
+            content_type = response.headers.get("content-type", "image/jpeg")
+            
+            return Response(
+                content=response.content,
+                media_type=content_type,
+                headers={
+                    "Cache-Control": "public, max-age=3600",  # Cache for 1 hour
+                    "Access-Control-Allow-Origin": "*"
+                }
+            )
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Failed to fetch thumbnail: {str(e)}")
 
 
 @app.post("/api/refresh")
